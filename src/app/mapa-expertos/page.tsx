@@ -678,9 +678,14 @@ export default function MapaExpertos() {
       .finally(() => setIsSearching(false));
   }, [searchQuery, rebaseExperts, rebaseJobs, showToast]);
 
-  // ── Profile Navigation: ALWAYS routes to /expertos/[id] (Fast & Complete) ────
+  // ── Profile Navigation: ALWAYS routes to /expertos/[id] and preserves exact initial photo ────
   const handleVerPerfil = (id: string) => {
-    router.push(`/expertos/${id}`);
+    const expert = experts.find(e => e.id === id);
+    if (expert) {
+      router.push(`/expertos/${id}?foto=${encodeURIComponent(expert.foto_perfil || '')}&nombre=${encodeURIComponent(expert.nombre_completo || '')}&titulo=${encodeURIComponent(expert.titulo_profesional || '')}&tarifa=${encodeURIComponent(expert.tarifa || '')}&categoria=${encodeURIComponent(expert.categoria || '')}`);
+    } else {
+      router.push(`/expertos/${id}`);
+    }
   };
 
   // ── Handlers for Job Accepting workflow ─────────────────────────────────────

@@ -595,7 +595,7 @@ export default function HomeCliente() {
                 {filteredProfessionals.map((pro: any) => (
                   <Link 
                     key={pro.id} 
-                    href={`/expertos/${pro.id}`}
+                    href={`/expertos/${pro.id}?foto=${encodeURIComponent(pro.foto_perfil || '')}&nombre=${encodeURIComponent(pro.nombre_completo || '')}&titulo=${encodeURIComponent(pro.titulo_profesional || '')}&tarifa=${encodeURIComponent(pro.precio || '')}&categoria=${encodeURIComponent(pro.categoria || '')}`}
                     className="group bg-white rounded-[24px] p-4 border border-[#C5A059]/20 hover:border-[#C5A059] hover:shadow-xl hover:shadow-[#0B2545]/5 transition-all duration-300 flex flex-col cursor-pointer"
                   >
                     <div className="relative aspect-square rounded-[18px] overflow-hidden mb-4 bg-gray-50">

@@ -68,7 +68,7 @@ export default function ProfessionalCard({
           </span>
         </div>
         <Link 
-          href={`/expertos/${id}`}
+          href={`/expertos/${id}?foto=${encodeURIComponent(foto_perfil || '')}&nombre=${encodeURIComponent(nombre_completo || '')}&titulo=${encodeURIComponent(titulo_profesional || '')}&tarifa=${encodeURIComponent(precio || '')}`}
           className="px-5 py-2.5 bg-[#0B2545] text-white rounded-full font-bold text-xs uppercase tracking-wider hover:bg-[#13335c] hover:shadow-md transition-all duration-300 active:scale-95 inline-block text-center border border-[#C5A059]/40"
         >
           Ver Perfil
