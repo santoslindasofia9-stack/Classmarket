@@ -27,18 +27,27 @@ export default function AuthCallback() {
 
       const avatar = meta?.avatar_url || meta?.picture || localStorage.getItem("userAvatar") || "";
 
-      localStorage.setItem("userRole", role);
+      const isPro = 
+        role === "pro" || 
+        localStorage.getItem("userRole") === "pro" || 
+        localStorage.getItem("isProIntent") === "true" ||
+        sessionStorage.getItem("userRole") === "pro";
+
+      const finalRole = isPro ? "pro" : "client";
+
+      localStorage.setItem("userRole", finalRole);
       localStorage.setItem("userName", displayName);
-      if (avatar) localStorage.setItem("userAvatar", avatar);
+      if (avatar) {
+        localStorage.setItem("userAvatar", avatar);
+        localStorage.setItem("proAvatar", avatar);
+      }
       localStorage.setItem("isLoggedIn", "true");
       localStorage.removeItem("pendingRole");
 
-      if (isMounted) setStatus(`¡Bienvenido, ${displayName}! Entrando a tu dashboard...`);
+      if (isMounted) setStatus(`¡Bienvenido, ${displayName}! Configurando tu perfil...`);
 
-      const isProRegistered = typeof window !== "undefined" && localStorage.getItem("proRegistered") === "true";
-      const target = role === "client" 
-        ? "/home-cliente" 
-        : (isProRegistered ? "/dashboard-pro" : "/tutor/register");
+      // Si seleccionó "Ofrezco Tutoría", SIEMPRE llevar a /tutor/register (ayuda con IA y portafolio)
+      const target = isPro ? "/tutor/register" : "/home-cliente";
       setTimeout(() => {
         window.location.href = target;
       }, 500);
@@ -46,7 +55,11 @@ export default function AuthCallback() {
 
     // Fail-safe timer: si cualquier llamada a red o PKCE se demora más de 1.2 segundos, avanzar directamente
     const safetyTimer = setTimeout(() => {
-      const role = localStorage.getItem("userRole") || "client";
+      const isPro = 
+        localStorage.getItem("userRole") === "pro" || 
+        localStorage.getItem("isProIntent") === "true" ||
+        sessionStorage.getItem("userRole") === "pro";
+      const role = isPro ? "pro" : (localStorage.getItem("userRole") || "client");
       doRedirect(null, role);
     }, 1200);
 
@@ -55,7 +68,12 @@ export default function AuthCallback() {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
         const roleFromUrl = urlParams.get("role");
-        const role = roleFromUrl || localStorage.getItem("userRole") || "client";
+        const isPro = 
+          roleFromUrl === "pro" || 
+          localStorage.getItem("userRole") === "pro" || 
+          localStorage.getItem("isProIntent") === "true" ||
+          sessionStorage.getItem("userRole") === "pro";
+        const role = isPro ? "pro" : (roleFromUrl || localStorage.getItem("userRole") || "client");
 
         // Escuchar el evento de autenticación automática de Supabase
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {

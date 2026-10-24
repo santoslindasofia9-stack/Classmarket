@@ -806,8 +806,8 @@ export default function MapaExpertos() {
             <div className="flex justify-center mb-2">
               <div className="bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-2xl border border-[#0B2545]/10 shadow-lg flex items-center gap-2.5">
                 <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#D81B60]"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C5A059] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#C5A059]"></span>
                 </span>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-bold text-[#5C6B73] uppercase tracking-wider">
@@ -825,7 +825,7 @@ export default function MapaExpertos() {
               onSubmit={handleLocationSearch}
               className="flex items-center gap-2 bg-white/98 backdrop-blur-md rounded-full border border-[#0B2545]/10 shadow-2xl px-4 py-2.5 transition-shadow hover:shadow-xl"
             >
-              <MapPin className="text-[#D81B60] shrink-0" size={20} />
+              <MapPin className="text-[#C5A059] shrink-0" size={20} />
               <input
                 type="text"
                 value={searchQuery}

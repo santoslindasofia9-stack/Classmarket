@@ -18,6 +18,7 @@ import {
   PlusCircle,
   TrendingUp
 } from "lucide-react";
+import BottomNav from "@/components/dashboard/BottomNav";
 
 // ── Interfaces ──────────────────────────────────────────────────────────────
 interface EventItem {
@@ -269,7 +270,7 @@ export default function WorkAgendaPage() {
               </div>
               <div className="flex gap-4 text-[10px] font-black uppercase tracking-wider text-slate-400">
                 <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Completado</div>
-                <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-pink-400"></span> Pendiente</div>
+                <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span> Pendiente</div>
               </div>
             </div>
 
@@ -296,12 +297,12 @@ export default function WorkAgendaPage() {
                     onClick={() => setSelectedDay(day)}
                     className={`aspect-square rounded-2xl border flex flex-col items-center justify-center relative transition-all cursor-pointer ${
                       isSelected 
-                        ? "border-[#D81B60] bg-[#FCE4EC]/35 ring-2 ring-[#D81B60]/20" 
+                        ? "border-[#0B2545] bg-[#FAF8F5] ring-2 ring-[#C5A059]/40 shadow-xs" 
                         : "border-slate-100 bg-white hover:bg-slate-50"
                     }`}
                   >
                     <span className={`text-xs md:text-sm font-extrabold ${
-                      isSelected ? "text-[#D81B60]" : "text-[#0d1c2e]"
+                      isSelected ? "text-[#0B2545]" : "text-[#0B2545]"
                     }`}>
                       {day}
                     </span>
@@ -310,7 +311,7 @@ export default function WorkAgendaPage() {
                     {dayHasEvents && (
                       <div className="absolute bottom-2 flex gap-0.5">
                         <span className={`w-1.5 h-1.5 rounded-full ${
-                          hasPending ? "bg-pink-400" : "bg-emerald-400"
+                          hasPending ? "bg-[#C5A059]" : "bg-emerald-400"
                         }`} />
                       </div>
                     )}
@@ -327,8 +328,8 @@ export default function WorkAgendaPage() {
             <div className="bg-white rounded-3xl p-6 shadow-md shadow-slate-100/50 border border-sky-50 flex flex-col">
               <div className="mb-6 flex justify-between items-start">
                 <div>
-                  <h4 className="text-base font-black text-[#0d1c2e]">Tareas del Día</h4>
-                  <p className="text-[10px] font-extrabold text-pink-600 uppercase tracking-widest mt-1">
+                  <h4 className="text-base font-black text-[#0B2545]">Tareas del Día</h4>
+                  <p className="text-[10px] font-extrabold text-[#C5A059] uppercase tracking-widest mt-1">
                     {selectedDay} de Octubre, 2024
                   </p>
                 </div>
@@ -422,15 +423,15 @@ export default function WorkAgendaPage() {
                 <p className="text-[11px] text-slate-300 font-medium mb-4">Los fondos están resguardados hasta la entrega final.</p>
                 <button 
                   onClick={() => router.push("/dashboard-pro")}
-                  className="w-full py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:brightness-105 active:scale-95 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-pink-900/30 flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-2.5 bg-[#0B2545] hover:bg-[#12335d] active:scale-95 text-white font-bold rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-[#C5A059]/40"
                 >
-                  <TrendingUp size={14} />
+                  <TrendingUp size={14} className="text-[#C5A059]" />
                   Revisar Garantías
                 </button>
               </div>
               
               {/* Glow decoration */}
-              <div className="absolute -right-8 -bottom-8 w-28 h-28 bg-pink-500/10 rounded-full blur-2xl" />
+              <div className="absolute -right-8 -bottom-8 w-28 h-28 bg-[#C5A059]/15 rounded-full blur-2xl pointer-events-none" />
             </div>
             
           </div>
@@ -598,55 +599,8 @@ export default function WorkAgendaPage() {
         </div>
       )}
 
-      {/* ── Navigation Bottom Bar ────────────────────────────────────────────── */}
-      <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-8 bg-white/90 backdrop-blur-xl border-t border-sky-50 shadow-[0_-10px_40px_rgba(13,28,46,0.06)] rounded-t-[32px] z-40">
-        <div className="flex justify-around items-center w-full max-w-lg mx-auto">
-          {/* Perfil */}
-          <a 
-            href="/perfil-y-editor-de-servicios-2" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-[#0d1c2e] transition-colors cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-[24px]">account_circle</span>
-            <span className="text-[10px] font-semibold mt-1">Perfil</span>
-          </a>
-
-          {/* Dashboard */}
-          <a 
-            href="/dashboard-pro" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-[#0d1c2e] transition-colors cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-[24px]">analytics</span>
-            <span className="text-[10px] font-semibold mt-1">Dashboard</span>
-          </a>
-
-          {/* Mapa */}
-          <a 
-            href="/mapa-expertos" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-[#0d1c2e] transition-colors cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-[24px]">map</span>
-            <span className="text-[10px] font-semibold mt-1">Mapa</span>
-          </a>
-
-          {/* Agenda (Active - Pink style matching requested bottom nav layout) */}
-          <a 
-            href="#" 
-            className="flex flex-col items-center justify-center text-[#D81B60] bg-[#FCE4EC]/85 rounded-2xl px-5 py-2 cursor-pointer transition-all border border-[#FCE4EC]/40"
-          >
-            <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>calendar_today</span>
-            <span className="text-[10px] font-bold mt-1">Agenda</span>
-          </a>
-
-          {/* Mensajes */}
-          <a 
-            href="/chat" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-[#0d1c2e] transition-colors cursor-pointer relative"
-          >
-            <span className="material-symbols-outlined text-[24px]">chat_bubble</span>
-            <span className="text-[10px] font-semibold mt-1">Mensajes</span>
-          </a>
-        </div>
-      </nav>
+      {/* ── Navigation Bottom Bar (Matching Photo 4) ───────────────────────── */}
+      <BottomNav />
 
       {/* Font & Keyframes imports */}
       <style>{`

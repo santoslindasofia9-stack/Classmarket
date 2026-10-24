@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 
 import { supabase } from "@/lib/supabase";
+import BottomNav from "@/components/dashboard/BottomNav";
 
 const PRESET_AVATARS = [
   { id: "avatar1", url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256&h=256", label: "Sofía" },
@@ -737,56 +738,8 @@ export default function PerfilYEditorDeServicios() {
         <Edit2 size={20} />
       </button>
 
-      {/* FLOATING CENTERING BOTTOM NAVIGATION BAR (Extremely Premium Glassmorphic Design for All Devices) */}
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[560px] z-50 bg-white/95 backdrop-blur-xl border border-sky-100 shadow-[0_12px_40px_rgba(15,23,42,0.08)] rounded-3xl">
-        <div className="flex justify-around items-center px-4 py-2.5 w-full">
-          {/* Perfil (Active) */}
-          <a 
-            href="#" 
-            className="flex flex-col items-center justify-center text-[#D81B60] bg-[#FCE4EC]/85 rounded-2xl px-5 py-2 cursor-pointer transition-all active:scale-95 duration-200 border border-[#FCE4EC]/40"
-          >
-            <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>account_circle</span>
-            <span className="text-[11px] font-bold mt-1">Perfil</span>
-          </a>
-
-          {/* Dashboard */}
-          <a 
-            href="/dashboard-pro" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-sky-50/30 rounded-2xl px-4 py-2 cursor-pointer transition-all duration-200 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[22px]">analytics</span>
-            <span className="text-[11px] font-semibold mt-1">Dashboard</span>
-          </a>
-
-          {/* Mapa */}
-          <a 
-            href="/mapa-expertos" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-sky-50/30 rounded-2xl px-4 py-2 cursor-pointer transition-all duration-200 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[22px]">map</span>
-            <span className="text-[11px] font-semibold mt-1">Mapa</span>
-          </a>
-
-          {/* Agenda */}
-          <a 
-            href="/agenda" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-sky-50/30 rounded-2xl px-4 py-2 cursor-pointer transition-all duration-200 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[22px]">calendar_today</span>
-            <span className="text-[11px] font-semibold mt-1">Agenda</span>
-          </a>
-
-          {/* Mensajes */}
-          <a 
-            href="/chat" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-sky-50/30 rounded-2xl px-4 py-2 cursor-pointer transition-all duration-200 active:scale-95 relative"
-          >
-            <span className="material-symbols-outlined text-[22px]">chat_bubble</span>
-            <span className="text-[11px] font-semibold mt-1">Mensajes</span>
-            <div className="absolute top-2 right-4 w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
-          </a>
-        </div>
-      </nav>
+      {/* FLOATING CENTERING BOTTOM NAVIGATION BAR (Matching Photo 4) */}
+      <BottomNav />
 
       {/* ========================================= MODALS PANEL ========================================= */}
       

@@ -139,6 +139,14 @@ function LoginContent() {
       setLoading(true);
       setError(null);
       localStorage.setItem("userRole", role);
+      sessionStorage.setItem("userRole", role);
+      if (role === "pro") {
+        localStorage.setItem("isProIntent", "true");
+        localStorage.setItem("forceTutorRegister", "true");
+      } else {
+        localStorage.removeItem("isProIntent");
+        localStorage.removeItem("forceTutorRegister");
+      }
 
       // Dynamic origin — works in localhost AND any Vercel URL
       const origin = typeof window !== "undefined" ? window.location.origin : "";
@@ -240,7 +248,13 @@ function LoginContent() {
               />
               <button
                 type="button"
-                onClick={() => setRole("client")}
+                onClick={() => {
+                  setRole("client");
+                  localStorage.setItem("userRole", "client");
+                  sessionStorage.setItem("userRole", "client");
+                  localStorage.removeItem("isProIntent");
+                  localStorage.removeItem("forceTutorRegister");
+                }}
                 className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-3 text-xs sm:text-sm font-bold transition-colors duration-300 ${role === "client" ? "text-[#0B2545]" : "text-[#5C6B73]"}`}
               >
                 <User size={16} />
@@ -248,7 +262,13 @@ function LoginContent() {
               </button>
               <button
                 type="button"
-                onClick={() => setRole("pro")}
+                onClick={() => {
+                  setRole("pro");
+                  localStorage.setItem("userRole", "pro");
+                  sessionStorage.setItem("userRole", "pro");
+                  localStorage.setItem("isProIntent", "true");
+                  localStorage.setItem("forceTutorRegister", "true");
+                }}
                 className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-3 text-xs sm:text-sm font-bold transition-colors duration-300 ${role === "pro" ? "text-[#0B2545]" : "text-[#5C6B73]"}`}
               >
                 <Briefcase size={16} />

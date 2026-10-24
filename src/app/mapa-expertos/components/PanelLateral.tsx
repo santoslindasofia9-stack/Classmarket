@@ -49,9 +49,9 @@ interface PanelLateralProps {
 const CATEGORIA_COLORS: Record<string, string> = {
   Tech: "text-[#0288D1] bg-[#E0F2FE]",
   Hogar: "text-[#F57F17] bg-[#FFFDE7]",
-  Creativo: "text-[#D81B60] bg-[#FCE4EC]",
+  Creativo: "text-[#0B2545] bg-[#FAF8F5] border border-[#C5A059]/40",
   Eventos: "text-[#2E7D32] bg-[#E8F5E9]",
-  Salud: "text-[#93000A] bg-[#FCE4EC]",
+  Salud: "text-[#0B2545] bg-[#FAF8F5] border border-[#0B2545]/20",
   "Educación": "text-[#50616B] bg-[#E6EEFF]",
 };
 

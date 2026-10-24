@@ -33,6 +33,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 import { supabase } from "@/lib/supabase";
+import BottomNav from "@/components/dashboard/BottomNav";
 
 export default function DashboardPro() {
   const [nombre, setNombre] = useState("Profesional");
@@ -247,34 +248,34 @@ export default function DashboardPro() {
 
   if (loading) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-[#f8f9ff]">
-        <div className="w-10 h-10 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin" />
+      <div className="min-h-screen w-full flex items-center justify-center bg-[#FAF8F5]">
+        <div className="w-10 h-10 border-4 border-[#0B2545]/20 border-t-[#0B2545] rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <main className="relative min-h-screen bg-[#f8f9ff] font-plus-jakarta pb-28 overflow-x-hidden">
+    <main className="relative min-h-screen bg-[#FAF8F5] font-plus-jakarta pb-28 overflow-x-hidden">
       {/* Decorative background gradients */}
       <div className="absolute top-0 left-0 right-0 h-[280px] bg-gradient-to-b from-[#E0F2FE]/60 to-transparent -z-10" />
       
       {/* Top Navbar */}
-      <nav className="w-full bg-white/80 backdrop-blur-md border-b border-sky-50 py-3 px-4 md:px-6 sticky top-0 z-40 shadow-sm">
+      <nav className="w-full bg-white/90 backdrop-blur-md border-b border-[#0B2545]/10 py-3 px-4 md:px-6 sticky top-0 z-40 shadow-xs">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-2 md:gap-3">
-            <span className="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-pink-100 flex items-center justify-center text-pink-600 font-bold shadow-sm text-sm">T</span>
-            <span className="text-base md:text-lg font-bold text-[#0d1c2e] tracking-tight">ClassMarket Pro</span>
+            <span className="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-[#0B2545] flex items-center justify-center text-[#C5A059] font-bold shadow-xs text-sm border border-[#C5A059]/40">T</span>
+            <span className="text-base md:text-lg font-bold text-[#0B2545] tracking-tight">ClassMarket Pro</span>
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
-            <button className="relative p-2 text-slate-400 hover:text-slate-600 bg-slate-50 rounded-full hover:scale-105 transition-all">
+            <button className="relative p-2 text-slate-400 hover:text-[#0B2545] bg-[#FAF8F5] rounded-full hover:scale-105 transition-all border border-[#0B2545]/10">
               <Bell size={20} />
-              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-pink-500 rounded-full border-2 border-white animate-pulse" />
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-[#C5A059] rounded-full border-2 border-white animate-pulse" />
             </button>
             
             <button 
               onClick={handleLogout}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-2 bg-pink-50 hover:bg-pink-100 text-pink-700 font-bold text-xs rounded-full border border-pink-100 transition-all hover:scale-[1.02]"
+              className="flex items-center gap-1.5 px-3 md:px-4 py-2 bg-[#FAF8F5] hover:bg-[#0B2545]/10 text-[#0B2545] font-bold text-xs rounded-full border border-[#0B2545]/15 transition-all hover:scale-[1.02]"
             >
               <LogOut size={14} />
               <span className="hidden sm:inline">Cerrar Sesión</span>
@@ -347,60 +348,63 @@ export default function DashboardPro() {
                   <h3 className="text-lg font-bold text-[#0d1c2e]">Reputación General</h3>
                   <p className="text-xs text-slate-400 font-medium">Basado en los últimos 124 contratos</p>
                 </div>
-                <div className="flex items-center gap-1 bg-[#F4DCE4] px-3 py-1.5 rounded-full border border-pink-100/50">
-                  <Star size={16} className="text-[#D81B60] fill-[#D81B60]" />
-                  <span className="text-xs font-extrabold text-[#D81B60]">4.9 / 5.0</span>
+                <div className="flex items-center gap-1 bg-[#FAF8F5] px-3 py-1.5 rounded-full border border-[#C5A059]/40">
+                  <Star size={16} className="text-[#C5A059] fill-[#C5A059]" />
+                  <span className="text-xs font-extrabold text-[#0B2545]">4.9 / 5.0</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
-                <div className="bg-[#f8f9ff] p-4 rounded-2xl border border-sky-50">
+                <div className="bg-[#FAF8F5] p-4 rounded-2xl border border-[#0B2545]/10">
                   <div className="flex items-center gap-1.5 text-slate-400 mb-1">
                     <ThumbsUp size={14} className="text-sky-500" />
                     <span className="text-[9px] font-bold uppercase tracking-wider">CONFIANZA</span>
                   </div>
-                  <span className="block text-xl font-black text-[#0d1c2e]">98%</span>
+                  <span className="block text-xl font-black text-[#0B2545]">98%</span>
                   <span className="text-[9px] text-slate-400 font-semibold">Recomendado</span>
                 </div>
 
-                <div className="bg-[#f8f9ff] p-4 rounded-2xl border border-sky-50">
+                <div className="bg-[#FAF8F5] p-4 rounded-2xl border border-[#0B2545]/10">
                   <div className="flex items-center gap-1.5 text-slate-400 mb-1">
                     <Clock size={14} className="text-emerald-500" />
                     <span className="text-[9px] font-bold uppercase tracking-wider">PUNTUALIDAD</span>
                   </div>
-                  <span className="block text-xl font-black text-[#0d1c2e]">100%</span>
+                  <span className="block text-xl font-black text-[#0B2545]">100%</span>
                   <span className="text-[9px] text-slate-400 font-semibold">Entregas a tiempo</span>
                 </div>
 
-                <div className="bg-[#f8f9ff] p-4 rounded-2xl border border-sky-50">
+                <div className="bg-[#FAF8F5] p-4 rounded-2xl border border-[#0B2545]/10">
                   <div className="flex items-center gap-1.5 text-slate-400 mb-1">
-                    <MessageSquare size={14} className="text-pink-500" />
+                    <MessageSquare size={14} className="text-[#0284C7]" />
                     <span className="text-[9px] font-bold uppercase tracking-wider">COMUNICACIÓN</span>
                   </div>
-                  <span className="block text-xl font-black text-[#0d1c2e]">4.8</span>
+                  <span className="block text-xl font-black text-[#0B2545]">4.8</span>
                   <span className="text-[9px] text-slate-400 font-semibold">Calidad de respuesta</span>
                 </div>
               </div>
             </div>
 
-            {/* Earnings Quick View */}
-            <div className="bg-gradient-to-tr from-pink-500 to-rose-400 p-6 rounded-[28px] shadow-lg flex flex-col justify-between relative overflow-hidden text-white">
-              <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+            {/* Earnings Quick View - Navy & Gold Brand */}
+            <div className="bg-gradient-to-br from-[#0B2545] via-[#12335d] to-[#0B2545] p-6 rounded-[28px] shadow-xl flex flex-col justify-between relative overflow-hidden text-white border border-[#C5A059]/40">
+              <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#C5A059]/20 rounded-full blur-2xl pointer-events-none" />
               <div>
-                <span className="text-xs font-bold text-white/80 uppercase tracking-widest">Ganancias Retirables</span>
-                <p className="text-3xl font-black mt-2 tracking-tighter">
+                <span className="text-xs font-bold text-[#C5A059] uppercase tracking-widest flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse" />
+                  Ganancias Retirables
+                </span>
+                <p className="text-3xl font-black mt-2 tracking-tighter text-white">
                   {isFundsWithdrawn ? "$0.00 USD" : "$4,250.00 USD"}
                 </p>
-                <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full mt-1.5 inline-block border border-white/10 font-bold">Este Mes</span>
+                <span className="text-[10px] bg-white/10 text-slate-200 px-2 py-0.5 rounded-full mt-1.5 inline-block border border-white/20 font-bold">Este Mes</span>
               </div>
 
               <button 
                 onClick={() => !isFundsWithdrawn && setShowWithdrawModal(true)}
                 disabled={isFundsWithdrawn}
-                className={`w-full bg-white font-extrabold py-3 rounded-2xl shadow-md transition-all mt-6 text-sm cursor-pointer ${
+                className={`w-full font-extrabold py-3 rounded-2xl shadow-md transition-all mt-6 text-sm cursor-pointer border ${
                   isFundsWithdrawn 
-                    ? "text-slate-400 bg-slate-100 cursor-not-allowed opacity-80" 
-                    : "text-pink-600 hover:bg-slate-50 active:scale-[0.98]"
+                    ? "text-slate-400 bg-slate-800/50 border-slate-700 cursor-not-allowed opacity-80" 
+                    : "bg-[#FAF8F5] text-[#0B2545] hover:bg-white hover:text-[#0B2545] border-[#C5A059]/50 active:scale-[0.98]"
                 }`}
               >
                 {isFundsWithdrawn ? "Retiro Procesado" : "Retirar Fondos"}
@@ -581,10 +585,10 @@ export default function DashboardPro() {
           {/* Real-time Dynamic Profile Card */}
           <div className="bg-white border border-slate-100 rounded-[28px] p-6 shadow-sm space-y-6">
             <div className="flex justify-between items-center">
-              <h3 className="text-sm font-bold text-[#0d1c2e] uppercase tracking-wider">Tu Identidad en la Red</h3>
+              <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">Tu Identidad en la Red</h3>
               <button 
                 onClick={handleOpenProfileModal}
-                className="text-xs font-bold text-pink-600 hover:text-pink-700 bg-pink-50 hover:bg-pink-100/70 px-3 py-1 rounded-full transition-all flex items-center gap-1 cursor-pointer active:scale-95"
+                className="text-xs font-bold text-[#0B2545] hover:text-[#0B2545] bg-[#FAF8F5] hover:bg-[#FAF8F5]/80 border border-[#C5A059]/40 px-3 py-1 rounded-full transition-all flex items-center gap-1 cursor-pointer active:scale-95"
               >
                 <Edit2 size={10} />
                 <span>Editar</span>
@@ -593,7 +597,7 @@ export default function DashboardPro() {
 
             <div className="flex flex-col items-center text-center">
               <div className="relative mb-4">
-                <div className="w-24 h-24 rounded-3xl overflow-hidden border-4 border-slate-50 shadow-md bg-slate-100">
+                <div className="w-24 h-24 rounded-3xl overflow-hidden border-4 border-[#FAF8F5] shadow-md bg-slate-100">
                   {avatar ? (
                     <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
                   ) : (
@@ -607,12 +611,12 @@ export default function DashboardPro() {
                 </div>
               </div>
 
-              <h4 className="text-lg font-bold text-[#0d1c2e]">{nombre}</h4>
+              <h4 className="text-lg font-bold text-[#0B2545]">{nombre}</h4>
               <div className="flex items-center gap-1 text-slate-400 text-xs font-semibold mt-0.5 mb-1.5">
                 <MapPin size={12} className="text-sky-500 shrink-0" />
                 <span>{ubicacion}</span>
               </div>
-              <span className="text-xs font-semibold text-sky-600 px-3 py-1 bg-sky-50 rounded-full mt-1 border border-sky-100/50">
+              <span className="text-xs font-semibold text-[#0B2545] px-3 py-1 bg-[#FAF8F5] border border-[#C5A059]/40 rounded-full mt-1">
                 {especialidad}
               </span>
             </div>
@@ -620,11 +624,13 @@ export default function DashboardPro() {
             <div className="grid grid-cols-2 gap-4 border-t border-b border-slate-100 py-4 text-center">
               <div>
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Experiencia</span>
-                <span className="text-base font-extrabold text-[#0d1c2e]">{experiencia} Años</span>
+                <span className="text-base font-extrabold text-[#0B2545]">{experiencia} Años</span>
               </div>
               <div>
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tarifa por Hora</span>
-                <span className="text-base font-extrabold text-emerald-600">${tarifa}/hr</span>
+                <span className="text-base font-extrabold text-emerald-600">
+                  ${tarifa ? tarifa.replace(/\$/g, "").replace(/\/hr/g, "") : "10.000"}/hr
+                </span>
               </div>
             </div>
 
@@ -673,62 +679,14 @@ export default function DashboardPro() {
       {/* FLOATING ACTION BUTTON */}
       <button 
         onClick={handleOpenProfileModal}
-        className="fixed bottom-28 right-6 w-14 h-14 bg-gradient-to-tr from-pink-500 to-rose-400 hover:brightness-105 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 z-40 border-4 border-white"
+        className="fixed bottom-28 right-6 w-14 h-14 bg-[#0B2545] hover:bg-[#12335d] text-[#C5A059] rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 z-40 border-2 border-[#C5A059]/60"
         title="Editar Perfil"
       >
         <Edit2 size={20} />
       </button>
 
-      {/* FLOATING CENTERING BOTTOM NAVIGATION BAR (Extremely Premium Glassmorphic Design for All Devices) */}
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[560px] z-50 bg-white/95 backdrop-blur-xl border border-sky-100 shadow-[0_12px_40px_rgba(15,23,42,0.08)] rounded-3xl">
-        <div className="flex justify-around items-center px-4 py-2.5 w-full">
-          {/* Perfil */}
-          <a 
-            href="/perfil-y-editor-de-servicios-2" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-sky-50/30 rounded-2xl px-4 py-2 cursor-pointer transition-all duration-200 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[22px]">account_circle</span>
-            <span className="text-[11px] font-semibold mt-1">Perfil</span>
-          </a>
-
-          {/* Dashboard (Active) */}
-          <a 
-            href="#" 
-            className="flex flex-col items-center justify-center text-[#D81B60] bg-[#FCE4EC]/85 rounded-2xl px-5 py-2 cursor-pointer transition-all active:scale-95 duration-200 border border-[#FCE4EC]/40"
-          >
-            <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>analytics</span>
-            <span className="text-[11px] font-bold mt-1">Dashboard</span>
-          </a>
-
-          {/* Mapa */}
-          <a 
-            href="/mapa-expertos" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-sky-50/30 rounded-2xl px-4 py-2 cursor-pointer transition-all duration-200 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[22px]">map</span>
-            <span className="text-[11px] font-semibold mt-1">Mapa</span>
-          </a>
-
-          {/* Agenda */}
-          <a 
-            href="/agenda" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-sky-50/30 rounded-2xl px-4 py-2 cursor-pointer transition-all duration-200 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[22px]">calendar_today</span>
-            <span className="text-[11px] font-semibold mt-1">Agenda</span>
-          </a>
-
-          {/* Mensajes */}
-          <a 
-            href="/chat" 
-            className="flex flex-col items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-sky-50/30 rounded-2xl px-4 py-2 cursor-pointer transition-all duration-200 active:scale-95 relative"
-          >
-            <span className="material-symbols-outlined text-[22px]">chat_bubble</span>
-            <span className="text-[11px] font-semibold mt-1">Mensajes</span>
-            <div className="absolute top-2 right-4 w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
-          </a>
-        </div>
-      </nav>
+      {/* FLOATING CENTERING BOTTOM NAVIGATION BAR (Matching Photo 4) */}
+      <BottomNav />
 
       {/* INTERACTIVE WITHDRAW FUNDS MODAL */}
       <AnimatePresence>
