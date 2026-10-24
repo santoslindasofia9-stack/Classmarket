@@ -1,14 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-plus-jakarta-sans",
-  weight: ["400", "500", "600", "700", "800"],
-});
 
 export const metadata: Metadata = {
   title: "ClassMarket - Educación e Intercambio Real",
@@ -33,16 +25,19 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${plusJakartaSans.variable} h-full antialiased`}
+      className="h-full antialiased"
       suppressHydrationWarning={true}
     >
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" />
       </head>
-      <body className="min-h-full flex flex-col overflow-x-hidden">
+      <body className="min-h-full flex flex-col overflow-x-hidden font-plus-jakarta">
         <AuthProvider>
           {children}
         </AuthProvider>
