@@ -362,29 +362,29 @@ const ContractConfirmationPage = () => {
           {/* Hero Section */}
           <motion.section 
             variants={itemVariants}
-            className="ethereal-gradient rounded-3xl p-6 md:p-16 flex flex-col md:flex-row items-center gap-8 md:gap-16 relative overflow-hidden shadow-sm"
+            className="classmarket-hero rounded-3xl p-6 md:p-16 flex flex-col md:flex-row items-center gap-8 md:gap-16 relative overflow-hidden shadow-sm"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-3xl -mr-32 -mt-32 rounded-full"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#e0f2fe]/30 blur-3xl -ml-24 -mb-24 rounded-full"></div>
             
             <div className="flex-1 space-y-4 md:space-y-6 relative z-10 text-center md:text-left">
-              <div className="inline-block px-4 py-1.5 bg-white/60 backdrop-blur-sm rounded-full text-[#50616b] font-bold text-[10px] md:text-xs tracking-wider uppercase">
-                SMART CONTRACT V2.1
+              <div className="inline-block px-4 py-1.5 bg-[#C5A059]/20 backdrop-blur-sm rounded-full text-[#0B2545] font-bold text-[10px] md:text-xs tracking-wider uppercase border border-[#C5A059]/40">
+                ACUERDO ACADÉMICO DIGITAL
               </div>
-              <h2 className="text-4xl md:text-6xl font-extrabold text-[#0d1c2e] tracking-tight leading-[1.1]">
+              <h2 className="text-4xl md:text-6xl font-extrabold text-[#0B2545] tracking-tight leading-[1.1]">
                 Confirmación de Contrato
               </h2>
-              <p className="text-lg md:text-xl text-[#43474b] max-w-xl mx-auto md:mx-0 leading-relaxed">
-                Nuestra Inteligencia Artificial ha redactado y verificado los términos legales para garantizar una transacción segura y transparente.
+              <p className="text-lg md:text-xl text-[#5C6B73] max-w-xl mx-auto md:mx-0 leading-relaxed">
+                Tu tutoría está asegurada. Ambos estudiantes han acordado los términos y el pago queda protegido en custodia hasta completar la sesión.
               </p>
             </div>
 
             <div className="relative w-48 h-48 md:w-80 md:h-80 flex-shrink-0">
-              <div className="absolute inset-0 bg-white/40 rounded-full blur-3xl animate-pulse"></div>
+              <div className="absolute inset-0 bg-[#C5A059]/30 rounded-full blur-3xl animate-pulse"></div>
               <div className="relative z-10 w-full h-full rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500">
                 <Image 
-                  src="/images/smart_contract_crystals.png"
-                  alt="Smart Contract Crystal Structure"
+                  src="/images/student_contract_confirmation.jpg"
+                  alt="Estudiantes firmando contrato académico"
                   fill
                   className="object-cover"
                 />
@@ -572,14 +572,14 @@ const ContractConfirmationPage = () => {
 
               <div className="relative overflow-hidden rounded-3xl h-[300px] md:h-auto min-h-[400px] group shadow-lg">
                 <Image 
-                  src="/images/minimal_office_laptop.png"
-                  alt="Minimalist Office"
+                  src="/images/student_contract_confirmation.jpg"
+                  alt="Contrato Académico Estudiantil"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0d1c2e]/80 via-[#0d1c2e]/20 to-transparent flex flex-col justify-end p-8 md:p-12">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B2545]/80 via-[#0B2545]/20 to-transparent flex flex-col justify-end p-8 md:p-12">
                   <p className="text-white text-xl md:text-2xl font-medium italic leading-snug">
-                    "La seguridad jurídica del futuro, ejecutada hoy por inteligencia artificial."
+                    "La educación entre pares, respaldada por garantía digital. Aprende y enseña con confianza."
                   </p>
                 </div>
               </div>
@@ -594,13 +594,13 @@ const ContractConfirmationPage = () => {
           {/* Mobile Layout */}
           <div className="flex md:hidden flex-col gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#f4dce4] flex items-center justify-center text-[#716066]">
+              <div className="w-10 h-10 rounded-full bg-[#0B2545]/10 flex items-center justify-center text-[#0B2545]">
                 <PenTool size={20} />
               </div>
               <div>
                 <p className="text-[10px] text-[#73787b] font-bold uppercase tracking-widest">Estado</p>
                 <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#6b5a60] animate-pulse"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse"></span>
                   <p className="text-[#0d1c2e] font-bold text-sm">Pendiente de Firma Digital</p>
                 </div>
               </div>
@@ -614,7 +614,7 @@ const ContractConfirmationPage = () => {
               </button>
               <button 
                 onClick={openPayModal}
-                className="flex-[2] px-4 py-4 bg-[#6b5a60] text-white font-bold rounded-full shadow-lg shadow-[#6b5a60]/20 flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                className="flex-[2] px-4 py-4 bg-[#0B2545] text-white font-bold rounded-full shadow-lg shadow-[#0B2545]/20 flex items-center justify-center gap-2 active:scale-95 transition-transform border border-[#C5A059]/30"
               >
                 Firmar Contrato <PenTool size={18} />
               </button>
@@ -624,13 +624,13 @@ const ContractConfirmationPage = () => {
           {/* Desktop Layout */}
           <div className="hidden md:flex items-center justify-between gap-8">
             <div className="flex items-center gap-6">
-              <div className="w-14 h-14 rounded-full bg-[#f4dce4] flex items-center justify-center text-[#716066] ring-8 ring-[#f4dce4]/20">
+              <div className="w-14 h-14 rounded-full bg-[#0B2545]/10 flex items-center justify-center text-[#0B2545] ring-8 ring-[#0B2545]/5">
                 <PenTool size={28} />
               </div>
               <div>
                 <p className="text-xs text-[#73787b] font-bold uppercase tracking-widest mb-1">Estado Actual del Contrato</p>
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#6b5a60] animate-pulse"></span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#C5A059] animate-pulse"></span>
                   <p className="text-[#0d1c2e] font-bold text-xl">Pendiente de Firma Digital</p>
                 </div>
               </div>
@@ -644,7 +644,7 @@ const ContractConfirmationPage = () => {
               </button>
               <button 
                 onClick={openPayModal}
-                className="px-14 py-5 bg-[#57534e] hover:bg-[#44403c] text-white font-bold rounded-full shadow-2xl shadow-[#57534e]/30 flex items-center gap-3 transform hover:-translate-y-1 transition-all text-lg"
+                className="px-14 py-5 bg-[#0B2545] hover:bg-[#12335d] text-white font-bold rounded-full shadow-2xl shadow-[#0B2545]/30 flex items-center gap-3 transform hover:-translate-y-1 transition-all text-lg border border-[#C5A059]/40"
               >
                 Firmar Contrato Digitalmente
                 <PenTool size={22} />
@@ -697,8 +697,14 @@ const ContractConfirmationPage = () => {
       </AnimatePresence>
 
       <style jsx>{`
-        .ethereal-gradient {
-          background: linear-gradient(135deg, #FAF8F5 0%, #F4F6F9 100%);
+        .classmarket-hero {
+          background: linear-gradient(135deg, #0B2545 0%, #0e2d52 60%, #1a3d6e 100%);
+        }
+        .classmarket-hero h2, .classmarket-hero p {
+          color: white;
+        }
+        .classmarket-hero .text-\[\#5C6B73\] {
+          color: rgba(255, 255, 255, 0.75);
         }
       `}</style>
     </div>

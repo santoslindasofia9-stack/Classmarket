@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -426,7 +426,7 @@ function PerfilContent() {
               className="relative p-2 hover:bg-slate-100 rounded-full transition-all cursor-pointer hidden md:block"
             >
               <Bell size={22} className="text-[#5e6f79]" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-pink-500 rounded-full"></span>
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#C5A059] rounded-full"></span>
             </div>
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#e6eeff] bg-white flex items-center justify-center cursor-pointer shrink-0">
               {userAvatar ? (
@@ -825,7 +825,7 @@ function PerfilContent() {
                   </div>
                   <div className="bg-[#f8f9ff] border border-[#e6eeff]/60 p-4 rounded-2xl">
                     <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">TOTAL PAGADO</span>
-                    <p className="text-sm font-bold text-pink-600 mt-0.5">{selectedContract.amount}</p>
+                    <p className="text-sm font-bold text-[#0B2545] mt-0.5">{selectedContract.amount}</p>
                   </div>
                 </div>
 
@@ -1080,7 +1080,7 @@ function PerfilContent() {
                       </div>
                       <p className="text-xs text-[#5e6f79] line-clamp-2 font-medium">Ã¡Hola Mariana! He subido los entregables de la Fase 1. Quedo atento a tu revisiÃ³n...</p>
                     </div>
-                    <span className="absolute top-4 right-4 w-2 h-2 bg-pink-500 rounded-full"></span>
+                    <span className="absolute top-4 right-4 w-2 h-2 bg-[#C5A059] rounded-full"></span>
                   </div>
 
                   {/* Msg 2 */}
@@ -1158,14 +1158,14 @@ function PerfilContent() {
                   </div>
 
                   {/* Notif 3 */}
-                  <div className="p-4 rounded-[2rem] bg-pink-50/50 border border-pink-100 flex gap-3">
-                    <Star className="text-pink-500 fill-pink-500 shrink-0 mt-0.5" size={16} />
+                  <div className="p-4 rounded-[2rem] bg-amber-50/50 border border-[#C5A059]/20 flex gap-3">
+                    <Star className="text-[#C5A059] fill-[#C5A059] shrink-0 mt-0.5" size={16} />
                     <div>
-                      <h5 className="font-bold text-sm text-pink-900 leading-tight">Nueva CalificaciÃ³n</h5>
-                      <p className="text-xs text-pink-700 mt-1 font-medium leading-relaxed">
+                      <h5 className="font-bold text-sm text-[#0B2545] leading-tight">Nueva CalificaciÃ³n</h5>
+                      <p className="text-xs text-[#5C6B73] mt-1 font-medium leading-relaxed">
                         Carlos Mendoza te ha calificado con 5 estrellas por tu excelente comunicaciÃ³n y puntualidad en el pago.
                       </p>
-                      <span className="text-[9px] text-pink-600 font-bold uppercase tracking-wider block mt-2">1 DÃA</span>
+                      <span className="text-[9px] text-[#C5A059] font-bold uppercase tracking-wider block mt-2">1 DÃA</span>
                     </div>
                   </div>
                 </div>
@@ -1188,6 +1188,7 @@ export default function PerfilPage() {
     </Suspense>
   );
 }
+
 
 
 

@@ -810,7 +810,7 @@ export default function MapaExpertos() {
             className="flex items-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
             onClick={() => router.push("/dashboard-pro")}
           >
-            <div className="w-8 h-8 bg-gradient-to-tr from-pink-500 to-rose-400 rounded-lg flex items-center justify-center shadow-md">
+            <div className="w-8 h-8 bg-gradient-to-tr from-[#0B2545] to-[#12335d] rounded-lg flex items-center justify-center shadow-md border border-[#C5A059]/30">
               <span className="material-symbols-outlined text-white text-lg leading-none font-bold">hub</span>
             </div>
             <h1 className="text-lg font-black text-[#0B2545] tracking-tight flex items-center gap-1.5">
@@ -933,7 +933,7 @@ export default function MapaExpertos() {
                 <button
                   type="submit"
                   disabled={jobSearchLoading || !jobSearch.trim()}
-                  className="px-4 py-1.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-xs rounded-xl hover:brightness-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 shrink-0"
+                  className="px-4 py-1.5 bg-[#0B2545] hover:bg-[#12335d] text-white font-bold text-xs rounded-xl hover:brightness-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 shrink-0 border border-[#C5A059]/30"
                 >
                   {jobSearchLoading ? (
                     <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -974,7 +974,7 @@ export default function MapaExpertos() {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-4 h-4 border-2 border-pink-100 border-t-pink-500 rounded-full"
+                  className="w-4 h-4 border-2 border-[#C5A059]/20 border-t-[#C5A059] rounded-full"
                 />
                 <span className="text-xs font-bold text-[#0d1c2e]">
                   Escaneando coordenadas de confianza…
@@ -1023,7 +1023,7 @@ export default function MapaExpertos() {
             {/* Mapa (Active - Pink style matching requested bottom nav layout) */}
             <a 
               href="#" 
-              className="flex flex-col items-center justify-center text-[#D81B60] bg-[#FCE4EC]/85 rounded-2xl px-5 py-2 cursor-pointer transition-all border border-[#FCE4EC]/40"
+              className="flex flex-col items-center justify-center text-[#0B2545] bg-[#C5A059]/20 rounded-2xl px-5 py-2 cursor-pointer transition-all border border-[#C5A059]/40"
             >
               <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>map</span>
               <span className="text-[10px] font-bold mt-1">Mapa</span>
@@ -1045,7 +1045,7 @@ export default function MapaExpertos() {
             >
               <span className="material-symbols-outlined text-[24px]">chat_bubble</span>
               <span className="text-[10px] font-semibold mt-1">Mensajes</span>
-              <div className="absolute top-0 right-3 w-1.5 h-1.5 bg-pink-500 rounded-full animate-pulse" />
+              <div className="absolute top-0 right-3 w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-pulse" />
             </a>
           </div>
         </nav>
@@ -1060,7 +1060,7 @@ export default function MapaExpertos() {
             exit={{ opacity: 0, y: 30, x: "-50%" }}
             className="fixed bottom-28 left-1/2 z-[500] bg-slate-900/95 backdrop-blur-md text-white px-5 py-3 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2 border border-slate-800"
           >
-            <Sparkles size={14} className="text-pink-400" />
+            <Sparkles size={14} className="text-[#C5A059]" />
             <span>{toast}</span>
           </motion.div>
         )}

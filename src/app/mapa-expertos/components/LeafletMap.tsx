@@ -391,7 +391,7 @@ export default function LeafletMap({
           >
             {acceptingId === selectedJob.id ? (
               <div className="flex flex-col items-center justify-center py-8 text-center animate-fadeIn my-auto">
-                <Loader2 size={44} className="animate-spin text-pink-500 mb-4" />
+                <Loader2 size={44} className="animate-spin text-[#C5A059] mb-4" />
                 <h4 className="text-base font-extrabold text-[#0d1c2e]">Firmando Contrato en la Blockchain</h4>
                 <p className="text-xs text-slate-400 font-semibold mt-1.5 max-w-xs mx-auto">
                   Generando billetera multifirma e inicializando custodia inteligente de TrustPay (Garantía Escrow).
@@ -406,7 +406,7 @@ export default function LeafletMap({
                 <p className="text-xs text-slate-500 font-semibold mt-1 mb-4">El trabajo ha sido añadido a tu Agenda.</p>
                 <button
                   onClick={() => router.push(`/chat/${selectedJob.id}`)}
-                  className="px-6 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:brightness-105 active:scale-95 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-pink-100 flex items-center gap-1.5 justify-center mx-auto"
+                  className="px-6 py-2.5 bg-[#0B2545] hover:bg-[#12335d] active:scale-95 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-[#0B2545]/20 flex items-center gap-1.5 justify-center mx-auto border border-[#C5A059]/30"
                 >
                   <MessageSquare size={14} />
                   Chat de Negociación
@@ -418,7 +418,7 @@ export default function LeafletMap({
                   {/* Header */}
                   <div className="flex items-start justify-between mb-3.5 gap-2">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center font-bold shadow-sm shrink-0 text-sm sm:text-base">
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 bg-[#0B2545]/10 text-[#0B2545] rounded-full flex items-center justify-center font-bold shadow-sm shrink-0 text-sm sm:text-base border border-[#C5A059]/30">
                         {selectedJob.cliente_nombre.substring(0, 2).toUpperCase()}
                       </div>
                       <div className="min-w-0">
@@ -471,7 +471,7 @@ export default function LeafletMap({
                   <div className="flex gap-2 w-full sm:w-auto justify-end">
                     <button 
                       onClick={() => router.push(`/chat/${selectedJob.id}`)}
-                      className="p-2.5 bg-pink-50 hover:bg-pink-100 text-[#D81B60] font-bold rounded-xl text-xs transition-colors flex items-center justify-center shadow-sm shrink-0"
+                      className="p-2.5 bg-[#FAF8F5] hover:bg-[#C5A059]/20 text-[#0B2545] font-bold rounded-xl text-xs transition-colors flex items-center justify-center shadow-sm shrink-0 border border-[#C5A059]/30"
                       title="Mensaje para negociar presupuesto"
                     >
                       <MessageSquare size={16} />
@@ -484,9 +484,9 @@ export default function LeafletMap({
                     </button>
                     <button 
                       onClick={() => handleLocalAcceptJob(selectedJob.id)}
-                      className="px-4 sm:px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:brightness-105 active:scale-95 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-pink-100 flex items-center gap-1 justify-center flex-1 sm:flex-none"
+                      className="px-4 sm:px-5 py-2.5 bg-[#0B2545] hover:bg-[#12335d] active:scale-95 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-[#0B2545]/20 flex items-center gap-1 justify-center flex-1 sm:flex-none border border-[#C5A059]/30"
                     >
-                      <Briefcase size={12} className="shrink-0" />
+                      <Briefcase size={12} className="shrink-0 text-[#C5A059]" />
                       <span className="truncate">Aceptar Trabajo</span>
                     </button>
                   </div>
