@@ -64,9 +64,7 @@ export default function AuthCallback() {
       // Si seleccionó "Ofrezco Tutoría" -> /tutor/register (primera vez ofreciendo tutorías)
       // Si seleccionó "Soy Estudiante" -> /home-cliente (dashboard de estudiantes)
       const target = isPro ? "/tutor/register" : "/home-cliente";
-      setTimeout(() => {
-        window.location.href = target;
-      }, 250);
+      window.location.replace(target);
     };
 
     // Fail-safe timer: si cualquier llamada a red o PKCE se demora más de 1.2 segundos, avanzar directamente

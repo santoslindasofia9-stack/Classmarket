@@ -75,6 +75,14 @@ export default function DashboardPro() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
+    // Si entra a dashboard-pro sin haber completado el registro de tutor por primera vez con IA,
+    // se le redirige obligatoriamente a /tutor/register
+    const isProRegistered = localStorage.getItem("proRegistered") === "true";
+    if (!isProRegistered) {
+      window.location.replace("/tutor/register");
+      return;
+    }
+
     // Read details from localStorage set during verification
     const savedName = localStorage.getItem("userName") || localStorage.getItem("proName");
     const savedSpec = localStorage.getItem("proSpecialty");
