@@ -255,6 +255,8 @@ function LoginContent() {
                   sessionStorage.setItem("userRole", "client");
                   localStorage.removeItem("isProIntent");
                   localStorage.removeItem("forceTutorRegister");
+                  document.cookie = "cm_role=client; path=/; max-age=3600; SameSite=Lax";
+                  document.cookie = "cm_pro_intent=; path=/; max-age=0; SameSite=Lax";
                 }}
                 className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-3 text-xs sm:text-sm font-bold transition-colors duration-300 ${role === "client" ? "text-[#0B2545]" : "text-[#5C6B73]"}`}
               >
@@ -269,6 +271,8 @@ function LoginContent() {
                   sessionStorage.setItem("userRole", "pro");
                   localStorage.setItem("isProIntent", "true");
                   localStorage.setItem("forceTutorRegister", "true");
+                  document.cookie = "cm_role=pro; path=/; max-age=3600; SameSite=Lax";
+                  document.cookie = "cm_pro_intent=true; path=/; max-age=3600; SameSite=Lax";
                 }}
                 className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-3 text-xs sm:text-sm font-bold transition-colors duration-300 ${role === "pro" ? "text-[#0B2545]" : "text-[#5C6B73]"}`}
               >

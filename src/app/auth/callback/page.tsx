@@ -12,18 +12,25 @@ export default function AuthCallback() {
     let isMounted = true;
     let redirected = false;
 
-    const getIsPro = (explicitRole?: string | null) => {
-      const cookiePro = typeof document !== "undefined" && (document.cookie.includes("cm_role=pro") || document.cookie.includes("cm_pro_intent=true"));
-      return (
-        explicitRole === "pro" ||
-        localStorage.getItem("userRole") === "pro" ||
-        localStorage.getItem("isProIntent") === "true" ||
-        sessionStorage.getItem("userRole") === "pro" ||
-        cookiePro
-      );
+    const getResolvedRole = (explicitRole?: string | null): "pro" | "client" => {
+      // 1. Si explícitamente se pasó en URL
+      if (explicitRole === "pro") return "pro";
+      if (explicitRole === "client") return "client";
+
+      // 2. Cookie de intención
+      if (typeof document !== "undefined") {
+        if (document.cookie.includes("cm_role=pro") || document.cookie.includes("cm_pro_intent=true")) return "pro";
+        if (document.cookie.includes("cm_role=client")) return "client";
+      }
+
+      // 3. Storage
+      if (localStorage.getItem("isProIntent") === "true") return "pro";
+      if (localStorage.getItem("userRole") === "pro" || sessionStorage.getItem("userRole") === "pro") return "pro";
+      
+      return "client";
     };
 
-    const doRedirect = (session: any, roleArg: string) => {
+    const doRedirect = (session: any, roleArg?: string | null) => {
       if (redirected) return;
       redirected = true;
 
@@ -38,8 +45,8 @@ export default function AuthCallback() {
 
       const avatar = meta?.avatar_url || meta?.picture || localStorage.getItem("userAvatar") || "";
 
-      const isPro = getIsPro(roleArg);
-      const finalRole = isPro ? "pro" : "client";
+      const finalRole = getResolvedRole(roleArg);
+      const isPro = finalRole === "pro";
 
       localStorage.setItem("userRole", finalRole);
       sessionStorage.setItem("userRole", finalRole);
@@ -53,17 +60,18 @@ export default function AuthCallback() {
 
       if (isMounted) setStatus(`¡Bienvenido, ${displayName}! Configurando tu perfil...`);
 
-      // Si seleccionó "Ofrezco Tutoría", SIEMPRE llevar a /tutor/register (ayuda con IA y portafolio)
+      // REGLA OBLIGATORIA:
+      // Si seleccionó "Ofrezco Tutoría" -> /tutor/register (primera vez ofreciendo tutorías)
+      // Si seleccionó "Soy Estudiante" -> /home-cliente (dashboard de estudiantes)
       const target = isPro ? "/tutor/register" : "/home-cliente";
       setTimeout(() => {
         window.location.href = target;
-      }, 300);
+      }, 250);
     };
 
     // Fail-safe timer: si cualquier llamada a red o PKCE se demora más de 1.2 segundos, avanzar directamente
     const safetyTimer = setTimeout(() => {
-      const isPro = getIsPro();
-      const role = isPro ? "pro" : (localStorage.getItem("userRole") || "client");
+      const role = getResolvedRole();
       doRedirect(null, role);
     }, 1200);
 
@@ -72,8 +80,7 @@ export default function AuthCallback() {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
         const roleFromUrl = urlParams.get("role");
-        const isPro = getIsPro(roleFromUrl);
-        const role = isPro ? "pro" : (roleFromUrl || localStorage.getItem("userRole") || "client");
+        const role = getResolvedRole(roleFromUrl);
 
         // Escuchar el evento de autenticación automática de Supabase
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
