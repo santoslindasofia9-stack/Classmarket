@@ -35,7 +35,10 @@ export default function AuthCallback() {
 
       if (isMounted) setStatus(`¡Bienvenido, ${displayName}! Entrando a tu dashboard...`);
 
-      const target = role === "client" ? "/home-cliente" : "/dashboard-pro";
+      const isProRegistered = typeof window !== "undefined" && localStorage.getItem("proRegistered") === "true";
+      const target = role === "client" 
+        ? "/home-cliente" 
+        : (isProRegistered ? "/dashboard-pro" : "/tutor/register");
       setTimeout(() => {
         window.location.href = target;
       }, 500);
