@@ -238,6 +238,7 @@ export default function TutorRegisterPage() {
       const existingAvatar = localStorage.getItem("userAvatar") || defaultAvatar;
 
       localStorage.setItem("userRole", "pro");
+      sessionStorage.setItem("userRole", "pro");
       localStorage.setItem("userName", fullName);
       localStorage.setItem("proName", fullName);
       localStorage.setItem("proAvatar", existingAvatar);
@@ -251,28 +252,29 @@ export default function TutorRegisterPage() {
       localStorage.setItem("proRegistered", "true");
       localStorage.setItem("isProVerified", "true");
       localStorage.setItem("isLoggedIn", "true");
+      document.cookie = "cm_role=pro; path=/; max-age=3600; SameSite=Lax";
+      document.cookie = "cm_pro_intent=true; path=/; max-age=3600; SameSite=Lax";
 
-      // 2. Sync to Supabase if session exists
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
+      // 2. Sync to Supabase in background (non-blocking)
+      supabase.auth.getSession().then(({ data: { session } }) => {
         if (session?.user) {
-          await supabase.from("perfiles_profesionales").upsert({
-            id: session.user.id,
-            nombre_completo: fullName,
-            titulo_profesional: `Tutorías de ${specialty} (${grade})`,
-            categoria: specialty,
-            tarifa: `$${tarifa}/hr`,
-            foto_perfil: existingAvatar,
-            ciudad: "Piedecuesta, Santander",
-            calificacion: 5.0,
-          });
+          Promise.resolve(
+            supabase.from("perfiles_profesionales").upsert({
+              id: session.user.id,
+              nombre_completo: fullName,
+              titulo_profesional: `Tutorías de ${specialty} (${grade})`,
+              categoria: specialty,
+              tarifa: `$${tarifa}/hr`,
+              foto_perfil: existingAvatar,
+              ciudad: "Piedecuesta, Santander",
+              calificacion: 5.0,
+            })
+          ).catch((e) => console.warn("Supabase upsert background:", e));
         }
-      } catch (dbErr) {
-        console.warn("Supabase background sync skipped (demo mode active)");
-      }
+      }).catch(() => {});
 
-      // 3. Smooth transition to Tutor Dashboard
-      router.push("/dashboard-pro");
+      // 3. Immediate hard navigation to Tutor Dashboard
+      window.location.replace("/dashboard-pro");
     } catch (err: any) {
       console.error("Registration error:", err);
       setError("Ocurrió un error al guardar tu perfil. Inténtalo nuevamente.");
