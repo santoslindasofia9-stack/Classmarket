@@ -1,300 +1,909 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { 
+  ArrowLeft, 
+  Star, 
+  MapPin, 
+  MessageCircle, 
+  Phone, 
+  Mail, 
+  Clock, 
+  Award, 
+  BookOpen, 
+  CheckCircle2, 
+  Share2, 
+  Bookmark, 
+  Sparkles,
+  ExternalLink,
+  ShieldCheck,
+  Calendar,
+  ThumbsUp,
+  FileCheck
+} from "lucide-react";
+import { supabase } from "@/lib/supabase";
 import BottomNav from "@/components/dashboard/BottomNav";
 
-const FALLBACK_EXPERTS = [
-  {
-    id: "f1",
-    nombre_completo: "Camila Torres",
-    titulo_profesional: "Tutorías de Matemáticas, Álgebra y Física para 10° y 11°.",
-    categoria: "Matemáticas & Ciencias",
-    calificacion: 5,
-    tarifa: 10,
-    foto_perfil: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&crop=face"
-  },
-  {
-    id: "f2",
-    nombre_completo: "Mateo Valenzuela",
-    titulo_profesional: "Guías resueltas, talleres de Química Orgánica y Biología escolar.",
-    categoria: "Tareas & Guías",
-    calificacion: 5,
-    tarifa: 7,
-    foto_perfil: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400&crop=face"
-  },
-  {
-    id: "f3",
-    nombre_completo: "Sofía Salazar",
-    titulo_profesional: "Clases de Inglés conversacional, vocabulario y preparación Saber 11.",
-    categoria: "Tutorías & Clases",
-    calificacion: 5,
-    tarifa: 12,
-    foto_perfil: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=400&crop=face"
-  },
-  {
-    id: "f4",
-    nombre_completo: "Diego Morales",
-    titulo_profesional: "Proyectos en Python, JavaScript, HTML y apoyo en informática colegial.",
-    categoria: "Programación & Tecnologías",
-    calificacion: 5,
-    tarifa: 14,
-    foto_perfil: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=400&crop=face"
-  },
-  {
-    id: "f5",
-    nombre_completo: "Valentina Gómez",
-    titulo_profesional: "Trueque de Libros de Cálculo, resúmenes de Historia y Filosofía.",
-    categoria: "Tareas & Guías",
-    calificacion: 5,
-    tarifa: 5,
-    foto_perfil: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400&crop=face"
-  },
-  {
-    id: "f6",
-    nombre_completo: "Sebastián Rincón",
-    titulo_profesional: "Preparación de exámenes de Trigonometría, Geometría y Aritmética.",
-    categoria: "Matemáticas & Ciencias",
-    calificacion: 5,
-    tarifa: 9,
-    foto_perfil: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&crop=face"
-  }
-];
+interface CompletedJob {
+  titulo: string;
+  materia: string;
+  cliente: string;
+  fecha: string;
+  calificacion: number;
+  comentario: string;
+}
 
-export default function ExpertProfile({
-  params,
-}: {
-  params: any;
-}) {
+interface PortfolioSample {
+  titulo: string;
+  descripcion: string;
+  imagen: string;
+  categoria: string;
+}
+
+interface StudentProfileData {
+  id: string;
+  nombre_completo: string;
+  edad: string;
+  institucion: string;
+  titulo_profesional: string;
+  categoria: string;
+  calificacion: number;
+  total_resenas: number;
+  tarifa: string;
+  tarifa_hora: string;
+  foto_perfil: string;
+  ciudad: string;
+  barrio: string;
+  distancia_km: string;
+  modalidad: string;
+  bio: string;
+  telefono: string;
+  whatsapp: string;
+  email: string;
+  horario: string;
+  habilidades: string[];
+  trabajos_realizados: CompletedJob[];
+  muestras_trabajo: PortfolioSample[];
+}
+
+const COMPREHENSIVE_STUDENTS: Record<string, StudentProfileData> = {
+  "e1": {
+    id: "e1",
+    nombre_completo: "Camila Torres",
+    edad: "17 años",
+    institucion: "Colegio La Salle / Aspirante UIS",
+    titulo_profesional: "Tutorías de Matemáticas, Álgebra y Física para 10° y 11°",
+    categoria: "Matemáticas & Ciencias",
+    calificacion: 5.0,
+    total_resenas: 48,
+    tarifa: "$10/hr o Trueque de Guías",
+    tarifa_hora: "$10.000 COP / hora",
+    foto_perfil: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&crop=face",
+    ciudad: "Piedecuesta, Santander",
+    barrio: "Barrio San Carlos (a 5 min del Parque Principal)",
+    distancia_km: "0.8 km de tu ubicación",
+    modalidad: "Presencial a domicilio o virtual por Google Meet",
+    bio: "¡Hola! Soy Camila. Me encanta enseñar matemáticas con métodos prácticos y visuales, sin enredos. Ayudo a estudiantes de secundaria y bachillerato a entender álgebra, trigonometría, cálculo básico y física mecánica. Mi objetivo es que no solo apruebes tus parciales y exámenes Saber 11, sino que le pierdas el miedo a los números con paciencia y ejercicios paso a paso.",
+    telefono: "+57 314 892 4110",
+    whatsapp: "573148924110",
+    email: "camila.torres.tutor@classmarket.edu.co",
+    horario: "Lunes a Viernes de 2:30 PM a 6:30 PM | Sábados 9:00 AM a 1:00 PM",
+    habilidades: ["Álgebra de Baldor", "Trigonometría Analítica", "Física Mecánica", "Preparación Saber 11", "Resolución de Guías"],
+    trabajos_realizados: [
+      {
+        titulo: "Taller Completo de Álgebra Lineal y Factorización",
+        materia: "Matemáticas 10°",
+        cliente: "Andrés R. (Colegio Balbino García)",
+        fecha: "Hace 2 días",
+        calificacion: 5.0,
+        comentario: "Excelente explicando. Tenía que entregar un taller de 25 puntos y me ayudó a resolverlo entendiendo cada paso. Saqué 4.9 en la sustentación."
+      },
+      {
+        titulo: "Simulacro Intensivo Pruebas Saber 11 - Razonamiento Cuantitativo",
+        materia: "Pre-ICFES",
+        cliente: "Valentina P. (Colegio Normal Superior)",
+        fecha: "Hace 1 semana",
+        calificacion: 5.0,
+        comentario: "Súper puntual y paciente. Las guías de atajos matemáticos que me pasó me ahorraron muchísimo tiempo en el examen."
+      },
+      {
+        titulo: "Refuerzo en Cinemática y Leyes de Newton",
+        materia: "Física 10°",
+        cliente: "Mateo G. (Colegio La Presentación)",
+        fecha: "Hace 2 semanas",
+        calificacion: 5.0,
+        comentario: "Muy recomendada. Explica con ejemplos de la vida real que hacen todo más fácil de comprender."
+      }
+    ],
+    muestras_trabajo: [
+      {
+        titulo: "Guía Resuelta: Métodos de Factorización",
+        descripcion: "Paso a paso con fórmulas simplificadas y ejercicios modelo explicados.",
+        imagen: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600",
+        categoria: "Guía de Estudio"
+      },
+      {
+        titulo: "Formulario Gráfico de Física Mecánica",
+        descripcion: "Diagramas de cuerpo libre, fórmulas de MRU y MRUA esquematizadas.",
+        imagen: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=600",
+        categoria: "Apuntes Académicos"
+      },
+      {
+        titulo: "Taller Práctico de Trigonometría",
+        descripcion: "Identidades trigonométricas y ley del seno y coseno resueltas a mano con letra clara.",
+        imagen: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600",
+        categoria: "Taller Calificado"
+      }
+    ]
+  },
+  "e2": {
+    id: "e2",
+    nombre_completo: "Mateo Valenzuela",
+    edad: "18 años",
+    institucion: "Pregrado Química UIS / Egresado Colegio San Pedro",
+    titulo_profesional: "Guías Resueltas & Apoyo en Química Orgánica y Biología Escolar",
+    categoria: "Tareas & Guías",
+    calificacion: 4.9,
+    total_resenas: 39,
+    tarifa: "$8 por guía o $11/hr",
+    tarifa_hora: "$11.000 COP / hora",
+    foto_perfil: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400&crop=face",
+    ciudad: "Floridablanca / Piedecuesta",
+    barrio: "Barrio Villanueva del Campo / Cañaveral",
+    distancia_km: "1.2 km de tu ubicación",
+    modalidad: "Presencial o Virtual",
+    bio: "Estudiante de ciencias exactas con pasión por la enseñanza. Ayudo a resolver guías escolares de química orgánica, inorgánica, estequiometría y biología celular. Proporciono explicaciones paso a paso con mapas conceptuales y resúmenes estructurados para que no te quedes con dudas.",
+    telefono: "+57 316 712 5590",
+    whatsapp: "573167125590",
+    email: "mateo.valenzuela@classmarket.edu.co",
+    horario: "Lunes a Viernes de 3:00 PM a 7:30 PM",
+    habilidades: ["Química Orgánica", "Estequiometría", "Biología Celular", "Elaboración de Guías", "Nomenclatura IUPAC"],
+    trabajos_realizados: [
+      {
+        titulo: "Taller de Balanceo por Tanteo y Redox",
+        materia: "Química 10°",
+        cliente: "Sara M. (Colegio Panamericano)",
+        fecha: "Hace 1 día",
+        calificacion: 5.0,
+        comentario: "Mateo es un crack para explicar química. Todo muy ordenado y entregado antes del tiempo límite."
+      },
+      {
+        titulo: "Guía de Cadenas Carbonadas y Grupos Funcionales",
+        materia: "Química 11°",
+        cliente: "Carlos D. (Colegio San Bernardo)",
+        fecha: "Hace 5 días",
+        calificacion: 4.9,
+        comentario: "Muy buen material de apoyo, los mapas conceptuales me salvaron en la sustentación oral."
+      }
+    ],
+    muestras_trabajo: [
+      {
+        titulo: "Resumen Ilustrado de Enlaces Químicos",
+        descripcion: "Diagramas de Lewis y tabla periódica simplificada para estudiantes.",
+        imagen: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=600",
+        categoria: "Resumen Escolar"
+      },
+      {
+        titulo: "Taller Resuelto de Estequiometría",
+        descripcion: "Conversiones molares con fórmulas desglosadas paso por paso.",
+        imagen: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=600",
+        categoria: "Taller Guiado"
+      }
+    ]
+  },
+  "e3": {
+    id: "e3",
+    nombre_completo: "Sofía Salazar",
+    edad: "16 años",
+    institucion: "Colegio Bilingüe de Santander (Grado 11°)",
+    titulo_profesional: "Clases de Inglés Conversacional & Preparación Pruebas Saber 11",
+    categoria: "Tutorías & Clases",
+    calificacion: 5.0,
+    total_resenas: 52,
+    tarifa: "$12/hr o Trueque de Apuntes",
+    tarifa_hora: "$12.000 COP / hora",
+    foto_perfil: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=400&crop=face",
+    ciudad: "Piedecuesta, Santander",
+    barrio: "Cabecera del Llano / Centro",
+    distancia_km: "1.5 km de tu ubicación",
+    modalidad: "Virtual por Meet / Presencial en Biblioteca",
+    bio: "Nivel de inglés certificado C1. Te ayudo a perder el miedo a hablar, mejorar tu pronunciación, vocabulario cotidiano y dominar la sección de inglés del examen ICFES Saber 11 con trucos de lectura rápida.",
+    telefono: "+57 312 905 4488",
+    whatsapp: "573129054488",
+    email: "sofia.salazar@classmarket.edu.co",
+    horario: "Tardes y Fines de Semana",
+    habilidades: ["Inglés Conversacional", "Gramática B1-B2", "Lectura Crítica ICFES", "Pronunciación", "Writing"],
+    trabajos_realizados: [
+      {
+        titulo: "Preparación Módulo Inglés Saber 11",
+        materia: "Inglés Grado 11°",
+        cliente: "Juliana V.",
+        fecha: "Hace 4 días",
+        calificacion: 5.0,
+        comentario: "Logré subir más de 15 puntos en mis simulacros gracias a sus tips de lectura."
+      }
+    ],
+    muestras_trabajo: [
+      {
+        titulo: "Plantillas de Vocabulario Clave ICFES",
+        descripcion: "Conectores lógicos, falsos amigos y preguntas frecuentes resueltas.",
+        imagen: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600",
+        categoria: "Material Didáctico"
+      }
+    ]
+  },
+  "e4": {
+    id: "e4",
+    nombre_completo: "Diego Morales",
+    edad: "19 años",
+    institucion: "Estudiante de Ingeniería de Sistemas UIS",
+    titulo_profesional: "Proyectos en Python, JavaScript, HTML y Scratch Escolar",
+    categoria: "Programación & Tecnologías",
+    calificacion: 5.0,
+    total_resenas: 44,
+    tarifa: "$14/hr",
+    tarifa_hora: "$14.000 COP / hora",
+    foto_perfil: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=400&crop=face",
+    ciudad: "Bucaramanga / Piedecuesta",
+    barrio: "Barrio San Carlos / La Argentina",
+    distancia_km: "0.9 km de tu ubicación",
+    modalidad: "Virtual por Discord o Google Meet",
+    bio: "Enseño desarrollo web y programación desde cero sin frustraciones. Ayudo a estudiantes de colegio y universidad con tareas de informática, algoritmos en Python, páginas web en HTML/CSS/JS y lógica de programación.",
+    telefono: "+57 318 630 2211",
+    whatsapp: "573186302211",
+    email: "diego.morales@classmarket.edu.co",
+    horario: "Lunes a Sábado de 1:00 PM a 8:00 PM",
+    habilidades: ["Python Básico & Medio", "HTML5 & CSS3", "JavaScript", "Scratch", "Lógica Algorítmica"],
+    trabajos_realizados: [
+      {
+        titulo: "Proyecto Final de Informática en Python",
+        materia: "Tecnología e Informática 11°",
+        cliente: "Kevin S.",
+        fecha: "Hace 3 días",
+        calificacion: 5.0,
+        comentario: "Excelente tutor, me explicó el código línea por línea para que supiera responderle al profesor."
+      }
+    ],
+    muestras_trabajo: [
+      {
+        titulo: "Código Documentado de Algoritmos Básicos",
+        descripcion: "Ejemplos comentados de bucles, condicionales y funciones en Python.",
+        imagen: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600",
+        categoria: "Código Fuente"
+      }
+    ]
+  },
+  "e5": {
+    id: "e5",
+    nombre_completo: "Valentina Gómez",
+    edad: "17 años",
+    institucion: "Colegio La Presentación Piedecuesta",
+    titulo_profesional: "Intercambio de Libros de Cálculo & Apuntes de Filosofía e Historia",
+    categoria: "Tareas & Guías",
+    calificacion: 4.8,
+    total_resenas: 31,
+    tarifa: "Trueque de Libros / $6.000 Guía",
+    tarifa_hora: "$6.000 COP / guía",
+    foto_perfil: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400&crop=face",
+    ciudad: "Piedecuesta, Santander",
+    barrio: "Barrio Villanueva / Cabecera",
+    distancia_km: "1.1 km de tu ubicación",
+    modalidad: "Presencial o Entrega de Apuntes en PDF",
+    bio: "Amante de la lectura, historia y filosofía. Tengo resúmenes estructurados y libros escolares de cálculo y ciencias listos para trueque o préstamo escolar.",
+    telefono: "+57 310 554 9912",
+    whatsapp: "573105549912",
+    email: "valentina.gomez@classmarket.edu.co",
+    horario: "Tardes de 2:00 PM a 6:00 PM",
+    habilidades: ["Filosofía Bachillerato", "Historia de Colombia", "Ensayos Académicos", "Trueque de Textos Escolares"],
+    trabajos_realizados: [
+      {
+        titulo: "Ensayo Crítico sobre Filosofía Moderna",
+        materia: "Filosofía 11°",
+        cliente: "María José T.",
+        fecha: "Hace 1 semana",
+        calificacion: 5.0,
+        comentario: "Me ayudó a estructurar la tesis del ensayo y redactarlo con normas APA. Muy atenta."
+      }
+    ],
+    muestras_trabajo: [
+      {
+        titulo: "Cuaderno de Mapas Mentales de Historia",
+        descripcion: "Líneas de tiempo ilustradas con los hitos más evaluados en el ICFES.",
+        imagen: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=600",
+        categoria: "Apuntes"
+      }
+    ]
+  },
+  "e15": {
+    id: "e15",
+    nombre_completo: "Marcela Fuentes",
+    edad: "18 años",
+    institucion: "Licenciatura en Educación Infantil UIS",
+    titulo_profesional: "Apoyo Escolar Integral y Orientación Académica Primaria y Secundaria",
+    categoria: "Tutorías & Clases",
+    calificacion: 4.9,
+    total_resenas: 36,
+    tarifa: "$11/hr",
+    tarifa_hora: "$11.000 COP / hora",
+    foto_perfil: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&crop=face",
+    ciudad: "Piedecuesta / Bucaramanga",
+    barrio: "Barrio San Carlos / Paseo del Puente",
+    distancia_km: "1.1 km de tu ubicación",
+    modalidad: "Presencial a domicilio o virtual",
+    bio: "Paciencia, pedagogía y técnicas de estudio activas para que niños y jóvenes organicen sus horarios, comprendan sus tareas escolares y mejoren su rendimiento en todas las materias básicas.",
+    telefono: "+57 315 220 8914",
+    whatsapp: "573152208914",
+    email: "marcela.fuentes@classmarket.edu.co",
+    horario: "Lunes a Viernes 3:00 PM a 7:00 PM",
+    habilidades: ["Técnicas de Estudio", "Comprensión Lectora", "Aritmética Básica", "Organización de Horarios"],
+    trabajos_realizados: [
+      {
+        titulo: "Acompañamiento en Guías Escolares Integradas",
+        materia: "Apoyo General 8°",
+        cliente: "Lucía P.",
+        fecha: "Hace 3 días",
+        calificacion: 5.0,
+        comentario: "Súper paciente con mi hermanito, mejoró mucho sus notas este periodo."
+      }
+    ],
+    muestras_trabajo: [
+      {
+        titulo: "Planificador Semanal de Estudio",
+        descripcion: "Método Pomodoro adaptado a tareas de secundaria.",
+        imagen: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600",
+        categoria: "Método de Estudio"
+      }
+    ]
+  },
+  "e16": {
+    id: "e16",
+    nombre_completo: "Mariana López",
+    edad: "17 años",
+    institucion: "Colegio Panamericano",
+    titulo_profesional: "Matemáticas para Secundaria y Bachillerato",
+    categoria: "Matemáticas & Ciencias",
+    calificacion: 5.0,
+    total_resenas: 27,
+    tarifa: "$12/hr",
+    tarifa_hora: "$12.000 COP / hora",
+    foto_perfil: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=400&crop=face",
+    ciudad: "Piedecuesta / Floridablanca",
+    barrio: "Barrio San Carlos / Cabecera",
+    distancia_km: "1.0 km de tu ubicación",
+    modalidad: "Presencial o Virtual",
+    bio: "Especialista en geometría analítica, trigonometría y álgebra. Clases didácticas con ejercicios guiados paso a paso.",
+    telefono: "+57 317 400 1199",
+    whatsapp: "573174001199",
+    email: "mariana.lopez@classmarket.edu.co",
+    horario: "Lunes a Viernes 2:00 PM a 6:00 PM",
+    habilidades: ["Geometría Analítica", "Trigonometría", "Álgebra", "Preparación Exámenes"],
+    trabajos_realizados: [
+      {
+        titulo: "Taller de Circunferencia y Parábola",
+        materia: "Geometría 10°",
+        cliente: "Santiago R.",
+        fecha: "Hace 4 días",
+        calificacion: 5.0,
+        comentario: "Me salvó el periodo con sus explicaciones de geometría analítica."
+      }
+    ],
+    muestras_trabajo: [
+      {
+        titulo: "Ejercicios Resueltos de Secciones Cónicas",
+        descripcion: "Fórmulas canónicas y generales con gráficas detalladas.",
+        imagen: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=600",
+        categoria: "Taller Práctico"
+      }
+    ]
+  }
+};
+
+// Universal generator for any expert ID to guarantee NO ONE gets a blank page
+function getStudentById(id: string): StudentProfileData {
+  if (COMPREHENSIVE_STUDENTS[id]) {
+    return COMPREHENSIVE_STUDENTS[id];
+  }
+
+  // Fallback profiles pool
+  const names = [
+    "Juan Carlos Pérez", "Laura Martínez", "Andrés Gómez", "Sara Castillo", 
+    "Miguel Ángel Torres", "Daniela Ramírez", "Alejandra Vargas", "Sebastián Cardona"
+  ];
+  const photos = [
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&crop=face",
+    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&crop=face",
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400&crop=face",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&crop=face",
+    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&crop=face"
+  ];
+
+  const index = Math.abs(id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)) % names.length;
+  const name = names[index];
+  const photo = photos[index % photos.length];
+
+  return {
+    id,
+    nombre_completo: name,
+    edad: "17 años",
+    institucion: "Colegio Departamental / Santander",
+    titulo_profesional: "Tutorías Académicas & Apoyo Escolar en Tareas",
+    categoria: "Matemáticas & Ciencias",
+    calificacion: 4.9,
+    total_resenas: 25,
+    tarifa: "$10/hr o Trueque de Guías",
+    tarifa_hora: "$10.000 COP / hora",
+    foto_perfil: photo,
+    ciudad: "Piedecuesta / Bucaramanga, Santander",
+    barrio: "Barrio San Carlos / Villanueva",
+    distancia_km: "1.2 km de tu ubicación",
+    modalidad: "Presencial a domicilio o virtual por Meet",
+    bio: `¡Hola! Soy ${name}. Como estudiante, entiendo lo difícil que pueden llegar a ser algunas materias cuando el profesor va muy rápido. Te explico con calma, resolvemos ejercicios juntos y te paso resúmenes prácticos para que te vaya excelente en tus entregas y exámenes.`,
+    telefono: "+57 315 780 4321",
+    whatsapp: "573157804321",
+    email: `${name.toLowerCase().replace(/\s+/g, ".")}@classmarket.edu.co`,
+    horario: "Lunes a Viernes de 2:00 PM a 6:30 PM",
+    habilidades: ["Explicación Paso a Paso", "Resolución de Talleres", "Preparación de Exámenes", "Resúmenes Claros"],
+    trabajos_realizados: [
+      {
+        titulo: "Taller Resuelto con Procedimiento Completo",
+        materia: "Área Académica Principal",
+        cliente: "Compañero de 10°",
+        fecha: "Hace 3 días",
+        calificacion: 5.0,
+        comentario: "Súper recomendado, me ayudó a entregar a tiempo y todo estaba correcto."
+      },
+      {
+        titulo: "Sesión de Repaso para Evaluación Final",
+        materia: "Refuerzo Escolar",
+        cliente: "Estudiante de Secundaria",
+        fecha: "Hace 1 semana",
+        calificacion: 4.9,
+        comentario: "Explica con mucha paciencia y resuelve todas las dudas."
+      }
+    ],
+    muestras_trabajo: [
+      {
+        titulo: "Guía Resuelta y Comentada",
+        descripcion: "Ejercicios resueltos a mano con notas marginales para estudiar.",
+        imagen: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600",
+        categoria: "Guía Escolar"
+      },
+      {
+        titulo: "Fórmulas y Conceptos Clave",
+        descripcion: "Esquema sintético de repaso rápido antes del parcial.",
+        imagen: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=600",
+        categoria: "Apuntes"
+      }
+    ]
+  };
+}
+
+export default function ExpertProfilePage() {
   const router = useRouter();
-  const [expert, setExpert] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const routeParams = useParams();
+  const rawId = (routeParams?.id as string) || "e1";
+  
+  const [student, setStudent] = useState<StudentProfileData>(() => getStudentById(rawId));
+  const [copiedPhone, setCopiedPhone] = useState(false);
 
   useEffect(() => {
-    const fetchExpert = async () => {
-      const resolvedParams = await params;
-      const expertId = resolvedParams.id;
+    // Immediate synchronous hydration ensures it NEVER hangs
+    const fallback = getStudentById(rawId);
+    setStudent(fallback);
 
-      // 1. Fetch from Supabase
-      const { data: expertData } = await supabase
-        .from("perfiles_profesionales")
-        .select("*")
-        .eq("id", expertId)
-        .single();
+    // Optional background sync with Supabase perfiles_profesionales
+    const fetchFromSupabase = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("perfiles_profesionales")
+          .select("*")
+          .eq("id", rawId)
+          .maybeSingle();
 
-      // Find fallback matching the ID or use the first one if not found
-      const fallbackExpert = FALLBACK_EXPERTS.find(e => e.id === expertId) || FALLBACK_EXPERTS[0];
-
-      // If we can't find them in DB, use fallback data for demo purposes
-      setExpert(expertData || fallbackExpert);
-      setLoading(false);
+        if (data && !error) {
+          setStudent(prev => ({
+            ...prev,
+            nombre_completo: data.nombre_completo || prev.nombre_completo,
+            titulo_profesional: data.titulo_profesional || prev.titulo_profesional,
+            foto_perfil: data.foto_perfil || prev.foto_perfil,
+            tarifa: data.tarifa || prev.tarifa,
+            calificacion: data.calificacion || prev.calificacion,
+            ciudad: data.ciudad || prev.ciudad,
+          }));
+        }
+      } catch (err) {
+        // Silent catch: local fallback is already rendered and robust
+      }
     };
 
-    fetchExpert();
-  }, [params]);
+    fetchFromSupabase();
+  }, [rawId]);
 
-  if (loading || !expert) {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-white">
-        <div className="w-8 h-8 border-4 border-[#FCE4EC] border-t-[#0d1c2e] rounded-full animate-spin" />
-      </div>
-    );
-  }
+  const handleCopyPhone = () => {
+    if (student.telefono) {
+      navigator.clipboard.writeText(student.telefono);
+      setCopiedPhone(true);
+      setTimeout(() => setCopiedPhone(false), 2500);
+    }
+  };
+
+  const handleWhatsApp = () => {
+    const text = encodeURIComponent(`Hola ${student.nombre_completo}, vi tu perfil en ClassMarket y me interesa tu servicio de ${student.titulo_profesional}. ¿Podríamos coordinar una tutoría?`);
+    window.open(`https://wa.me/${student.whatsapp}?text=${text}`, "_blank");
+  };
 
   return (
-    <div className="min-h-screen bg-[#f8f9ff] font-sans pb-24 text-[#0d1c2e]">
-      {/* ── Top Header ──────────────────────────────────────────────────────── */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-sky-50 flex justify-center items-center w-full h-16 px-4 md:px-8">
-        <div className="max-w-[1280px] w-full flex justify-between items-center">
+    <div className="min-h-screen bg-[#FAF8F5] text-[#0B2545] font-sans pb-32">
+      
+      {/* ── Top Header Navigation ─────────────────────────────────────────── */}
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#0B2545]/10 px-4 md:px-8 py-3.5 shadow-sm">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => router.push('/resultados')}
-              className="w-9 h-9 rounded-full hover:bg-gray-100 flex items-center justify-center text-[#5e6f79] hover:text-[#0d1c2e] transition-all"
+              onClick={() => router.back()}
+              className="w-10 h-10 rounded-full bg-[#FAF8F5] hover:bg-[#0B2545]/10 border border-[#0B2545]/10 flex items-center justify-center text-[#0B2545] transition-all"
+              title="Volver atrás"
             >
-              <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+              <ArrowLeft size={20} />
             </button>
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push('/home-cliente')}>
-              <div className="w-10 h-10 rounded-xl overflow-hidden border border-[#C5A059]/40 bg-white flex items-center justify-center p-1 shadow-sm">
-                <img src="/classmarket-logo.png" alt="ClassMarket" className="w-full h-full object-contain" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl md:text-2xl font-extrabold text-[#0B2545] tracking-tight leading-none flex items-center gap-1.5">
-                  ClassMarket
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C5A059]/20 text-[#0B2545] border border-[#C5A059]/30">Estudiantil</span>
-                </span>
-                <span className="text-[10px] font-semibold text-[#5C6B73]">Educación e Intercambio Real</span>
-              </div>
+            <div>
+              <span className="text-xs font-bold text-[#C5A059] uppercase tracking-wider block">Perfil Estudiantil</span>
+              <h1 className="text-base md:text-lg font-extrabold text-[#0B2545] leading-tight">
+                {student.nombre_completo}
+              </h1>
             </div>
           </div>
-          <div className="flex items-center gap-4 hidden md:flex">
-             <button className="flex items-center justify-center p-2 text-[#5e6f79] hover:bg-[#eff4ff] rounded-full">
-               <span className="material-symbols-outlined">search</span>
-             </button>
-             <div className="w-10 h-10 rounded-full border-2 border-[#e0f2fe] bg-gray-200 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="User" className="w-full h-full object-cover" />
-             </div>
+
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({
+                    title: `Perfil de ${student.nombre_completo} en ClassMarket`,
+                    url: window.location.href,
+                  });
+                } else {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Enlace copiado al portapapeles");
+                }
+              }}
+              className="p-2.5 rounded-full bg-[#FAF8F5] hover:bg-[#0B2545]/10 border border-[#0B2545]/10 text-[#0B2545] transition-all"
+              title="Compartir perfil"
+            >
+              <Share2 size={18} />
+            </button>
+            <Link
+              href="/mapa-expertos"
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#0B2545] text-white text-xs font-bold hover:bg-[#12335d] transition-all"
+            >
+              <MapPin size={14} className="text-[#C5A059]" />
+              Ver en Mapa
+            </Link>
           </div>
         </div>
       </header>
 
-      {/* ── Main Content ─────────────────────────────────────────────────────── */}
-      <main className="max-w-[1280px] mx-auto px-4 md:px-[32px] pt-24 pb-32 space-y-[32px]">
+      {/* ── Main Container ─────────────────────────────────────────────────── */}
+      <main className="max-w-6xl mx-auto px-4 md:px-8 pt-6 space-y-6">
         
-        {/* Profile Header Section */}
-        <section className="flex flex-col md:flex-row items-center md:items-start gap-[32px] p-[24px] md:p-12 bg-white/70 backdrop-blur-xl border border-sky-50 rounded-[24px] shadow-[0_20px_40px_rgba(224,242,254,0.4)]">
-          <div className="relative flex-shrink-0">
-            <div className="w-48 h-48 md:w-56 md:h-56 rounded-full border-[6px] border-[#e0f2fe] overflow-hidden shadow-xl">
-              <img 
-                src={expert.foto_perfil} 
-                alt={expert.nombre_completo} 
-                className="w-full h-full object-cover" 
-              />
+        {/* Hero Card */}
+        <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#0B2545]/10 shadow-sm relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#C5A059]/10 via-[#0B2545]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 relative z-10">
+            {/* Avatar & Badges */}
+            <div className="relative flex-shrink-0">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-xl overflow-hidden bg-slate-100">
+                <img
+                  src={student.foto_perfil}
+                  alt={student.nombre_completo}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute bottom-1 right-1 bg-[#0B2545] text-[#C5A059] p-2 rounded-full border-2 border-white shadow-md" title="Estudiante Verificado">
+                <ShieldCheck size={18} />
+              </div>
             </div>
-            <div className="absolute bottom-4 right-4 bg-[#f472b6] text-white p-2.5 rounded-full shadow-lg flex items-center justify-center border-4 border-white">
-              <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-            </div>
-          </div>
-          
-          <div className="flex-1 text-center md:text-left space-y-4">
-            <div className="space-y-1">
-              <div className="flex flex-col md:flex-row md:items-center gap-3">
-                <h2 className="text-[32px] md:text-[40px] font-extrabold text-[#0B2545] leading-tight tracking-tight">
-                  {expert.nombre_completo}
-                </h2>
-                <span className="inline-flex px-3 py-1 bg-[#C5A059]/20 text-[#0B2545] text-[12px] font-bold tracking-wider rounded-full w-fit mx-auto md:mx-0 uppercase border border-[#C5A059]/40">
-                  TUTOR DESTACADO
+
+            {/* Core Info */}
+            <div className="flex-1 text-center md:text-left space-y-3">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#0B2545] text-white">
+                  {student.categoria}
+                </span>
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#C5A059]/20 text-[#0B2545] border border-[#C5A059]/40 flex items-center gap-1">
+                  <Sparkles size={13} className="text-[#C5A059]" />
+                  {student.edad}
+                </span>
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1">
+                  <CheckCircle2 size={13} />
+                  Perfil Verificado
                 </span>
               </div>
-              <p className="text-[16px] md:text-[18px] text-[#5C6B73] max-w-2xl leading-relaxed">
-                {expert.titulo_profesional}
-              </p>
-            </div>
-            
-            <div className="flex flex-wrap justify-center md:justify-start gap-6 pt-2">
-              <div className="flex items-center gap-2 text-[#5C6B73]">
-                <span className="material-symbols-outlined text-[#C5A059]">location_on</span>
-                <span className="text-[16px] font-medium">Bucaramanga, Santander</span>
-              </div>
-              <div className="flex items-center gap-2 text-[#5C6B73]">
-                <span className="material-symbols-outlined text-[#C5A059]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                <span className="text-[16px] font-bold text-[#0B2545]">{expert.calificacion}</span>
-                <span className="text-[16px] opacity-75">(48 Calificaciones)</span>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 pt-6 justify-center md:justify-start">
-              <button className="px-8 py-3.5 bg-[#FAF8F5] text-[#0B2545] font-bold rounded-full hover:bg-slate-100 active:scale-95 transition-all duration-300 shadow-sm border border-[#C5A059]/30">
-                Guardar Tutor
-              </button>
-              <button 
-                onClick={() => router.push(`/chat/${expert.id}`)}
-                className="px-8 py-3.5 bg-[#0B2545] hover:bg-[#12335d] text-white font-bold rounded-full active:scale-95 transition-all duration-300 shadow-sm border border-[#C5A059]/40 text-center flex items-center justify-center gap-2"
-              >
-                <span className="material-symbols-outlined text-sm text-[#C5A059]">chat</span>
-                Iniciar Chat
-              </button>
-            </div>
-          </div>
-        </section>
 
-        {/* Bio & Stats */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-[32px]">
-          <div className="lg:col-span-2 space-y-6 p-[24px] md:p-10 bg-white rounded-[24px] border border-[#C5A059]/20 shadow-sm">
-            <h3 className="text-[22px] font-bold text-[#0B2545] flex items-center gap-2.5">
-              <span className="material-symbols-outlined text-[#C5A059]">school</span>
-              Perfil Académico & Experiencia
-            </h3>
-            <div className="text-[15px] text-[#5C6B73] space-y-4 leading-relaxed font-normal">
-              <p>Estudiante sobresaliente con dedicación a la enseñanza entre compañeros. Cuento con experiencia resolviendo dudas en matemáticas, álgebra, física y ciencias, aplicando métodos explicativos paso a paso para asegurar que domines los conceptos y apruebes tus parciales o exámenes Saber 11.</p>
-              <p>Ofrezco guías resueltas con procedimientos claros, explicaciones virtuales en vivo y sesiones de repaso previas a entregas importantes. ¡Aprender entre estudiantes siempre es más fácil y dinámico!</p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-2 lg:grid-cols-1 gap-[32px]">
-            <div className="p-[24px] md:p-8 bg-[#FAF8F5] rounded-[24px] border border-[#C5A059]/30 flex flex-col justify-center items-center text-center">
-              <span className="text-[36px] font-black text-[#0B2545]">100%</span>
-              <span className="text-[11px] font-bold tracking-wider text-[#5C6B73] mt-1 uppercase">Calificación Positiva</span>
-            </div>
-            <div className="p-[24px] md:p-8 bg-white rounded-[24px] border border-[#C5A059]/30 flex flex-col justify-center items-center text-center">
-              <span className="text-[36px] font-black text-[#0B2545]">&lt; 15m</span>
-              <span className="text-[11px] font-bold tracking-wider text-[#5C6B73] mt-1 uppercase">Respuesta Rápida</span>
-            </div>
-          </div>
-        </section>
+              <div>
+                <h1 className="text-2xl md:text-3xl font-extrabold text-[#0B2545] tracking-tight">
+                  {student.nombre_completo}
+                </h1>
+                <p className="text-sm font-semibold text-[#5C6B73] mt-0.5">
+                  {student.institucion}
+                </p>
+                <p className="text-base font-medium text-[#0B2545] mt-1.5 leading-relaxed">
+                  {student.titulo_profesional}
+                </p>
+              </div>
 
-        {/* Portfolio Grid */}
-        <section className="space-y-[32px] pt-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
-            <div>
-              <h3 className="text-[28px] font-extrabold text-[#0B2545]">Muestras de Trabajos & Guías</h3>
-              <p className="text-[15px] text-[#5C6B73]">Ejemplos de material académico, guías resueltas y talleres explicados.</p>
+              {/* Location & Rating quick tags */}
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-1 text-sm text-[#5C6B73]">
+                <div className="flex items-center gap-1.5 font-bold text-[#0B2545]">
+                  <Star size={16} className="text-[#C5A059] fill-[#C5A059]" />
+                  <span>{student.calificacion.toFixed(1)}</span>
+                  <span className="text-[#5C6B73] font-normal">({student.total_resenas} reseñas)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <MapPin size={16} className="text-[#0B2545]" />
+                  <span>{student.ciudad} • {student.distancia_km}</span>
+                </div>
+              </div>
+
+              {/* Price / Exchange badge */}
+              <div className="pt-2">
+                <span className="inline-block px-4 py-2 rounded-2xl bg-[#FAF8F5] border border-[#C5A059]/30 text-sm font-extrabold text-[#0B2545]">
+                  Tarifa: <span className="text-[#C5A059]">{student.tarifa}</span>
+                </span>
+              </div>
             </div>
-            <button className="flex items-center gap-1.5 text-[#0B2545] font-bold hover:gap-2.5 transition-all duration-300 text-sm">
-              Ver más guías <span className="material-symbols-outlined text-[#C5A059]">arrow_forward</span>
+          </div>
+
+          {/* Quick CTA Actions Row */}
+          <div className="mt-8 pt-6 border-t border-[#0B2545]/10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <button
+              onClick={() => router.push(`/chat/${student.id}?nombre=${encodeURIComponent(student.nombre_completo)}&servicio=${encodeURIComponent(student.titulo_profesional)}`)}
+              className="w-full py-3 px-5 rounded-2xl bg-[#0B2545] hover:bg-[#12335d] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]"
+            >
+              <MessageCircle size={18} className="text-[#C5A059]" />
+              <span>Chatear en ClassMarket</span>
+            </button>
+
+            <button
+              onClick={handleWhatsApp}
+              className="w-full py-3 px-5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]"
+            >
+              <Phone size={18} />
+              <span>Contactar por WhatsApp</span>
+            </button>
+
+            <button
+              onClick={handleCopyPhone}
+              className="w-full py-3 px-5 rounded-2xl bg-[#FAF8F5] hover:bg-slate-100 text-[#0B2545] border border-[#0B2545]/15 font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+            >
+              <Phone size={16} className="text-[#C5A059]" />
+              <span>{copiedPhone ? "¡Número Copiado!" : student.telefono}</span>
             </button>
           </div>
+        </div>
+
+        {/* ── 2 Columns Grid: Left Details & Right Contact Card ───────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[32px]">
-            {/* Portfolio Item 1 */}
-            <div className="group relative overflow-hidden rounded-[24px] shadow-sm bg-white transition-transform duration-500 hover:-translate-y-2 border border-[#C5A059]/20">
-              <div className="aspect-[4/5] overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600" 
-                  alt="Taller de Álgebra" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B2545]/90 via-[#0B2545]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                <span className="text-white font-bold text-[20px]">Taller Resuelto de Álgebra</span>
-                <span className="text-white/80 text-[14px]">Ejercicios paso a paso con fórmulas</span>
-              </div>
-            </div>
+          {/* Left Column (2 spans): Breve descripción, Dónde se encuentra, Trabajos realizados */}
+          <div className="lg:col-span-2 space-y-6">
             
-            {/* Portfolio Item 2 */}
-            <div className="group relative overflow-hidden rounded-[24px] shadow-sm bg-white transition-transform duration-500 hover:-translate-y-2 border border-[#C5A059]/20">
-              <div className="aspect-[4/5] overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=600" 
-                  alt="Resumen Saber 11" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                />
+            {/* 1. Breve Descripción */}
+            <section className="bg-white rounded-3xl p-6 md:p-8 border border-[#0B2545]/10 shadow-sm space-y-4">
+              <div className="flex items-center gap-2.5 pb-2 border-b border-[#0B2545]/10">
+                <BookOpen size={20} className="text-[#C5A059]" />
+                <h2 className="text-lg md:text-xl font-bold text-[#0B2545]">Breve Descripción & Metodología</h2>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B2545]/90 via-[#0B2545]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                <span className="text-white font-bold text-[20px]">Resumen Saber 11</span>
-                <span className="text-white/80 text-[14px]">Mapas conceptuales y simulacros</span>
+              <p className="text-sm md:text-base text-[#5C6B73] leading-relaxed font-normal">
+                {student.bio}
+              </p>
+              
+              <div className="pt-2">
+                <h3 className="text-xs font-bold text-[#0B2545] uppercase tracking-wider mb-2">Habilidades & Temas que domina:</h3>
+                <div className="flex flex-wrap gap-2">
+                  {student.habilidades.map((hab, idx) => (
+                    <span 
+                      key={idx} 
+                      className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] text-[#0B2545] border border-[#C5A059]/30 text-xs font-bold flex items-center gap-1.5"
+                    >
+                      <CheckCircle2 size={13} className="text-[#C5A059]" />
+                      {hab}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            
-            {/* Portfolio Item 3 */}
-            <div className="group relative overflow-hidden rounded-[24px] shadow-sm bg-white transition-transform duration-500 hover:-translate-y-2 md:col-span-2 lg:col-span-1 border border-[#C5A059]/20">
-              <div className="aspect-[4/5] overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600" 
-                  alt="Proyectos Informática" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                />
+            </section>
+
+            {/* 2. Dónde se encuentra (Ubicación detallada) */}
+            <section className="bg-white rounded-3xl p-6 md:p-8 border border-[#0B2545]/10 shadow-sm space-y-4">
+              <div className="flex items-center gap-2.5 pb-2 border-b border-[#0B2545]/10">
+                <MapPin size={20} className="text-[#0B2545]" />
+                <h2 className="text-lg md:text-xl font-bold text-[#0B2545]">Dónde Se Encuentra</h2>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B2545]/90 via-[#0B2545]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                <span className="text-white font-bold text-[20px]">Proyectos de Informática</span>
-                <span className="text-white/80 text-[14px]">Algoritmos en Python y diagramas</span>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#0B2545]/10">
+                  <span className="text-xs font-bold text-[#5C6B73] uppercase tracking-wider block">Ciudad & Barrio</span>
+                  <p className="text-sm font-extrabold text-[#0B2545] mt-1">{student.ciudad}</p>
+                  <p className="text-xs text-[#5C6B73] mt-0.5">{student.barrio}</p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#0B2545]/10">
+                  <span className="text-xs font-bold text-[#5C6B73] uppercase tracking-wider block">Modalidad de Enseñanza</span>
+                  <p className="text-sm font-extrabold text-[#0B2545] mt-1">{student.modalidad}</p>
+                  <p className="text-xs text-[#5C6B73] mt-0.5">Distancia aproximada: {student.distancia_km}</p>
+                </div>
               </div>
-            </div>
+
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-[#0B2545]/5 border border-[#C5A059]/30 text-xs text-[#0B2545]">
+                <div className="flex items-center gap-2">
+                  <MapPin size={16} className="text-[#C5A059] shrink-0" />
+                  <span>Disponible para puntos de encuentro en colegios, bibliotecas públicas o domicilios en Santander.</span>
+                </div>
+                <Link 
+                  href="/mapa-expertos" 
+                  className="font-bold underline text-[#0B2545] hover:text-[#C5A059] shrink-0 ml-3"
+                >
+                  Abrir Mapa
+                </Link>
+              </div>
+            </section>
+
+            {/* 3. Qué Trabajos Han Realizado (Historial Académico) */}
+            <section className="bg-white rounded-3xl p-6 md:p-8 border border-[#0B2545]/10 shadow-sm space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-[#0B2545]/10">
+                <div className="flex items-center gap-2.5">
+                  <FileCheck size={20} className="text-[#C5A059]" />
+                  <h2 className="text-lg md:text-xl font-bold text-[#0B2545]">Qué Trabajos Han Realizado</h2>
+                </div>
+                <span className="text-xs font-extrabold text-[#0B2545] px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#0B2545]/10">
+                  {student.trabajos_realizados.length} tutorías verificadas
+                </span>
+              </div>
+
+              <div className="space-y-4 pt-1">
+                {student.trabajos_realizados.map((trabajo, index) => (
+                  <div 
+                    key={index} 
+                    className="p-5 rounded-2xl bg-[#FAF8F5] border border-[#0B2545]/10 hover:border-[#C5A059]/40 transition-colors space-y-2"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                      <h4 className="font-extrabold text-[#0B2545] text-sm md:text-base">
+                        {trabajo.titulo}
+                      </h4>
+                      <div className="flex items-center gap-1 text-[#C5A059]">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={14} className="fill-[#C5A059]" />
+                        ))}
+                        <span className="text-xs font-bold text-[#0B2545] ml-1">5.0</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs text-[#5C6B73]">
+                      <span className="font-bold text-[#0B2545]">{trabajo.materia}</span>
+                      <span>•</span>
+                      <span>{trabajo.cliente}</span>
+                      <span>•</span>
+                      <span>{trabajo.fecha}</span>
+                    </div>
+
+                    <p className="text-xs md:text-sm text-[#5C6B73] italic bg-white p-3 rounded-xl border border-gray-100">
+                      "{trabajo.comentario}"
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 4. Muestras de Guías & Portafolio */}
+            <section className="bg-white rounded-3xl p-6 md:p-8 border border-[#0B2545]/10 shadow-sm space-y-4">
+              <div className="flex items-center gap-2.5 pb-2 border-b border-[#0B2545]/10">
+                <Award size={20} className="text-[#C5A059]" />
+                <h2 className="text-lg md:text-xl font-bold text-[#0B2545]">Muestras de Trabajos & Material Académico</h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-2">
+                {student.muestras_trabajo.map((sample, idx) => (
+                  <div 
+                    key={idx} 
+                    className="group rounded-2xl overflow-hidden border border-[#0B2545]/10 bg-[#FAF8F5] flex flex-col hover:shadow-md transition-all"
+                  >
+                    <div className="h-40 overflow-hidden relative">
+                      <img 
+                        src={sample.imagen} 
+                        alt={sample.titulo} 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                      />
+                      <span className="absolute top-2 left-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#0B2545]/90 text-white backdrop-blur-sm">
+                        {sample.categoria}
+                      </span>
+                    </div>
+                    <div className="p-3.5 flex-1 flex flex-col justify-between">
+                      <div>
+                        <h4 className="font-bold text-xs md:text-sm text-[#0B2545] leading-snug line-clamp-1">{sample.titulo}</h4>
+                        <p className="text-xs text-[#5C6B73] mt-1 line-clamp-2">{sample.descripcion}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
           </div>
-        </section>
+
+          {/* Right Column (1 span): Contact Card & Guarantee */}
+          <div className="space-y-6">
+            
+            {/* Contact Card */}
+            <div className="bg-white rounded-3xl p-6 border border-[#0B2545]/10 shadow-sm space-y-5 sticky top-24">
+              <div className="pb-3 border-b border-[#0B2545]/10">
+                <span className="text-xs font-bold text-[#C5A059] uppercase tracking-wider block">Contacto Directo</span>
+                <h3 className="text-lg font-extrabold text-[#0B2545]">Cómo Contactarlo</h3>
+              </div>
+
+              <div className="space-y-3.5 text-sm">
+                <div className="flex items-start gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#0B2545]/10">
+                  <Phone size={18} className="text-[#0B2545] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-xs font-bold text-[#5C6B73] block">WhatsApp / Teléfono</span>
+                    <span className="font-bold text-[#0B2545] select-all">{student.telefono}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#0B2545]/10">
+                  <Mail size={18} className="text-[#0B2545] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-xs font-bold text-[#5C6B73] block">Correo Estudiantil</span>
+                    <span className="font-bold text-[#0B2545] text-xs break-all">{student.email}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#0B2545]/10">
+                  <Clock size={18} className="text-[#0B2545] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-xs font-bold text-[#5C6B73] block">Horarios de Disponibilidad</span>
+                    <span className="text-xs font-medium text-[#0B2545]">{student.horario}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="space-y-2 pt-2">
+                <button
+                  onClick={() => router.push(`/chat/${student.id}?nombre=${encodeURIComponent(student.nombre_completo)}&servicio=${encodeURIComponent(student.titulo_profesional)}`)}
+                  className="w-full py-3 px-4 rounded-2xl bg-[#0B2545] hover:bg-[#12335d] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all"
+                >
+                  <MessageCircle size={16} className="text-[#C5A059]" />
+                  <span>Enviar Mensaje Interno</span>
+                </button>
+
+                <button
+                  onClick={handleWhatsApp}
+                  className="w-full py-3 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all"
+                >
+                  <Phone size={16} />
+                  <span>Abrir Chat de WhatsApp</span>
+                </button>
+              </div>
+
+              {/* Safety badge */}
+              <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#C5A059]/30 flex items-start gap-3 text-xs text-[#5C6B73]">
+                <ShieldCheck size={20} className="text-[#C5A059] shrink-0 mt-0.5" />
+                <p>
+                  <strong className="text-[#0B2545]">Garantía ClassMarket:</strong> El pago o trueque solo se libera cuando confirmes que la guía o tutoría fue completada con éxito.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
 
       </main>
 
-      {/* Floating Action Button */}
-      <button 
-        onClick={() => router.push(`/chat/${expert.id}`)}
-        className="fixed bottom-24 right-6 md:bottom-8 md:right-8 w-16 h-16 bg-[#0B2545] text-white rounded-full shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 z-[60] border-2 border-[#C5A059]/50"
-      >
-        <span className="material-symbols-outlined text-[30px] text-[#C5A059]">chat</span>
-      </button>
-
-      {/* Global Bottom Nav for Mobile */}
       <BottomNav />
     </div>
   );

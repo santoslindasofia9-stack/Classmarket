@@ -163,17 +163,21 @@ export default function LeafletMap({
 
   // Custom Icon generation function for experts
   const createCustomIcon = (expert: Expert, isSelected: boolean) => {
-    const pinColor = CATEGORIA_PIN_COLORS[expert.categoria] || "#0B2545";
     const avatar = expert.foto_perfil || `https://ui-avatars.com/api/?name=${encodeURIComponent(expert.nombre_completo)}&background=0B2545&color=fff`;
+    const priceMatch = (expert.tarifa || "$10").match(/\$\d+/);
+    const compactPrice = priceMatch ? priceMatch[0] : "$10";
     
     const html = `
       <div class="relative group cursor-pointer transition-transform duration-300 ${isSelected ? 'scale-110' : 'hover:scale-105'}" style="outline: none;">
-        <div class="relative w-12 h-12 rounded-full border-4 shadow-lg overflow-hidden flex items-center justify-center bg-white ${isSelected ? 'ring-4 ring-[#C5A059]/40' : ''}" style="border-color: white;">
-          <img src="${avatar}" class="w-full h-full object-cover" />\n            <div class="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-white rounded-full border border-[#C5A059] flex items-center justify-center shadow-sm">\n              <svg width="10" height="10" viewBox="0 0 24 24" fill="#C5A059"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>\n            </div>
+        <div class="relative w-12 h-12 rounded-full border-2 shadow-lg overflow-hidden flex items-center justify-center bg-white ${isSelected ? 'ring-4 ring-[#C5A059]' : ''}" style="border-color: white;">
+          <img src="${avatar}" class="w-full h-full object-cover" />
+          <div class="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-white rounded-full border border-[#C5A059] flex items-center justify-center shadow-sm">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="#C5A059"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
         </div>
-        <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-r border-b border-white bg-white" style="z-index: -1;"></div>
+        <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 border-r border-b border-white bg-white" style="z-index: -1;"></div>
         <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#0B2545] text-white rounded-full px-2 py-0.5 shadow-md border border-[#C5A059]/60" style="white-space: nowrap;">
-          <span class="text-[9px] font-extrabold">${expert.tarifa || "$10/hr"}</span>
+          <span class="text-[10px] font-black tracking-tight">${compactPrice}</span>
         </div>
       </div>
     `;
@@ -182,8 +186,8 @@ export default function LeafletMap({
       className: 'custom-leaflet-icon',
       html,
       iconSize: [48, 48],
-      iconAnchor: [24, 54],
-      popupAnchor: [0, -54],
+      iconAnchor: [24, 52],
+      popupAnchor: [0, -52],
     });
   };
 
@@ -192,12 +196,15 @@ export default function LeafletMap({
     const avatar = job.cliente_avatar || "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=200&crop=face";
     const html = `
       <div class="relative group cursor-pointer transition-transform duration-300 ${isSelected ? 'scale-110' : 'hover:scale-105'}" style="outline: none;">
-        <div class="relative w-12 h-12 rounded-full border-4 shadow-lg overflow-hidden flex items-center justify-center bg-white ${isSelected ? 'ring-4 ring-[#C5A059]/40' : ''}" style="border-color: white;">
-          <img src="${avatar}" class="w-full h-full object-cover" />\n            <div class="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-white rounded-full border border-[#C5A059] flex items-center justify-center shadow-sm">\n              <svg width="10" height="10" viewBox="0 0 24 24" fill="#C5A059"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>\n            </div>
+        <div class="relative w-12 h-12 rounded-full border-2 shadow-lg overflow-hidden flex items-center justify-center bg-white ${isSelected ? 'ring-4 ring-[#C5A059]' : ''}" style="border-color: white;">
+          <img src="${avatar}" class="w-full h-full object-cover" />
+          <div class="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-white rounded-full border border-[#C5A059] flex items-center justify-center shadow-sm">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="#C5A059"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
         </div>
-        <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-r border-b border-white bg-white" style="z-index: -1;"></div>
+        <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 border-r border-b border-white bg-white" style="z-index: -1;"></div>
         <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#0B2545] text-white rounded-full px-2 py-0.5 shadow-md border border-[#C5A059]/60" style="white-space: nowrap;">
-          <span class="text-[9px] font-extrabold">$${job.pago}</span>
+          <span class="text-[10px] font-black tracking-tight">$${job.pago}</span>
         </div>
       </div>
     `;
@@ -206,8 +213,8 @@ export default function LeafletMap({
       className: 'custom-leaflet-job-icon',
       html,
       iconSize: [48, 48],
-      iconAnchor: [24, 54],
-      popupAnchor: [0, -54],
+      iconAnchor: [24, 52],
+      popupAnchor: [0, -52],
     });
   };
 
@@ -360,19 +367,27 @@ export default function LeafletMap({
                 {selectedExpert.tarifa && <span className="text-xs text-[#0288D1] font-bold ml-2">{selectedExpert.tarifa}</span>}
               </div>
             </div>
-            <div className="flex flex-col items-end gap-2 shrink-0">
+            <div className="flex flex-col items-end gap-1.5 shrink-0">
               <button 
                 onClick={(e) => { e.stopPropagation(); onSelectExpert(null); }}
-                className="w-6 h-6 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full flex items-center justify-center text-xs transition-colors"
+                className="w-6 h-6 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full flex items-center justify-center text-xs transition-colors self-end"
               >
                 ✕
               </button>
-              <button
-                onClick={() => onVerPerfil(selectedExpert.id)}
-                className="px-4 py-2 bg-[#0d1c2e] text-white font-bold rounded-full text-xs sm:text-sm hover:bg-[#1a2e44] transition-colors shadow-sm"
-              >
-                Chatear
-              </button>
+              <div className="flex gap-1.5">
+                <button
+                  onClick={() => router.push(`/chat/${selectedExpert.id}?nombre=${encodeURIComponent(selectedExpert.nombre_completo)}&servicio=${encodeURIComponent(selectedExpert.titulo_profesional)}`)}
+                  className="px-3 py-1.5 bg-[#C5A059] text-[#0B2545] font-bold rounded-full text-xs shadow-sm"
+                >
+                  Chatear
+                </button>
+                <button
+                  onClick={() => onVerPerfil(selectedExpert.id)}
+                  className="px-3 py-1.5 bg-[#0B2545] text-white font-bold rounded-full text-xs shadow-sm"
+                >
+                  Ver Perfil
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
