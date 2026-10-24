@@ -12,7 +12,18 @@ export default function AuthCallback() {
     let isMounted = true;
     let redirected = false;
 
-    const doRedirect = (session: any, role: string) => {
+    const getIsPro = (explicitRole?: string | null) => {
+      const cookiePro = typeof document !== "undefined" && (document.cookie.includes("cm_role=pro") || document.cookie.includes("cm_pro_intent=true"));
+      return (
+        explicitRole === "pro" ||
+        localStorage.getItem("userRole") === "pro" ||
+        localStorage.getItem("isProIntent") === "true" ||
+        sessionStorage.getItem("userRole") === "pro" ||
+        cookiePro
+      );
+    };
+
+    const doRedirect = (session: any, roleArg: string) => {
       if (redirected) return;
       redirected = true;
 
@@ -27,15 +38,11 @@ export default function AuthCallback() {
 
       const avatar = meta?.avatar_url || meta?.picture || localStorage.getItem("userAvatar") || "";
 
-      const isPro = 
-        role === "pro" || 
-        localStorage.getItem("userRole") === "pro" || 
-        localStorage.getItem("isProIntent") === "true" ||
-        sessionStorage.getItem("userRole") === "pro";
-
+      const isPro = getIsPro(roleArg);
       const finalRole = isPro ? "pro" : "client";
 
       localStorage.setItem("userRole", finalRole);
+      sessionStorage.setItem("userRole", finalRole);
       localStorage.setItem("userName", displayName);
       if (avatar) {
         localStorage.setItem("userAvatar", avatar);
@@ -50,15 +57,12 @@ export default function AuthCallback() {
       const target = isPro ? "/tutor/register" : "/home-cliente";
       setTimeout(() => {
         window.location.href = target;
-      }, 500);
+      }, 300);
     };
 
     // Fail-safe timer: si cualquier llamada a red o PKCE se demora más de 1.2 segundos, avanzar directamente
     const safetyTimer = setTimeout(() => {
-      const isPro = 
-        localStorage.getItem("userRole") === "pro" || 
-        localStorage.getItem("isProIntent") === "true" ||
-        sessionStorage.getItem("userRole") === "pro";
+      const isPro = getIsPro();
       const role = isPro ? "pro" : (localStorage.getItem("userRole") || "client");
       doRedirect(null, role);
     }, 1200);
@@ -68,11 +72,7 @@ export default function AuthCallback() {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
         const roleFromUrl = urlParams.get("role");
-        const isPro = 
-          roleFromUrl === "pro" || 
-          localStorage.getItem("userRole") === "pro" || 
-          localStorage.getItem("isProIntent") === "true" ||
-          sessionStorage.getItem("userRole") === "pro";
+        const isPro = getIsPro(roleFromUrl);
         const role = isPro ? "pro" : (roleFromUrl || localStorage.getItem("userRole") || "client");
 
         // Escuchar el evento de autenticación automática de Supabase

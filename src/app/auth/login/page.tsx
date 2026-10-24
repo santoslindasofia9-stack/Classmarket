@@ -138,12 +138,15 @@ function LoginContent() {
       setError(null);
       localStorage.setItem("userRole", role);
       sessionStorage.setItem("userRole", role);
+      document.cookie = `cm_role=${role}; path=/; max-age=3600; SameSite=Lax`;
       if (role === "pro") {
         localStorage.setItem("isProIntent", "true");
         localStorage.setItem("forceTutorRegister", "true");
+        document.cookie = `cm_pro_intent=true; path=/; max-age=3600; SameSite=Lax`;
       } else {
         localStorage.removeItem("isProIntent");
         localStorage.removeItem("forceTutorRegister");
+        document.cookie = `cm_pro_intent=; path=/; max-age=0; SameSite=Lax`;
       }
 
       // Dynamic origin — works in localhost AND any Vercel URL
