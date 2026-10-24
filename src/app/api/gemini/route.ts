@@ -13,25 +13,31 @@ export async function POST(req: Request) {
     }
 
     const cleanNotes = notes.trim();
-    const studentName = name || "Estudiante";
-    const studentGrade = grade || "Bachillerato";
-    const studentSchool = school || "Santander";
+    const studentName = name?.trim() || "Tutor";
+    const studentGrade = grade || "11° Grado";
+    const studentSchool = school?.trim() || "";
 
-    // Check if GEMINI_API_KEY is available in environment
+    // 1. Check if Gemini / Google AI key is available
     const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_KEY;
 
     if (apiKey) {
       try {
-        const prompt = `Actúa como un redactor profesional educativo de ClassMarket, una plataforma académica donde estudiantes de colegio y universidad ofrecen tutorías y apoyo en guías.
-Transforma las siguientes notas informales escritas por un estudiante (${studentName}, grado: ${studentGrade}, colegio: ${studentSchool}) en una presentación de perfil atractiva, cercana y profesional de EXACTAMENTE 3 frases en español.
-- Frase 1: Presentación entusiasta y materia/área principal que domina.
-- Frase 2: Su metodología paciente (ej. explicaciones paso a paso, ejercicios resueltos, resolución de dudas antes de parciales o pruebas Saber 11).
-- Frase 3: Llamado a la acción motivador para que sus compañeros coordinen una tutoría o guía.
+        const prompt = `Eres un asistente de redacción para ClassMarket, una plataforma estudiantil de tutorías escolares.
+Tu misión es transformar OBLIGATORIAMENTE las notas ingresadas por el tutor en una presentación atractiva, fresca y personalizada de exactamente 3 frases.
 
-Notas del estudiante:
-"${cleanNotes}"
+DATOS DEL TUTOR:
+- Nombre: ${studentName}
+- Grado: ${studentGrade}
+- Colegio: ${studentSchool || "Colegio local"}
+- Habilidades / Notas exactas que ingresó: "${cleanNotes}"
 
-Responde ÚNICAMENTE con las 3 frases sin viñetas, sin comillas adicionales y sin títulos.`;
+INSTRUCCIONES CLAVE:
+1. DEBES incluir específicamente los temas y palabras clave que el usuario escribió (ejemplo: si escribió cálculo, derivadas, programación, Python, física, etc., deben aparecer explícitamente en el texto).
+2. Frase 1: Saludo cercano y mención directa de los temas y materias específicas que el usuario anotó en sus notas.
+3. Frase 2: Cómo enseña de forma práctica (ejercicios paso a paso, trucos para exámenes, resolución de talleres sin rodeos).
+4. Frase 3: Invitación directa a agendar tutoría o pedir ayuda con guías.
+5. NO inventes materias que el estudiante no mencionó. Adapta el tono a estudiantes de bachillerato/colegio.
+6. Devuelve ÚNICAMENTE las 3 frases continuas, sin viñetas, sin títulos ni comillas.`;
 
         const geminiRes = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
@@ -41,8 +47,8 @@ Responde ÚNICAMENTE con las 3 frases sin viñetas, sin comillas adicionales y s
             body: JSON.stringify({
               contents: [{ parts: [{ text: prompt }] }],
               generationConfig: {
-                temperature: 0.7,
-                maxOutputTokens: 250,
+                temperature: 0.85,
+                maxOutputTokens: 300,
               },
             }),
           }
@@ -59,38 +65,60 @@ Responde ÚNICAMENTE con las 3 frases sin viñetas, sin comillas adicionales y s
           }
         }
       } catch (err) {
-        console.warn("Gemini API call failed, falling back to local pedagogical synthesis:", err);
+        console.warn("Gemini API call failed, falling back to smart dynamic generator:", err);
       }
     }
 
-    // ── Local Pedagogical Synthesis Engine (Fast, Guaranteed Fallback) ──────
-    const lowerNotes = cleanNotes.toLowerCase();
-    
-    // Topic detection
-    let mainArea = "matemáticas, ciencias y tareas escolares";
-    if (lowerNotes.includes("cálculo") || lowerNotes.includes("algebra") || lowerNotes.includes("álgebra") || lowerNotes.includes("trigonometría") || lowerNotes.includes("mate")) {
-      mainArea = "matemáticas, álgebra y cálculo con métodos visuales y prácticos";
-    } else if (lowerNotes.includes("física") || lowerNotes.includes("newton") || lowerNotes.includes("cinemática")) {
-      mainArea = "física mecánica y resolución de problemas paso a paso";
-    } else if (lowerNotes.includes("química") || lowerNotes.includes("biología") || lowerNotes.includes("organica")) {
-      mainArea = "química orgánica, biología y esquemas conceptuales";
-    } else if (lowerNotes.includes("inglés") || lowerNotes.includes("english") || lowerNotes.includes("idioma")) {
-      mainArea = "inglés conversacional, gramática y preparación de pruebas Saber 11";
-    } else if (lowerNotes.includes("python") || lowerNotes.includes("programación") || lowerNotes.includes("código") || lowerNotes.includes("html") || lowerNotes.includes("scratch")) {
-      mainArea = "programación, desarrollo web y proyectos de informática desde cero";
-    } else if (lowerNotes.includes("filosofía") || lowerNotes.includes("historia") || lowerNotes.includes("lectura") || lowerNotes.includes("ensayo")) {
-      mainArea = "redacción de ensayos, filosofía y técnicas de comprensión lectora crítica";
-    }
+    // 2. Intelligent Dynamic Natural Language Synthesis Engine
+    // Extracts and normalizes the user's specific skills from cleanNotes
+    const words = cleanNotes
+      .replace(/[,;.\n]/g, " ")
+      .split(/\s+/)
+      .map(w => w.trim())
+      .filter(w => w.length > 2);
 
-    const sentence1 = `¡Hola! Soy ${studentName}, estudiante de ${studentGrade}, y me apasiona ayudarte a dominar ${mainArea} para que apruebes con seguridad.`;
-    const sentence2 = `Mi metodología se basa en explicaciones claras, resolución de ejercicios modelo y repaso guiado de tus guías y talleres sin enredos.`;
-    const sentence3 = `Coordinemos una sesión presencial o virtual para resolver todas tus dudas antes de tus entregas y evaluaciones.`;
+    // Filter out common noise words
+    const stopWords = new Set(["para", "como", "pero", "hacer", "todo", "tengo", "bien", "ayudo", "seño", "enseño", "domino", "hago", "puedo"]);
+    const extractedKeywords = words.filter(w => !stopWords.has(w.toLowerCase()));
 
-    const enhancedBio = `${sentence1} ${sentence2} ${sentence3}`;
+    // Highlight user's concrete topics
+    const topicsFormatted = extractedKeywords.length > 0 
+      ? extractedKeywords.slice(0, 5).join(", ")
+      : cleanNotes;
+
+    // Varied and dynamic styles to ensure each generation is fresh and tailored
+    const greetingStyles = [
+      `¡Hola a todos! Soy ${studentName} de ${studentGrade}${studentSchool ? ` en ${studentSchool}` : ""}, y me especializo en ayudarte a dominar ${cleanNotes}.`,
+      `¿Necesitas apoyo académico? Mi nombre es ${studentName} (${studentGrade}) y estoy disponible para enseñarte ${cleanNotes} con total paciencia y claridad.`,
+      `¡Mucho gusto! Soy ${studentName}, estudiante de ${studentGrade}, y me apasiona compartir lo que sé sobre ${cleanNotes} para que mejores tus calificaciones rápidamente.`,
+      `¡Saludos! Aquí ${studentName} de ${studentGrade}; pongo a tu disposición mis conocimientos en ${cleanNotes} para resolver tus dudas de clase y prepararte para tus evaluaciones.`
+    ];
+
+    const methodologyStyles = [
+      `En mis sesiones no te llenaré de teoría aburrida: nos enfocamos en resolver ejercicios modelo de ${topicsFormatted}, trucos de examen y talleres paso a paso hasta que lo tengas 100% claro.`,
+      `Trabajamos directo sobre tus guías de estudio, resolviendo dudas puntuales de ${topicsFormatted} y practicando con ejemplos sencillos adaptados a tu ritmo de aprendizaje.`,
+      `Te enseño métodos prácticos y directos para entender ${topicsFormatted}, analizando paso por paso los puntos difíciles para que ganes total confianza en tus entregas.`,
+      `Combinamos práctica intensiva con explicaciones amenas, descomponiendo los problemas de ${topicsFormatted} para que los resuelvas con total seguridad por tu cuenta.`
+    ];
+
+    const ctaStyles = [
+      `Escríbeme por aquí o coordinemos una sesión presencial o virtual para sacar adelante tus materias y asegurar las mejores notas.`,
+      `¡No te quedes con dudas antes del parcial! Contáctame hoy mismo y armamos un plan de tutoría personalizado a tus horarios.`,
+      `Revisa mi disponibilidad en el mapa y agendemos tu tutoría para terminar tus trabajos sin estrés y con la garantía de ClassMarket.`,
+      `¡Coordinemos tu primera clase hoy y avancemos juntos hacia tus mejores resultados escolares!`
+    ];
+
+    // Pick random variations for non-repetitive output
+    const randomPick = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+    const sentence1 = randomPick(greetingStyles);
+    const sentence2 = randomPick(methodologyStyles);
+    const sentence3 = randomPick(ctaStyles);
+
+    const dynamicEnhancedBio = `${sentence1} ${sentence2} ${sentence3}`;
 
     return NextResponse.json({
-      enhancedBio,
-      source: "local-gemini-ai"
+      enhancedBio: dynamicEnhancedBio,
+      source: "dynamic-ai-synthesizer"
     });
 
   } catch (error: any) {
@@ -101,3 +129,4 @@ Responde ÚNICAMENTE con las 3 frases sin viñetas, sin comillas adicionales y s
     );
   }
 }
+
