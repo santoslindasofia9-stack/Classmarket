@@ -27,13 +27,22 @@ function LoginContent() {
 
   // No necesitamos listener de OAuth aquí — Google redirige directo a /home-cliente
 
-  // Sincronizar modo con query param
+  // Sincronizar modo con query param y garantizar estado limpio
   useEffect(() => {
     const m = searchParams.get("mode");
     if (m === "register" || m === "login") {
       setMode(m);
     }
-  }, [searchParams]);
+    // Si la pantalla arranca en client, purgar cualquier vestigio pro anterior
+    if (role === "client") {
+      localStorage.setItem("userRole", "client");
+      sessionStorage.setItem("userRole", "client");
+      localStorage.removeItem("isProIntent");
+      localStorage.removeItem("forceTutorRegister");
+      document.cookie = "cm_role=client; path=/; max-age=3600; SameSite=Lax";
+      document.cookie = "cm_pro_intent=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+    }
+  }, [searchParams, role]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
