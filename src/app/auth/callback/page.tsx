@@ -14,16 +14,17 @@ export default function AuthCallback() {
 
     const getResolvedRole = (explicitRole?: string | null): "pro" | "client" => {
       // 1. Si explícitamente se pasó en URL
-      if (explicitRole === "pro") return "pro";
       if (explicitRole === "client") return "client";
+      if (explicitRole === "pro") return "pro";
 
       // 2. Cookie de intención
       if (typeof document !== "undefined") {
-        if (document.cookie.includes("cm_role=pro") || document.cookie.includes("cm_pro_intent=true")) return "pro";
         if (document.cookie.includes("cm_role=client")) return "client";
+        if (document.cookie.includes("cm_role=pro") || document.cookie.includes("cm_pro_intent=true")) return "pro";
       }
 
       // 3. Storage
+      if (localStorage.getItem("userRole") === "client" || sessionStorage.getItem("userRole") === "client") return "client";
       if (localStorage.getItem("isProIntent") === "true") return "pro";
       if (localStorage.getItem("userRole") === "pro" || sessionStorage.getItem("userRole") === "pro") return "pro";
       
@@ -48,12 +49,19 @@ export default function AuthCallback() {
       const finalRole = getResolvedRole(roleArg);
       const isPro = finalRole === "pro";
 
+      if (!isPro) {
+        localStorage.removeItem("isProIntent");
+        localStorage.removeItem("forceTutorRegister");
+        document.cookie = "cm_role=client; path=/; max-age=3600; SameSite=Lax";
+        document.cookie = "cm_pro_intent=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+      }
+
       localStorage.setItem("userRole", finalRole);
       sessionStorage.setItem("userRole", finalRole);
       localStorage.setItem("userName", displayName);
       if (avatar) {
         localStorage.setItem("userAvatar", avatar);
-        localStorage.setItem("proAvatar", avatar);
+        if (isPro) localStorage.setItem("proAvatar", avatar);
       }
       localStorage.setItem("isLoggedIn", "true");
       localStorage.removeItem("pendingRole");

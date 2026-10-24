@@ -136,17 +136,22 @@ function LoginContent() {
     try {
       setLoading(true);
       setError(null);
-      localStorage.setItem("userRole", role);
-      sessionStorage.setItem("userRole", role);
-      document.cookie = `cm_role=${role}; path=/; max-age=3600; SameSite=Lax`;
-      if (role === "pro") {
-        localStorage.setItem("isProIntent", "true");
-        localStorage.setItem("forceTutorRegister", "true");
-        document.cookie = `cm_pro_intent=true; path=/; max-age=3600; SameSite=Lax`;
-      } else {
+      
+      if (role === "client") {
+        // Purga radical de cualquier vestigio de rol pro previo
+        localStorage.setItem("userRole", "client");
+        sessionStorage.setItem("userRole", "client");
         localStorage.removeItem("isProIntent");
         localStorage.removeItem("forceTutorRegister");
-        document.cookie = `cm_pro_intent=; path=/; max-age=0; SameSite=Lax`;
+        document.cookie = "cm_role=client; path=/; max-age=3600; SameSite=Lax";
+        document.cookie = "cm_pro_intent=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+      } else {
+        localStorage.setItem("userRole", "pro");
+        sessionStorage.setItem("userRole", "pro");
+        localStorage.setItem("isProIntent", "true");
+        localStorage.setItem("forceTutorRegister", "true");
+        document.cookie = "cm_role=pro; path=/; max-age=3600; SameSite=Lax";
+        document.cookie = "cm_pro_intent=true; path=/; max-age=3600; SameSite=Lax";
       }
 
       // Dynamic origin — works in localhost AND any Vercel URL
