@@ -38,7 +38,7 @@ interface Contract {
   category: string;
   date: string;
   amount: string;
-  status: "Completado" | "En progreso" | "En revisión";
+  status: "Completado" | "En progreso" | "En revisiÃ³n";
   desc: string;
 }
 
@@ -56,10 +56,10 @@ interface Review {
 const DEFAULT_AVATAR = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&crop=face";
 
 const AVATAR_PRESETS = [
-  { name: "Sofía (Estudiante)", url: DEFAULT_AVATAR },
-  { name: "Camila Torres (Matemáticas)", url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=400&crop=face" },
-  { name: "Mateo Valenzuela (Química)", url: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400&crop=face" },
-  { name: "Diego Morales (Informática)", url: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=400&crop=face" }
+  { name: "SofÃ­a (Estudiante)", url: DEFAULT_AVATAR },
+  { name: "Camila Torres (MatemÃ¡ticas)", url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=400&crop=face" },
+  { name: "Mateo Valenzuela (QuÃ­mica)", url: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400&crop=face" },
+  { name: "Diego Morales (InformÃ¡tica)", url: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=400&crop=face" }
 ];
 
 function PerfilContent() {
@@ -69,7 +69,7 @@ function PerfilContent() {
   const publicId = searchParams.get("id");
   
   // 1. Core Profile States
-  const [userName, setUserName] = useState<string>("Sofía");
+  const [userName, setUserName] = useState<string>("SofÃ­a");
   const [userAvatar, setUserAvatar] = useState<string>(DEFAULT_AVATAR);
   const [userLocation, setUserLocation] = useState<string>("Bucaramanga, Santander");
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
@@ -83,7 +83,7 @@ function PerfilContent() {
   const [editPhoto, setEditPhoto] = useState<string>("");
 
   // 2. Interactive Navigation States
-  const [activeTab, setActiveTab] = useState<"contratos" | "reseñas" | "escrow">("contratos");
+  const [activeTab, setActiveTab] = useState<"contratos" | "resenas" | "escrow">("contratos");
   const [selectedContract, setSelectedContract] = useState<Contract | null>(null);
   
   // Escrow Simulated Funds State
@@ -95,20 +95,20 @@ function PerfilContent() {
 
   // Geolocation and Reverse Geocoding via OpenStreetMap Nominatim API
   const publicProfiles: Record<string, any> = {
-    "e1": { name: "Camila Torres", avatar: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de 11� � Tutor de Matem�ticas y F�sica", bio: "Me gusta explicar matem�ticas con ejemplos pr�cticos. Ayudo en �lgebra, trigonometr�a y preparaci�n para ex�menes con mucha paciencia." },
-    "e2": { name: "Diego Morales", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de Ingenier�a � Tutor de Programaci�n", bio: "Aprendemos Python, JavaScript y l�gica desde cero con proyectos reales. Enfoque pr�ctico para iniciantes." },
-    "e3": { name: "Luc�a Fern�ndez", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&crop=face", location: "Floridablanca, COL", role: "Estudiante de Qu�mica � Tutor de Biolog�a y Qu�mica", bio: "Te ayudo a entender qu�mica y biolog�a con mapas mentales, res�menes claros y ejercicios guiados." },
-    "e4": { name: "Mateo Valenzuela", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&crop=face", location: "Piedecuesta, COL", role: "Estudiante de 11� � Tutor de �lgebra y Geometr�a", bio: "Me gusta que mis compa�eros entiendan el porqu� de cada paso. Ejercicios resueltos juntos hasta dominar el tema." },
-    "e5": { name: "Valentina R�os", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&crop=face", location: "Gir�n, COL", role: "Estudiante de Medicina Pregrado � Tutor de Biolog�a", bio: "Apoyo en biolog�a, anatom�a b�sica y t�cnicas de estudio efectivas para bachillerato y primeros semestres." },
-    "e16": { name: "Mariana L�pez", avatar: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de 11� � Tutora de Matem�ticas", bio: "�lgebra, trigonometr�a y preparaci�n para ex�menes. Clases amables, claras y con ejercicios pr�cticos." },
-    "e17": { name: "Juan Carlos P�rez", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&crop=face", location: "Floridablanca, COL", role: "Estudiante de Sistemas � Tutor de Programaci�n", bio: "Aprende Python desde cero con l�gica, ejercicios y tus primeros proyectos web." },
-    "e18": { name: "Laura Mart�nez", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de Qu�mica � Tutora de Qu�mica y Biolog�a", bio: "Te ayudo con res�menes, mapas mentales y resoluci�n de ejercicios paso a paso." },
-    "e19": { name: "Andr�s G�mez", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400&crop=face", location: "Piedecuesta, COL", role: "Estudiante de Ingenier�a � Tutor de F�sica", bio: "F�sica mec�nica y electromagnetismo con enfoque pr�ctico y visual." },
-    "e20": { name: "Sara Castillo", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&crop=face", location: "Gir�n, COL", role: "Estudiante de Idiomas � Tutora de Ingl�s", bio: "Ingl�s conversacional B1-B2, vocabulario pr�ctico y preparaci�n para ex�menes." },
-    "e21": { name: "Miguel �ngel Torres", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de Matem�ticas � Tutor Universitario", bio: "�lgebra lineal y c�lculo diferencial con explicaciones claras y ejercicios guiados." },
-    "e22": { name: "Daniela Ram�rez", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de 11� � Tutora de Apoyo Escolar", bio: "Tareas, gu�as, res�menes y organizaci�n acad�mica para mejorar tu rendimiento." },
-    "e23": { name: "Alejandra Vargas", avatar: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=400&crop=face", location: "Floridablanca, COL", role: "Estudiante de 11� � Tutora de Trigonometr�a", bio: "Trigonometr�a y geometr�a anal�tica con ejercicios paso a paso." },
-    "e24": { name: "Sebasti�n Cardona", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200&crop=face", location: "Bucaramanga, COL", role: "Estudiante de Ingenier�a � Tutor de Desarrollo Web", bio: "JavaScript, React y l�gica para crear tus primeros proyectos web." },
+    "e1": { name: "Camila Torres", avatar: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de 11Ã¯¿½ Ã¯¿½ Tutor de MatemÃ¯¿½ticas y FÃ¯¿½sica", bio: "Me gusta explicar matemÃ¯¿½ticas con ejemplos prÃ¯¿½cticos. Ayudo en Ã¯¿½lgebra, trigonometrÃ¯¿½a y preparaciÃ¯¿½n para exÃ¯¿½menes con mucha paciencia." },
+    "e2": { name: "Diego Morales", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de IngenierÃ¯¿½a Ã¯¿½ Tutor de ProgramaciÃ¯¿½n", bio: "Aprendemos Python, JavaScript y lÃ¯¿½gica desde cero con proyectos reales. Enfoque prÃ¯¿½ctico para iniciantes." },
+    "e3": { name: "LucÃ¯¿½a FernÃ¯¿½ndez", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&crop=face", location: "Floridablanca, COL", role: "Estudiante de QuÃ¯¿½mica Ã¯¿½ Tutor de BiologÃ¯¿½a y QuÃ¯¿½mica", bio: "Te ayudo a entender quÃ¯¿½mica y biologÃ¯¿½a con mapas mentales, resÃ¯¿½menes claros y ejercicios guiados." },
+    "e4": { name: "Mateo Valenzuela", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&crop=face", location: "Piedecuesta, COL", role: "Estudiante de 11Ã¯¿½ Ã¯¿½ Tutor de Ã¯¿½lgebra y GeometrÃ¯¿½a", bio: "Me gusta que mis compaÃ¯¿½eros entiendan el porquÃ¯¿½ de cada paso. Ejercicios resueltos juntos hasta dominar el tema." },
+    "e5": { name: "Valentina RÃ¯¿½os", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&crop=face", location: "GirÃ¯¿½n, COL", role: "Estudiante de Medicina Pregrado Ã¯¿½ Tutor de BiologÃ¯¿½a", bio: "Apoyo en biologÃ¯¿½a, anatomÃ¯¿½a bÃ¯¿½sica y tÃ¯¿½cnicas de estudio efectivas para bachillerato y primeros semestres." },
+    "e16": { name: "Mariana LÃ¯¿½pez", avatar: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de 11Ã¯¿½ Ã¯¿½ Tutora de MatemÃ¯¿½ticas", bio: "Ã¯¿½lgebra, trigonometrÃ¯¿½a y preparaciÃ¯¿½n para exÃ¯¿½menes. Clases amables, claras y con ejercicios prÃ¯¿½cticos." },
+    "e17": { name: "Juan Carlos PÃ¯¿½rez", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&crop=face", location: "Floridablanca, COL", role: "Estudiante de Sistemas Ã¯¿½ Tutor de ProgramaciÃ¯¿½n", bio: "Aprende Python desde cero con lÃ¯¿½gica, ejercicios y tus primeros proyectos web." },
+    "e18": { name: "Laura MartÃ¯¿½nez", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de QuÃ¯¿½mica Ã¯¿½ Tutora de QuÃ¯¿½mica y BiologÃ¯¿½a", bio: "Te ayudo con resÃ¯¿½menes, mapas mentales y resoluciÃ¯¿½n de ejercicios paso a paso." },
+    "e19": { name: "AndrÃ¯¿½s GÃ¯¿½mez", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400&crop=face", location: "Piedecuesta, COL", role: "Estudiante de IngenierÃ¯¿½a Ã¯¿½ Tutor de FÃ¯¿½sica", bio: "FÃ¯¿½sica mecÃ¯¿½nica y electromagnetismo con enfoque prÃ¯¿½ctico y visual." },
+    "e20": { name: "Sara Castillo", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&crop=face", location: "GirÃ¯¿½n, COL", role: "Estudiante de Idiomas Ã¯¿½ Tutora de InglÃ¯¿½s", bio: "InglÃ¯¿½s conversacional B1-B2, vocabulario prÃ¯¿½ctico y preparaciÃ¯¿½n para exÃ¯¿½menes." },
+    "e21": { name: "Miguel Ã¯¿½ngel Torres", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de MatemÃ¯¿½ticas Ã¯¿½ Tutor Universitario", bio: "Ã¯¿½lgebra lineal y cÃ¯¿½lculo diferencial con explicaciones claras y ejercicios guiados." },
+    "e22": { name: "Daniela RamÃ¯¿½rez", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&crop=face", location: "Bucaramanga, COL", role: "Estudiante de 11Ã¯¿½ Ã¯¿½ Tutora de Apoyo Escolar", bio: "Tareas, guÃ¯¿½as, resÃ¯¿½menes y organizaciÃ¯¿½n acadÃ¯¿½mica para mejorar tu rendimiento." },
+    "e23": { name: "Alejandra Vargas", avatar: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=400&crop=face", location: "Floridablanca, COL", role: "Estudiante de 11Ã¯¿½ Ã¯¿½ Tutora de TrigonometrÃ¯¿½a", bio: "TrigonometrÃ¯¿½a y geometrÃ¯¿½a analÃ¯¿½tica con ejercicios paso a paso." },
+    "e24": { name: "SebastiÃ¯¿½n Cardona", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200&crop=face", location: "Bucaramanga, COL", role: "Estudiante de IngenierÃ¯¿½a Ã¯¿½ Tutor de Desarrollo Web", bio: "JavaScript, React y lÃ¯¿½gica para crear tus primeros proyectos web." },
   };
 
   useEffect(() => {
@@ -156,26 +156,26 @@ function PerfilContent() {
               }
               
               triggerToast(
-                "Ubicación Detectada", 
-                `Hemos detectado tu ubicación actual: ${formattedLocation}`
+                "UbicaciÃ³n Detectada", 
+                `Hemos detectado tu ubicaciÃ³n actual: ${formattedLocation}`
               );
             }
           } catch (err) {
             console.error("Error reverse geocoding location:", err);
             if (isForModal) {
-              alert("No se pudo obtener la ubicación. Por favor escríbela manualmente.");
+              alert("No se pudo obtener la ubicaciÃ³n. Por favor escrÃ­bela manualmente.");
             }
           }
         },
         (error) => {
           console.warn("Geolocation permission error: ", error);
           if (isForModal) {
-            alert("No pudimos acceder a tu ubicación actual. Revisa los permisos de tu navegador.");
+            alert("No pudimos acceder a tu ubicaciÃ³n actual. Revisa los permisos de tu navegador.");
           }
         }
       );
     } else if (isForModal) {
-      alert("La geolocalización no está soportada en tu navegador.");
+      alert("La geolocalizaciÃ³n no estÃ¡ soportada en tu navegador.");
     }
   };
 
@@ -199,11 +199,11 @@ function PerfilContent() {
       if (savedLocation) {
         setUserLocation(savedLocation);
         // If it is the default location AND the user already accepted geolocation, auto-detect
-        if (savedLocation === "Ciudad de México (CDMX)" && savedShared === "true") {
+        if (savedLocation === "Ciudad de MÃ©xico (CDMX)" && savedShared === "true") {
           detectUserLocation(false);
         }
       } else {
-        localStorage.setItem("userLocation", "Ciudad de México (CDMX)");
+        localStorage.setItem("userLocation", "Ciudad de MÃ©xico (CDMX)");
         if (savedShared === "true") {
           detectUserLocation(false);
         }
@@ -222,7 +222,7 @@ function PerfilContent() {
   // Handle manual saving
   const handleSaveProfile = () => {
     if (!editName.trim()) {
-      alert("Por favor introduce un nombre válido.");
+      alert("Por favor introduce un nombre vÃ¡lido.");
       return;
     }
     setUserName(editName);
@@ -234,7 +234,7 @@ function PerfilContent() {
     localStorage.setItem("userAvatar", editPhoto);
 
     setIsEditOpen(false);
-    triggerToast("Perfil Actualizado", "Tus datos personales y foto de avatar se han guardado con éxito.");
+    triggerToast("Perfil Actualizado", "Tus datos personales y foto de avatar se han guardado con Ã©xito.");
   };
 
   // Process Custom File uploads to Base64
@@ -258,7 +258,7 @@ function PerfilContent() {
       setEscrowReleased(true);
       triggerToast(
         "Pago Autorizado", 
-        "El saldo en garantía de $14.00 USD ha sido transferido de forma segura a la cuenta de Mateo Valenzuela."
+        "El saldo en garantÃ­a de $14.00 USD ha sido transferido de forma segura a la cuenta de Mateo Valenzuela."
       );
     }, 1500);
   };
@@ -269,73 +269,73 @@ function PerfilContent() {
       id: "CM-2026-01",
       proName: "Camila Torres",
       avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&crop=face",
-      category: "Tutoría de Álgebra y Física",
+      category: "TutorÃ­a de Ãlgebra y FÃ­sica",
       date: "Mayo, 2026",
       amount: "$15.00 USD",
       status: "Completado",
-      desc: "Sesión intensiva de preparación para el examen bimestral de cálculo y física 11°. Incluye resolución de guía de 10 ejercicios paso a paso y apuntes en PDF."
+      desc: "SesiÃ³n intensiva de preparaciÃ³n para el examen bimestral de cÃ¡lculo y fÃ­sica 11Ã°. Incluye resoluciÃ³n de guÃ­a de 10 ejercicios paso a paso y apuntes en PDF."
     },
     {
       id: "CM-2026-02",
       proName: "Mateo Valenzuela",
       avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400&crop=face",
-      category: "Guías de Química Orgánica",
+      category: "GuÃ­as de QuÃ­mica OrgÃ¡nica",
       date: "Abril, 2026",
       amount: "$12.00 USD",
       status: "Completado",
-      desc: "Resolución y explicación del taller de hidrocarburos, enlaces moleculares y compuestos de carbono con diagramas de Lewis detallados."
+      desc: "ResoluciÃ³n y explicaciÃ³n del taller de hidrocarburos, enlaces moleculares y compuestos de carbono con diagramas de Lewis detallados."
     },
     {
       id: "CM-2026-03",
-      proName: "Sofía Salazar",
+      proName: "SofÃ­a Salazar",
       avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=400&crop=face",
-      category: "Clases de Inglés Saber 11",
+      category: "Clases de InglÃ©s Saber 11",
       date: "Marzo, 2026",
       amount: "$18.00 USD",
       status: "Completado",
-      desc: "Preparación especializada para la prueba de inglés del Icfes Saber 11. Enfoque en lectura crítica, conectores textuales y simulacro comentado."
+      desc: "PreparaciÃ³n especializada para la prueba de inglÃ©s del Icfes Saber 11. Enfoque en lectura crÃ­tica, conectores textuales y simulacro comentado."
     },
     {
       id: "CM-2026-04",
       proName: "Diego Morales",
       avatar: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=400&crop=face",
-      category: "Proyectos en Python e Informática",
+      category: "Proyectos en Python e InformÃ¡tica",
       date: "Febrero, 2026",
       amount: "$14.00 USD",
       status: "Completado",
-      desc: "Tutoría para entrega de proyecto escolar de programación en Python. Se implementaron algoritmos de búsqueda y estructuras de datos básicas."
+      desc: "TutorÃ­a para entrega de proyecto escolar de programaciÃ³n en Python. Se implementaron algoritmos de bÃºsqueda y estructuras de datos bÃ¡sicas."
     }
   ];
 
-  const reseñas: Review[] = [
+  const resenas: Review[] = [
     {
       id: 1,
       proName: "Camila Torres",
       avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&crop=face",
-      category: "Tutoría de Álgebra y Física",
+      category: "TutorÃ­a de Ãlgebra y FÃ­sica",
       date: "May, 2026",
       stars: 5,
-      comment: "Excelente compañera y tutora. Me explicó cálculo con muchísima paciencia y logré pasar el examen con 4.8. Súper recomendada.",
+      comment: "Excelente compaÃ±era y tutora. Me explicÃ³ cÃ¡lculo con muchÃ­sima paciencia y logrÃ© pasar el examen con 4.8. SÃºper recomendada.",
       publishDate: "20 de May, 2026"
     },
     {
       id: 2,
       proName: "Mateo Valenzuela",
       avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400&crop=face",
-      category: "Guías de Química Orgánica",
+      category: "GuÃ­as de QuÃ­mica OrgÃ¡nica",
       date: "Abr, 2026",
       stars: 5,
-      comment: "El taller de química orgánica quedó impecable. Todos los pasos explicados y la entrega fue puntual antes de la clase.",
+      comment: "El taller de quÃ­mica orgÃ¡nica quedÃ³ impecable. Todos los pasos explicados y la entrega fue puntual antes de la clase.",
       publishDate: "15 de Abr, 2026"
     },
     {
       id: 3,
-      proName: "Sofía Salazar",
+      proName: "SofÃ­a Salazar",
       avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=400&crop=face",
-      category: "Clases de Inglés Saber 11",
+      category: "Clases de InglÃ©s Saber 11",
       date: "Mar, 2026",
       stars: 4.9,
-      comment: "Muy buena sesión de repaso para el Saber 11. Me ayudó a ganar confianza en las lecturas largas y resolver rápido.",
+      comment: "Muy buena sesiÃ³n de repaso para el Saber 11. Me ayudÃ³ a ganar confianza en las lecturas largas y resolver rÃ¡pido.",
       publishDate: "28 de Mar, 2026"
     }
   ];
@@ -365,7 +365,7 @@ function PerfilContent() {
                   ClassMarket
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C5A059]/20 text-[#0B2545] border border-[#C5A059]/30">Estudiantil</span>
                 </span>
-                <span className="text-[10px] font-semibold text-[#5C6B73]">Educación e Intercambio Real</span>
+                <span className="text-[10px] font-semibold text-[#5C6B73]">EducaciÃ³n e Intercambio Real</span>
               </div>
             </div>
           </div>
@@ -378,7 +378,7 @@ function PerfilContent() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
                 </span>
-                <span className="text-xs font-semibold text-[#0d1c2e] tracking-tight">¿Deseas compartir tu ubicación actual para tu perfil?</span>
+                <span className="text-xs font-semibold text-[#0d1c2e] tracking-tight">Ã¿Deseas compartir tu ubicaciÃ³n actual para tu perfil?</span>
               </div>
               <div className="flex gap-2">
                 <button
@@ -404,13 +404,13 @@ function PerfilContent() {
             <div className="hidden md:flex items-center gap-3 bg-slate-50 border border-slate-100 px-4 py-1.5 rounded-full transition-all duration-300 hover:bg-slate-100/70">
               <MapPin size={14} className="text-sky-500 shrink-0" />
               <div className="flex flex-col text-left">
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none">Ubicación GPS</span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider leading-none">UbicaciÃ³n GPS</span>
                 <span className="text-xs font-extrabold text-[#0d1c2e] leading-tight line-clamp-1 max-w-[160px]">{userLocation}</span>
               </div>
               <button
                 onClick={() => detectUserLocation(false)}
                 className="ml-2 p-1.5 bg-white hover:bg-sky-50 text-[#0288D1] rounded-full border border-slate-100 transition-all active:scale-95 flex items-center justify-center shadow-sm"
-                title="Actualizar Ubicación automáticamente"
+                title="Actualizar UbicaciÃ³n automÃ¡ticamente"
               >
                 <RefreshCw size={10} className="text-[#0288D1]" />
               </button>
@@ -490,8 +490,8 @@ function PerfilContent() {
                   <p className="text-lg font-black text-[#0d1c2e]">{trabajos.length}</p>
                 </div>
                 <div className="bg-[#f8f9ff] p-3 rounded-2xl border border-[#e6eeff]/60">
-                  <span className="text-[10px] font-bold text-[#5e6f79] uppercase block tracking-wider mb-0.5">RESEÑAS</span>
-                  <p className="text-lg font-black text-pink-600">{reseñas.length}</p>
+                  <span className="text-[10px] font-bold text-[#5e6f79] uppercase block tracking-wider mb-0.5">RESEÃAS</span>
+                  <p className="text-lg font-black text-pink-600">{resenas.length}</p>
                 </div>
               </div>
 
@@ -526,14 +526,14 @@ function PerfilContent() {
                 Trabajos Contratados
               </button>
               <button 
-                onClick={() => setActiveTab("reseñas")}
+                onClick={() => setActiveTab("resenas")}
                 className={`flex-1 py-3 px-2 text-center rounded-full text-xs md:text-sm font-bold transition-all ${
-                  activeTab === "reseñas" 
+                  activeTab === "resenas" 
                     ? "bg-[#FCE4EC] text-[#D81B60]" 
                     : "text-[#5e6f79] hover:text-[#0d1c2e]"
                 }`}
               >
-                Nuestras Reseñas
+                Nuestras ReseÃ±as
               </button>
               <button 
                 onClick={() => setActiveTab("escrow")}
@@ -543,7 +543,7 @@ function PerfilContent() {
                     : "text-[#5e6f79] hover:text-[#0d1c2e]"
                 }`}
               >
-                Garantías y Escrow
+                GarantÃ­as y Escrow
               </button>
             </div>
 
@@ -567,7 +567,7 @@ function PerfilContent() {
                             <h3 className="font-bold text-[#0d1c2e] text-base group-hover:text-[#0288D1] transition-colors">{trabajo.proName}</h3>
                             <span className="text-[10px] font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded-full uppercase tracking-wider">{trabajo.status}</span>
                           </div>
-                          <p className="text-xs text-[#5e6f79] font-medium mt-0.5">{trabajo.category} • {trabajo.date}</p>
+                          <p className="text-xs text-[#5e6f79] font-medium mt-0.5">{trabajo.category} Ã¢¢ {trabajo.date}</p>
                         </div>
                       </div>
                       
@@ -589,35 +589,35 @@ function PerfilContent() {
               )}
 
               {/* Tab 2: Reviews Written by User */}
-              {activeTab === "reseñas" && (
+              {activeTab === "resenas" && (
                 <div className="space-y-4">
-                  {reseñas.map((reseña) => (
+                  {resenas.map((review) => (
                     <div 
-                      key={reseña.id} 
+                      key={review.id} 
                       className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#e6eeff] hover:border-pink-200 transition-all"
                     >
                       <div className="flex gap-4 items-start">
                         <div className="w-12 h-12 rounded-full overflow-hidden border border-slate-100 shrink-0">
-                          <img src={reseña.avatar} alt={reseña.proName} className="w-full h-full object-cover" />
+                          <img src={review.avatar} alt={review.proName} className="w-full h-full object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex justify-between items-start flex-wrap gap-2">
                             <div>
-                              <h4 className="font-bold text-[#0d1c2e] text-sm">Reseña para {reseña.proName}</h4>
-                              <p className="text-[11px] text-[#5e6f79] font-medium">{reseña.category} • Contratado en {reseña.date}</p>
+                              <h4 className="font-bold text-[#0d1c2e] text-sm">ReseÃ±a para {review.proName}</h4>
+                              <p className="text-[11px] text-[#5e6f79] font-medium">{review.category} Ã¢¢ Contratado en {review.date}</p>
                             </div>
                             <div className="flex items-center gap-1 bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-bold border border-amber-100">
                               <Star size={14} className="fill-[#C5A059] text-[#C5A059]" />
-                              <span>{reseña.stars.toFixed(1)}</span>
+                              <span>{review.stars.toFixed(1)}</span>
                             </div>
                           </div>
                           
                           <p className="text-sm text-slate-600 mt-3 leading-relaxed bg-[#f8f9ff]/60 p-4 rounded-2xl border border-slate-50">
-                            "{reseña.comment}"
+                            "{review.comment}"
                           </p>
                           
                           <div className="mt-4 flex items-center justify-between text-[10px] font-bold text-[#5e6f79] uppercase tracking-wider">
-                            <span>Publicado el {reseña.publishDate}</span>
+                            <span>Publicado el {review.publishDate}</span>
                             <span className="text-[#0288D1] flex items-center gap-1">
                               <ShieldCheck size={14} /> Verificada por Escrow
                             </span>
@@ -646,12 +646,12 @@ function PerfilContent() {
                       <div>
                         <span className="text-[10px] font-black text-[#C5A059] uppercase tracking-widest block mb-0.5">CONTRATO ACTIVO</span>
                         <h3 className="font-extrabold text-[#0B2545] text-lg leading-tight">Mateo Valenzuela</h3>
-                        <p className="text-xs text-[#5C6B73] font-medium mt-0.5">Tutoría de Química y Biología</p>
+                        <p className="text-xs text-[#5C6B73] font-medium mt-0.5">TutorÃ­a de QuÃ­mica y BiologÃ­a</p>
                       </div>
                     </div>
                     
                     <div className="bg-[#FAF8F5] border border-[#C5A059]/30 text-[#0B2545] px-4 py-2 rounded-2xl flex flex-col text-right">
-                      <span className="text-[8px] font-bold uppercase tracking-wider block text-[#5C6B73]">FONDOS EN GARANTÍA</span>
+                      <span className="text-[8px] font-bold uppercase tracking-wider block text-[#5C6B73]">FONDOS EN GARANTÃA</span>
                       <span className="text-lg font-black leading-none text-[#0B2545]">$14.00 USD</span>
                     </div>
                   </div>
@@ -673,7 +673,7 @@ function PerfilContent() {
                         {/* Step 1 */}
                         <div className="flex flex-col items-center text-center">
                           <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shadow-sm">
-                            ✓
+                            Ã¢
                           </div>
                           <span className="text-[10px] font-extrabold text-[#0d1c2e] mt-2 block uppercase tracking-wider">Depositado</span>
                           <span className="text-[9px] text-[#5e6f79] mt-0.5">04 May, 2026</span>
@@ -681,7 +681,7 @@ function PerfilContent() {
                         {/* Step 2 */}
                         <div className="flex flex-col items-center text-center">
                           <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shadow-sm">
-                            ✓
+                            Ã¢
                           </div>
                           <span className="text-[10px] font-extrabold text-[#0d1c2e] mt-2 block uppercase tracking-wider">Entregado</span>
                           <span className="text-[9px] text-[#5e6f79] mt-0.5">14 May, 2026</span>
@@ -691,7 +691,7 @@ function PerfilContent() {
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-sm transition-colors duration-300 ${
                             escrowReleased ? "bg-emerald-500 text-white" : "bg-white text-emerald-500 border-2 border-emerald-500"
                           }`}>
-                            {escrowReleased ? "✓" : "3"}
+                            {escrowReleased ? "Ã¢" : "3"}
                           </div>
                           <span className="text-[10px] font-extrabold text-[#0d1c2e] mt-2 block uppercase tracking-wider">Liberado</span>
                           <span className="text-[9px] text-[#5e6f79] mt-0.5">
@@ -706,7 +706,7 @@ function PerfilContent() {
                   <div className="bg-[#f8f9ff] border border-[#e6eeff] p-5 rounded-2xl flex gap-3 items-start mb-6">
                     <Info className="text-sky-500 shrink-0 mt-0.5" size={18} />
                     <p className="text-xs text-[#5e6f79] leading-relaxed">
-                      El trabajo ha sido entregado en la plataforma. Por favor, revisa detalladamente que todos los entregables acordados funcionen de manera correcta antes de presionar el botón de liberación de fondos. Una vez liberados, los fondos se transferirán permanentemente al contratista.
+                      El trabajo ha sido entregado en la plataforma. Por favor, revisa detalladamente que todos los entregables acordados funcionen de manera correcta antes de presionar el botÃ³n de liberaciÃ³n de fondos. Una vez liberados, los fondos se transferirÃ¡n permanentemente al contratista.
                     </p>
                   </div>
 
@@ -796,7 +796,7 @@ function PerfilContent() {
                 <div>
                   <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-0.5">RESUMEN DEL CONTRATO</span>
                   <h3 className="text-xl font-extrabold text-[#0B2545] tracking-tight">{selectedContract.proName}</h3>
-                  <p className="text-xs text-[#5e6f79] font-medium mt-0.5">{selectedContract.category} • Habilitado el {selectedContract.date}</p>
+                  <p className="text-xs text-[#5e6f79] font-medium mt-0.5">{selectedContract.category} Ã¢¢ Habilitado el {selectedContract.date}</p>
                 </div>
                 <button 
                   onClick={() => setSelectedContract(null)}
@@ -811,7 +811,7 @@ function PerfilContent() {
                 
                 {/* Description */}
                 <div>
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">DESCRIPCIÓN DEL PROYECTO</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">DESCRIPCIÃN DEL PROYECTO</label>
                   <p className="text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100 font-medium">
                     {selectedContract.desc}
                   </p>
@@ -835,7 +835,7 @@ function PerfilContent() {
                   <div className="text-left">
                     <span className="text-[10px] font-black text-emerald-800 uppercase tracking-wider block">CUSTODIA ESCROW FIRMADA</span>
                     <p className="text-[10px] text-emerald-700 leading-none mt-0.5 font-semibold">
-                      Transacción sellada digitalmente e inalterable bajo protocolo seguro de fideicomiso.
+                      TransacciÃ³n sellada digitalmente e inalterable bajo protocolo seguro de fideicomiso.
                     </p>
                   </div>
                 </div>
@@ -886,7 +886,7 @@ function PerfilContent() {
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <h3 className="text-xl font-extrabold text-[#0B2545] tracking-tight">Editar Datos de Perfil</h3>
-                  <p className="text-xs text-[#5e6f79] font-medium mt-0.5">Mantén tu información actualizada para la comunidad.</p>
+                  <p className="text-xs text-[#5e6f79] font-medium mt-0.5">MantÃ©n tu informaciÃ³n actualizada para la comunidad.</p>
                 </div>
                 <button 
                   onClick={() => setIsEditOpen(false)}
@@ -952,7 +952,7 @@ function PerfilContent() {
                 {/* Location field with GPS Autodetect */}
                 <div>
                   <div className="flex justify-between items-center ml-1">
-                    <label className="text-[10px] font-bold text-[#0d1c2e] uppercase tracking-wider">Ubicación / Ciudad</label>
+                    <label className="text-[10px] font-bold text-[#0d1c2e] uppercase tracking-wider">UbicaciÃ³n / Ciudad</label>
                     <button
                       type="button"
                       onClick={() => detectUserLocation(true)}
@@ -1075,10 +1075,10 @@ function PerfilContent() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-center mb-0.5">
-                        <span className="font-bold text-sm text-[#0d1c2e]">Alex Martínez</span>
+                        <span className="font-bold text-sm text-[#0d1c2e]">Alex MartÃ­nez</span>
                         <span className="text-[10px] text-[#0288D1] font-bold">2 min</span>
                       </div>
-                      <p className="text-xs text-[#5e6f79] line-clamp-2 font-medium">¡Hola Mariana! He subido los entregables de la Fase 1. Quedo atento a tu revisión...</p>
+                      <p className="text-xs text-[#5e6f79] line-clamp-2 font-medium">Ã¡Hola Mariana! He subido los entregables de la Fase 1. Quedo atento a tu revisiÃ³n...</p>
                     </div>
                     <span className="absolute top-4 right-4 w-2 h-2 bg-pink-500 rounded-full"></span>
                   </div>
@@ -1103,7 +1103,7 @@ function PerfilContent() {
                         <span className="font-bold text-sm text-[#0d1c2e]">Elena Varas</span>
                         <span className="text-[10px] text-[#5e6f79] font-medium">1 h</span>
                       </div>
-                      <p className="text-xs text-[#5e6f79] line-clamp-2 font-medium">Perfecto, ya recibí el comprobante del depósito de garantía. Mañana iniciamos con el análisis.</p>
+                      <p className="text-xs text-[#5e6f79] line-clamp-2 font-medium">Perfecto, ya recibÃ­ el comprobante del depÃ³sito de garantÃ­a. MaÃ±ana iniciamos con el anÃ¡lisis.</p>
                     </div>
                   </div>
 
@@ -1127,7 +1127,7 @@ function PerfilContent() {
                         <span className="font-bold text-sm text-[#0d1c2e]">Carlos Mendoza</span>
                         <span className="text-[10px] text-[#5e6f79] font-medium">1 d</span>
                       </div>
-                      <p className="text-xs text-[#5e6f79] line-clamp-2 font-medium">¡Muchas gracias por la excelente reseña, Mariana! Fue un placer remodelar tu espacio.</p>
+                      <p className="text-xs text-[#5e6f79] line-clamp-2 font-medium">Ã¡Muchas gracias por la excelente review, Mariana! Fue un placer remodelar tu espacio.</p>
                     </div>
                   </div>
                 </div>
@@ -1137,9 +1137,9 @@ function PerfilContent() {
                   <div className="p-4 rounded-[2rem] bg-emerald-50/70 border border-emerald-100 flex gap-3">
                     <Unlock className="text-emerald-500 shrink-0 mt-0.5 animate-pulse" size={16} />
                     <div>
-                      <h5 className="font-bold text-sm text-emerald-900 leading-tight">Garantía Escrow Retenida</h5>
+                      <h5 className="font-bold text-sm text-emerald-900 leading-tight">GarantÃ­a Escrow Retenida</h5>
                       <p className="text-xs text-emerald-700 mt-1 font-medium leading-relaxed">
-                        El depósito de $1,224.00 ha sido resguardado de forma segura en fideicomiso para el proyecto de Alex Martínez.
+                        El depÃ³sito de $1,224.00 ha sido resguardado de forma segura en fideicomiso para el proyecto de Alex MartÃ­nez.
                       </p>
                       <span className="text-[9px] text-emerald-600 font-bold uppercase tracking-wider block mt-2">5 MINUTOS</span>
                     </div>
@@ -1151,7 +1151,7 @@ function PerfilContent() {
                     <div>
                       <h5 className="font-bold text-sm text-sky-900 leading-tight">Entregables Recibidos</h5>
                       <p className="text-xs text-sky-700 mt-1 font-medium leading-relaxed">
-                        Alex Martínez ha subido los archivos fuente y documentación técnica de la Fase 1 a la sala de evidencias.
+                        Alex MartÃ­nez ha subido los archivos fuente y documentaciÃ³n tÃ©cnica de la Fase 1 a la sala de evidencias.
                       </p>
                       <span className="text-[9px] text-sky-600 font-bold uppercase tracking-wider block mt-2">2 HORAS</span>
                     </div>
@@ -1161,11 +1161,11 @@ function PerfilContent() {
                   <div className="p-4 rounded-[2rem] bg-pink-50/50 border border-pink-100 flex gap-3">
                     <Star className="text-pink-500 fill-pink-500 shrink-0 mt-0.5" size={16} />
                     <div>
-                      <h5 className="font-bold text-sm text-pink-900 leading-tight">Nueva Calificación</h5>
+                      <h5 className="font-bold text-sm text-pink-900 leading-tight">Nueva CalificaciÃ³n</h5>
                       <p className="text-xs text-pink-700 mt-1 font-medium leading-relaxed">
-                        Carlos Mendoza te ha calificado con 5 estrellas por tu excelente comunicación y puntualidad en el pago.
+                        Carlos Mendoza te ha calificado con 5 estrellas por tu excelente comunicaciÃ³n y puntualidad en el pago.
                       </p>
-                      <span className="text-[9px] text-pink-600 font-bold uppercase tracking-wider block mt-2">1 DÍA</span>
+                      <span className="text-[9px] text-pink-600 font-bold uppercase tracking-wider block mt-2">1 DÃA</span>
                     </div>
                   </div>
                 </div>
@@ -1181,13 +1181,13 @@ function PerfilContent() {
   );
 }
 
- e x p o r t   d e f a u l t   f u n c t i o n   P e r f i l P a g e ( )   { 
-     r e t u r n   ( 
-         < S u s p e n s e   f a l l b a c k = { < d i v   c l a s s N a m e = ' m i n - h - s c r e e n   f l e x   i t e m s - c e n t e r   j u s t i f y - c e n t e r   b g - [ # F A F 8 F 5 ] ' > < d i v   c l a s s N a m e = ' w - 1 0   h - 1 0   b o r d e r - 4   b o r d e r - [ # 0 B 2 5 4 5 ] / 1 0   b o r d e r - t - [ # 0 B 2 5 4 5 ]   r o u n d e d - f u l l   a n i m a t e - s p i n '   / > < / d i v > } > 
-             < P e r f i l C o n t e n t   / > 
-         < / S u s p e n s e > 
-     ) ; 
- } 
- 
- 
- 
+export default function PerfilPage() {
+  return (
+    <Suspense fallback={<div className='min-h-screen flex items-center justify-center bg-[#FAF8F5]'><div className='w-10 h-10 border-4 border-[#0B2545]/10 border-t-[#0B2545] rounded-full animate-spin' /></div>}>
+      <PerfilContent />
+    </Suspense>
+  );
+}
+
+
+
