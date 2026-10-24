@@ -199,23 +199,24 @@ export default function AdvancedNegotiationView({ expertData }: AdvancedNegotiat
             </div>
           </div>
 
-          {/* Tarjeta de Total Acordado (Pink Bottom) */}
+          {/* Tarjeta de Total Acordado (Navy & Gold) */}
           <motion.div 
             layout
-            className="mt-auto bg-[#FCE4EC]/50 border border-[#F8BBD0]/30 rounded-2xl p-5"
+            className="mt-auto bg-[#FAF8F5] border border-[#C5A059]/40 rounded-2xl p-5 shadow-sm"
           >
             <div className="flex justify-between items-center mb-2">
-              <span className="text-[10px] font-bold text-[#C2185B] uppercase tracking-widest">Total Acordado</span>
-              <Info className="w-4 h-4 text-[#F06292]" />
+              <span className="text-[10px] font-bold text-[#0B2545] uppercase tracking-widest">Total Acordado</span>
+              <Info className="w-4 h-4 text-[#C5A059]" />
             </div>
             
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-[#AD1457]">
+              <span className="text-2xl font-black text-[#0B2545]">
                 ${totalAgreed.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </span>
+              <span className="text-xs font-semibold text-[#5C6B73]">USD</span>
             </div>
-            <p className="text-[10px] text-[#D81B60] font-medium italic mt-1 opacity-70">
-              Incluye 15% ajuste solicitado
+            <p className="text-[10px] text-[#5C6B73] font-medium italic mt-1">
+              Incluye garantía y soporte académico
             </p>
           </motion.div>
         </div>
@@ -274,7 +275,7 @@ export default function AdvancedNegotiationView({ expertData }: AdvancedNegotiat
                       <div className={`max-w-[85%] lg:max-w-[70%] p-5 rounded-2xl shadow-sm relative group/msg ${
                         msg.sender === 'client' 
                           ? 'bg-[#E3F2FD]/80 text-gray-800 rounded-bl-none border border-[#BBDEFB]/30' 
-                          : 'bg-white text-gray-800 rounded-br-none border border-[#FCE4EC] ring-1 ring-[#FCE4EC]/50'
+                          : 'bg-white text-gray-800 rounded-br-none border border-slate-200 ring-1 ring-slate-100'
                       }`}>
                         <p className={`text-sm lg:text-[15px] leading-relaxed font-medium ${msg.text.includes('eliminado') ? 'opacity-40 italic' : ''}`}>
                           {msg.text}
@@ -336,18 +337,18 @@ export default function AdvancedNegotiationView({ expertData }: AdvancedNegotiat
             <button 
               onClick={() => setIsEditing(!isEditing)}
               className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-full font-bold text-xs transition-all ${
-                isEditing ? 'bg-blue-600 text-white' : 'bg-[#FCE4EC] text-[#AD1457] hover:bg-[#F8BBD0]'
+                isEditing ? 'bg-[#0B2545] text-[#C5A059]' : 'bg-[#FAF8F5] text-[#0B2545] border border-[#C5A059]/40 hover:bg-[#C5A059]/15'
               }`}
             >
-              <Pencil className="w-4 h-4" />
+              <Pencil className="w-4 h-4 text-[#C5A059]" />
               <span>{isEditing ? 'GUARDAR CAMBIOS' : 'AJUSTAR PRESUPUESTO'}</span>
             </button>
             
             <Link 
               href="/confirmacion-contrato"
-              className={`flex-[3] flex items-center justify-center gap-3 bg-slate-700 text-white h-12 rounded-full font-black text-xs uppercase tracking-widest hover:bg-slate-800 shadow-lg shadow-slate-200 transition-all active:scale-95`}
+              className={`flex-[3] flex items-center justify-center gap-3 bg-[#0B2545] text-white h-12 rounded-full font-black text-xs uppercase tracking-widest hover:bg-[#134074] shadow-lg shadow-[#0B2545]/15 transition-all active:scale-95 border border-[#C5A059]/40`}
             >
-              <FileText className="w-4 h-4" />
+              <FileText className="w-4 h-4 text-[#C5A059]" />
               <span>Enviar Términos y Condiciones</span>
             </Link>
           </motion.div>
@@ -364,12 +365,12 @@ export default function AdvancedNegotiationView({ expertData }: AdvancedNegotiat
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Escribe una contraoferta o mensaje..."
-                className="w-full bg-[#F8FAFC] border border-gray-100 rounded-full px-8 py-4 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-50/50 focus:border-blue-100 transition-all placeholder:text-gray-400 shadow-inner"
+                className="w-full bg-[#F8FAFC] border border-gray-100 rounded-full px-8 py-4 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-[#0B2545]/10 focus:border-[#0B2545]/20 transition-all placeholder:text-gray-400 shadow-inner"
               />
             </div>
             <button 
               onClick={handleSendMessage}
-              className="bg-[#FCE4EC] w-14 h-14 rounded-full flex items-center justify-center text-[#AD1457] shadow-lg shadow-pink-100/50 hover:scale-105 active:scale-95 transition-all"
+              className="bg-[#0B2545] w-14 h-14 rounded-full flex items-center justify-center text-[#C5A059] shadow-lg shadow-[#0B2545]/20 hover:bg-[#134074] hover:scale-105 active:scale-95 transition-all border border-[#C5A059]/30"
             >
               <Send className="w-5 h-5 fill-current" />
             </button>

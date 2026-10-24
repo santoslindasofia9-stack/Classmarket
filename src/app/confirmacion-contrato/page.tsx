@@ -459,8 +459,8 @@ const ContractConfirmationPage = () => {
           >
             {/* Header */}
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 rounded-2xl bg-[#FCE4EC]/60 flex items-center justify-center text-[#880e4f]">
-                <Wallet size={26} />
+              <div className="w-12 h-12 rounded-2xl bg-[#FAF8F5] border border-[#C5A059]/40 flex items-center justify-center text-[#0B2545]">
+                <Wallet size={26} className="text-[#C5A059]" />
               </div>
               <div>
                 <h3 className="text-2xl md:text-3xl font-bold text-[#0d1c2e]">Estructura de Pago</h3>
@@ -677,7 +677,7 @@ const ContractConfirmationPage = () => {
                       {selectedConfig ? (
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: selectedConfig.bg }}>{selectedConfig.icon}</div>
                       ) : (
-                        <div className="w-10 h-10 rounded-xl bg-[#FCE4EC] flex items-center justify-center"><Wallet size={20} className="text-[#880e4f]" /></div>
+                        <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] border border-[#C5A059]/30 flex items-center justify-center"><Wallet size={20} className="text-[#C5A059]" /></div>
                       )}
                       <div>
                         <p className="font-extrabold text-[#0d1c2e] text-base">{selectedConfig ? selectedConfig.label : 'Pago del Anticipo'}</p>
@@ -698,7 +698,7 @@ const ContractConfirmationPage = () => {
 
       <style jsx>{`
         .ethereal-gradient {
-          background: linear-gradient(135deg, #e0f2fe 0%, #fce4ec 100%);
+          background: linear-gradient(135deg, #FAF8F5 0%, #F4F6F9 100%);
         }
       `}</style>
     </div>

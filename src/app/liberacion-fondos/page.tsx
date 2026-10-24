@@ -136,8 +136,8 @@ export default function LiberacionFondosPage() {
   const [pseBank, setPseBank] = useState('');
   const [pseDoc, setPseDoc] = useState('');
 
-  const TOTAL = '$2,250.00';
-  const TOTAL_CONTRACT = '$4,500.00';
+  const TOTAL = '$9.00';
+  const TOTAL_CONTRACT = '$18.00';
 
   const openModal = (id: PayMethod) => {
     setSelectedMethod(id);
@@ -257,7 +257,7 @@ startxref
             </button>
             <button
               onClick={() => router.push('/confirmacion-pago-final')}
-              className="w-full py-4 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold rounded-2xl transition-all active:scale-95 text-sm"
+              className="w-full py-4 bg-[#0B2545] hover:bg-[#134074] text-white font-bold rounded-2xl transition-all active:scale-95 text-sm border border-[#C5A059]/40"
             >
               Siguiente
             </button>
@@ -448,9 +448,9 @@ startxref
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-pink-50/20 font-sans">
+    <div className="min-h-screen bg-[#FAF8F5]/80 font-sans">
       {/* Decorative blobs */}
-      <div className="fixed -bottom-20 -right-20 w-80 h-80 bg-pink-100/30 rounded-full blur-[80px] pointer-events-none" />
+      <div className="fixed -bottom-20 -right-20 w-80 h-80 bg-[#C5A059]/10 rounded-full blur-[80px] pointer-events-none" />
       <div className="fixed -top-20 -left-20 w-64 h-64 bg-sky-100/30 rounded-full blur-[60px] pointer-events-none" />
 
       {/* Header */}
@@ -476,12 +476,12 @@ startxref
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center text-center gap-3"
         >
-          <div className="w-20 h-20 rounded-full bg-[#FCE4EC] flex items-center justify-center shadow-lg shadow-pink-100 mb-2">
+          <div className="w-20 h-20 rounded-full bg-[#FAF8F5] border border-[#C5A059]/40 flex items-center justify-center shadow-md mb-2">
             <span className="text-4xl">🎉</span>
           </div>
-          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">¡Listo para finalizar!</h2>
+          <h2 className="text-3xl font-extrabold text-[#0B2545] tracking-tight">¡Listo para finalizar!</h2>
           <p className="text-slate-500 text-base max-w-md leading-relaxed">
-            El trabajo ha sido completado satisfactoriamente. Paga la segunda mitad del contrato para liberar los fondos al profesional.
+            La tutoría y entrega del taller han sido completadas satisfactoriamente. Paga la segunda mitad del depósito en garantía para liberar los fondos al tutor.
           </p>
         </motion.div>
 
@@ -494,25 +494,25 @@ startxref
         >
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-[10px] font-black text-sky-500 uppercase tracking-widest mb-1">Servicio Prestado</p>
-              <h3 className="text-xl font-extrabold text-slate-900">Diseño de Identidad Visual Premium</h3>
+              <p className="text-[10px] font-black text-[#C5A059] uppercase tracking-widest mb-1">Servicio Prestado</p>
+              <h3 className="text-xl font-extrabold text-[#0B2545]">Tutoría de Matemáticas & Taller de Álgebra</h3>
             </div>
-            <span className="bg-[#FCE4EC] text-[#880e4f] text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">Completado</span>
+            <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">Completado</span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 py-4 border-y border-slate-50">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 text-lg">👤</div>
+              <div className="w-10 h-10 rounded-full bg-[#FAF8F5] border border-[#C5A059]/30 flex items-center justify-center text-slate-400 text-lg">👤</div>
               <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Profesional</p>
-                <p className="text-sm font-bold text-slate-900">Expert Professional</p>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tutor Académico</p>
+                <p className="text-sm font-bold text-[#0B2545]">Camila Torres (Tutor Destacado)</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 text-lg">📅</div>
+              <div className="w-10 h-10 rounded-full bg-[#FAF8F5] border border-[#C5A059]/30 flex items-center justify-center text-slate-400 text-lg">📅</div>
               <div>
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Entrega</p>
-                <p className="text-sm font-bold text-slate-900">24 de Mayo, 2026</p>
+                <p className="text-sm font-bold text-[#0B2545]">24 de Mayo, 2026</p>
               </div>
             </div>
           </div>
@@ -525,15 +525,15 @@ startxref
             </div>
             <div className="flex justify-between items-center text-sm text-slate-500">
               <span>1ª mitad pagada al inicio ✓</span>
-              <span className="font-semibold text-green-600">- $2,250.00</span>
+              <span className="font-semibold text-green-600">- $9.00 USD</span>
             </div>
             <div className="flex justify-between items-center text-sm text-slate-500">
               <span>Tasa de Marketplace</span>
-              <span className="font-semibold text-slate-700">$45.00</span>
+              <span className="font-semibold text-slate-700">$0.90 USD</span>
             </div>
             <div className="flex justify-between items-center pt-3 border-t border-dashed border-slate-200">
-              <span className="text-base font-extrabold text-slate-900">Total a pagar ahora</span>
-              <span className="text-xl font-black text-[#880e4f]">{TOTAL}</span>
+              <span className="text-base font-extrabold text-[#0B2545]">Total a pagar ahora</span>
+              <span className="text-2xl font-black text-[#0B2545]">{TOTAL}</span>
             </div>
           </div>
         </motion.div>
@@ -578,8 +578,8 @@ startxref
         {/* Trust badges */}
         <div className="grid grid-cols-3 gap-3 pb-6">
           {[
-            { Icon: Shield, label: 'Garantía Trust', color: 'text-sky-500', bg: 'bg-sky-50' },
-            { Icon: BookOpen, label: 'Contrato Digital', color: 'text-pink-500', bg: 'bg-pink-50' },
+            { Icon: Shield, label: 'Garantía Trust', color: 'text-[#0B2545]', bg: 'bg-[#FAF8F5]' },
+            { Icon: BookOpen, label: 'Contrato Digital', color: 'text-[#C5A059]', bg: 'bg-[#FAF8F5]' },
             { Icon: HeadphonesIcon, label: 'Soporte 24/7', color: 'text-slate-500', bg: 'bg-slate-50' },
           ].map(({ Icon, label, color, bg }) => (
             <div key={label} className={`${bg} rounded-2xl p-4 flex flex-col items-center text-center gap-2 border border-slate-100`}>

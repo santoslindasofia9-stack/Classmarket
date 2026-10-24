@@ -37,11 +37,11 @@ export default function ProjectTrackingPage() {
 
   // Estados de Evidencias (con carga funcional)
   const [evidences, setEvidences] = useState([
-    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=400",
-    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=400",
-    "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=400",
-    "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=400",
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=400",
+    "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=400",
+    "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=400",
+    "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=400",
+    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=400",
+    "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=400",
   ]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -99,10 +99,10 @@ export default function ProjectTrackingPage() {
           <div className="flex items-center gap-6 relative">
             {/* Campanita Funcional */}
             <div>
-              <button onClick={() => setIsNotifOpen(!isNotifOpen)} className="text-slate-400 hover:text-slate-600 transition-colors relative p-2">
+              <button onClick={() => setIsNotifOpen(!isNotifOpen)} className="text-slate-400 hover:text-[#0B2545] transition-colors relative p-2">
                 <Bell size={24} />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white"></span>
+                  <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#C5A059] rounded-full border-2 border-white"></span>
                 )}
               </button>
               
@@ -119,14 +119,14 @@ export default function ProjectTrackingPage() {
                       <div className="p-4 border-b border-slate-100 flex justify-between items-center">
                         <span className="font-bold text-slate-900">Notificaciones</span>
                         {unreadCount > 0 && (
-                          <button onClick={() => setNotifications(n => n.map(x => ({...x, read: true})))} className="text-xs text-sky-500 font-bold hover:underline">
+                          <button onClick={() => setNotifications(n => n.map(x => ({...x, read: true})))} className="text-xs text-[#0B2545] font-bold hover:underline">
                             Marcar leídas
                           </button>
                         )}
                       </div>
                       <div className="max-h-60 overflow-y-auto">
                         {notifications.map(n => (
-                          <div key={n.id} className={`p-4 border-b border-slate-50 text-sm ${n.read ? 'bg-white' : 'bg-slate-50'}`}>
+                          <div key={n.id} className={`p-4 border-b border-slate-50 text-sm ${n.read ? 'bg-white' : 'bg-[#FAF8F5]'}`}>
                             <p className={`text-slate-800 ${n.read ? '' : 'font-semibold'}`}>{n.text}</p>
                             <p className="text-xs text-slate-400 mt-1">{n.time}</p>
                           </div>
@@ -144,10 +144,10 @@ export default function ProjectTrackingPage() {
             {/* Perfil del Usuario Logueado */}
             <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-slate-900">{userName}</p>
-                <p className="text-[11px] font-semibold text-sky-500 uppercase tracking-wider">{userRole}</p>
+                <p className="text-sm font-bold text-[#0B2545]">{userName}</p>
+                <p className="text-[11px] font-bold text-[#C5A059] uppercase tracking-wider">{userRole}</p>
               </div>
-              <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm ring-2 ring-slate-100 bg-slate-100">
+              <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#C5A059]/40 shadow-sm ring-2 ring-slate-100 bg-slate-100">
                 {userAvatar ? (
                   <Image 
                     src={userAvatar || ''} 
@@ -156,7 +156,7 @@ export default function ProjectTrackingPage() {
                     className="object-cover"
                   />
                 ) : (
-                  <span className="absolute inset-0 flex items-center justify-center font-bold text-slate-500 text-sm uppercase">
+                  <span className="absolute inset-0 flex items-center justify-center font-bold text-[#0B2545] text-sm uppercase">
                     {userName.charAt(0)}
                   </span>
                 )}
@@ -176,18 +176,18 @@ export default function ProjectTrackingPage() {
         >
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse"></span>
-              <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Proyecto Activo</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-[#C5A059] animate-pulse"></span>
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Tutoría Activa</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Diseño de Interiores – Suite Nube
+            <h1 className="text-3xl md:text-4xl font-extrabold text-[#0B2545] tracking-tight">
+              Tutoría de Matemáticas & Taller de Álgebra
             </h1>
             <p className="text-slate-500 font-medium text-lg">
-              Siguiente hito: <span className="text-slate-800 font-semibold">Confirmación de Materiales Finales</span>
+              Siguiente hito: <span className="text-slate-800 font-semibold">Revisión de Ejercicios y Guía Resuelta</span>
             </p>
           </div>
 
-          <div className="flex items-center gap-6 bg-slate-50 rounded-2xl p-6 border border-slate-100">
+          <div className="flex items-center gap-6 bg-[#FAF8F5] rounded-2xl p-6 border border-[#C5A059]/20">
             <div className="relative w-20 h-20">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
                 <path
@@ -198,7 +198,7 @@ export default function ProjectTrackingPage() {
                   strokeWidth="3"
                 />
                 <path
-                  className="text-sky-500"
+                  className="text-[#C5A059]"
                   strokeDasharray="75, 100"
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                   fill="none"
@@ -207,12 +207,12 @@ export default function ProjectTrackingPage() {
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-xl font-bold text-slate-900">75%</span>
+                <span className="text-xl font-bold text-[#0B2545]">75%</span>
               </div>
             </div>
             <div>
               <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Estado Actual</p>
-              <p className="text-sky-600 font-bold bg-sky-50 px-3 py-1 rounded-lg inline-block text-sm">En Progreso</p>
+              <p className="text-[#0B2545] font-bold bg-[#FAF8F5] border border-[#C5A059]/30 px-3 py-1 rounded-lg inline-block text-sm">En Progreso</p>
             </div>
           </div>
         </motion.div>
@@ -279,45 +279,45 @@ export default function ProjectTrackingPage() {
                 <h2 className="text-xl font-bold text-slate-900">Seguimiento</h2>
               </div>
 
-              <div className="relative border-l-2 border-sky-100 ml-4 space-y-8 pb-4">
+              <div className="relative border-l-2 border-slate-200 ml-4 space-y-8 pb-4">
                 
                 {/* Completed Hito 1 */}
                 <div className="relative pl-8">
-                  <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-sky-500 flex items-center justify-center ring-4 ring-white">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-[#0B2545] flex items-center justify-center ring-4 ring-white">
+                    <Check size={12} className="text-[#C5A059]" strokeWidth={3} />
                   </div>
                   <div className="mb-1 flex items-center justify-between">
-                    <h3 className="font-bold text-slate-900 text-sm">Consulta Inicial</h3>
+                    <h3 className="font-bold text-slate-900 text-sm">Diagnóstico & Consulta Inicial</h3>
                     <span className="text-[10px] font-bold text-slate-400">12 OCT, 2023</span>
                   </div>
-                  <p className="text-sm text-slate-500 leading-relaxed">Definición de objetivos y paleta de colores celestial.</p>
+                  <p className="text-sm text-slate-500 leading-relaxed">Definición de objetivos de examen y dudas principales de álgebra.</p>
                 </div>
 
                 {/* Completed Hito 2 */}
                 <div className="relative pl-8">
-                  <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-sky-500 flex items-center justify-center ring-4 ring-white">
-                    <Check size={12} className="text-white" strokeWidth={3} />
+                  <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-[#0B2545] flex items-center justify-center ring-4 ring-white">
+                    <Check size={12} className="text-[#C5A059]" strokeWidth={3} />
                   </div>
                   <div className="mb-1 flex items-center justify-between">
-                    <h3 className="font-bold text-slate-900 text-sm">Propuesta Concepto</h3>
+                    <h3 className="font-bold text-slate-900 text-sm">Guía de Ejercicios Resueltos</h3>
                     <span className="text-[10px] font-bold text-slate-400">15 OCT, 2023</span>
                   </div>
-                  <p className="text-sm text-slate-500 leading-relaxed">Aprobación de los moodboards iniciales de diseño.</p>
+                  <p className="text-sm text-slate-500 leading-relaxed">Desarrollo paso a paso de los 10 problemas del taller en PDF.</p>
                 </div>
 
                 {/* Active Hito */}
                 <div className="relative pl-8">
-                  <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-white border-2 border-sky-500 flex items-center justify-center ring-4 ring-white">
-                    <div className="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></div>
+                  <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-white border-2 border-[#C5A059] flex items-center justify-center ring-4 ring-white">
+                    <div className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse"></div>
                   </div>
                   <div className="mb-2 flex items-center gap-3">
-                    <h3 className="font-bold text-sky-600 text-base">Selección de Mobiliario</h3>
-                    <span className="text-[9px] font-black bg-sky-100 text-sky-600 px-2 py-0.5 rounded uppercase tracking-wider">En Curso</span>
+                    <h3 className="font-bold text-[#0B2545] text-base">Sesión Virtual de Repaso</h3>
+                    <span className="text-[9px] font-black bg-[#FAF8F5] border border-[#C5A059]/40 text-[#0B2545] px-2 py-0.5 rounded uppercase tracking-wider">En Curso</span>
                   </div>
-                  <p className="text-sm text-slate-600 leading-relaxed mb-4">Curaduría de piezas premium para el salón principal.</p>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">Clase en vivo de 1.5 horas para resolver ejercicios tipo parcial.</p>
                   <button 
                     onClick={() => router.push('/centro-evidencias')}
-                    className="px-5 py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-600 font-bold text-xs uppercase tracking-wider rounded-xl transition-colors border border-sky-100"
+                    className="px-5 py-2.5 bg-[#FAF8F5] hover:bg-[#C5A059]/20 text-[#0B2545] font-bold text-xs uppercase tracking-wider rounded-xl transition-colors border border-[#C5A059]/40 shadow-sm"
                   >
                     Centro de Evidencias
                   </button>
@@ -327,7 +327,7 @@ export default function ProjectTrackingPage() {
                 <div className="relative pl-8 opacity-50">
                   <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-slate-200 ring-4 ring-white"></div>
                   <div className="mb-1 flex items-center gap-3">
-                    <h3 className="font-bold text-slate-400 text-sm">Renderizado Final</h3>
+                    <h3 className="font-bold text-slate-400 text-sm">Simulacro de Examen & Evaluación</h3>
                     <span className="text-[9px] font-black bg-slate-100 text-slate-400 px-2 py-0.5 rounded uppercase tracking-wider">Pendiente</span>
                   </div>
                 </div>
@@ -336,7 +336,7 @@ export default function ProjectTrackingPage() {
                 <div className="relative pl-8 opacity-50">
                   <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-slate-200 ring-4 ring-white"></div>
                   <div className="mb-1 flex items-center gap-3">
-                    <h3 className="font-bold text-slate-400 text-sm">Entrega de Obra</h3>
+                    <h3 className="font-bold text-slate-400 text-sm">Entrega Final & Liberación de Fondos</h3>
                     <span className="text-[9px] font-black bg-slate-100 text-slate-400 px-2 py-0.5 rounded uppercase tracking-wider">Pendiente</span>
                   </div>
                 </div>
@@ -370,7 +370,7 @@ export default function ProjectTrackingPage() {
               <span className="text-xs text-slate-400 font-medium">hace 5 min</span>
             </div>
             <p className="text-sm text-slate-600 italic line-clamp-1">
-              "Hola! He subido las muestras de materiales. Por favor, dime qué te parece la opción del mármol azulado..."
+              "¡Hola! Ya subí el avance de la guía de álgebra y los ejercicios resueltos. Por favor, revísalos cuando puedas..."
             </p>
           </div>
         </div>
@@ -379,16 +379,16 @@ export default function ProjectTrackingPage() {
             localStorage.setItem('pendingTrackingMsg', 'true');
             router.push(`/chat/${expertId}?msg=true`);
           }}
-          className="shrink-0 px-6 py-3 bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold rounded-2xl transition-colors flex items-center gap-2 text-sm border border-pink-100"
+          className="shrink-0 px-6 py-3 bg-[#FAF8F5] hover:bg-[#C5A059]/20 text-[#0B2545] font-bold rounded-2xl transition-colors flex items-center gap-2 text-sm border border-[#C5A059]/40 shadow-sm active:scale-95"
         >
-          <MessageCircle size={18} />
+          <MessageCircle size={18} className="text-[#C5A059]" />
           <span className="hidden sm:inline uppercase tracking-wider text-[11px]">Responder en el Chat</span>
         </button>
       </div>
 
       <button 
         onClick={() => router.push('/centro-seguridad')}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-sky-500 hover:bg-sky-600 text-white rounded-full shadow-lg shadow-sky-500/30 flex items-center justify-center transition-transform hover:scale-110 active:scale-95 z-50"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-[#0B2545] hover:bg-[#134074] text-[#C5A059] rounded-full shadow-lg shadow-[#0B2545]/20 flex items-center justify-center transition-transform hover:scale-110 active:scale-95 z-50 border border-[#C5A059]/40"
       >
         <Headphones size={24} />
       </button>

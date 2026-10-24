@@ -120,9 +120,9 @@ export default function EvidenceCenterPage() {
           </div>
           
           <div className="flex items-center gap-6">
-            <button className="text-slate-400 hover:text-slate-600 transition-colors relative p-2">
+            <button className="text-slate-400 hover:text-[#0B2545] transition-colors relative p-2">
               <Bell size={24} />
-              <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white"></span>
+              <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#C5A059] rounded-full border-2 border-white"></span>
             </button>
             <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
               <p className="text-sm font-bold text-slate-900 hidden sm:block">{userName}</p>
@@ -165,13 +165,13 @@ export default function EvidenceCenterPage() {
             {/* Zona de Carga (Drag & Drop) */}
             <motion.div 
               whileHover={{ scale: 1.01 }}
-              className="bg-white rounded-[32px] p-12 border-2 border-dashed border-sky-200 flex flex-col items-center justify-center text-center space-y-6 shadow-sm hover:border-sky-300 transition-colors"
+              className="bg-white rounded-[32px] p-12 border-2 border-dashed border-[#C5A059]/40 flex flex-col items-center justify-center text-center space-y-6 shadow-sm hover:border-[#0B2545] transition-colors"
             >
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="w-20 h-20 rounded-full bg-pink-50 flex items-center justify-center text-pink-500 cursor-pointer hover:scale-110 transition-transform shadow-sm"
+                className="w-20 h-20 rounded-full bg-[#FAF8F5] border border-[#C5A059]/40 flex items-center justify-center text-[#0B2545] cursor-pointer hover:scale-110 transition-transform shadow-sm"
               >
-                <Upload size={32} />
+                <Upload size={32} className="text-[#C5A059]" />
               </div>
               <div className="space-y-2">
                 <p className="text-xl font-bold text-slate-900">Arrastra y suelta tus archivos aquí</p>
@@ -179,7 +179,7 @@ export default function EvidenceCenterPage() {
               </div>
               <button 
                 onClick={() => fileInputRef.current?.click()}
-                className="px-8 py-3 bg-[#FCE4EC] hover:bg-[#fbd1de] text-[#880e4f] font-bold rounded-full transition-all shadow-sm active:scale-95"
+                className="px-8 py-3 bg-[#0B2545] hover:bg-[#134074] text-[#C5A059] font-bold rounded-full transition-all shadow-sm active:scale-95 border border-[#C5A059]/40"
               >
                 Seleccionar Archivos
               </button>
@@ -196,7 +196,7 @@ export default function EvidenceCenterPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <h2 className="text-2xl font-bold text-slate-900">Archivos subidos</h2>
-                  <span className="bg-sky-100 text-sky-600 text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider">
+                  <span className="bg-[#FAF8F5] border border-[#C5A059]/40 text-[#0B2545] text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider">
                     {files.length} ARCHIVOS
                   </span>
                 </div>
@@ -213,7 +213,7 @@ export default function EvidenceCenterPage() {
                     >
                       <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 ${
                         file.type === 'pdf' ? 'bg-red-50 text-red-500' : 
-                        file.type === 'image' ? 'bg-sky-50 text-sky-500' : 'bg-slate-50 text-slate-500'
+                        file.type === 'image' ? 'bg-[#FAF8F5] text-[#0B2545]' : 'bg-slate-50 text-slate-500'
                       }`}>
                         {file.type === 'pdf' && <FileText size={24} />}
                         {file.type === 'image' && (
@@ -252,7 +252,7 @@ export default function EvidenceCenterPage() {
               animate={{ opacity: 1, x: 0 }}
               className="bg-white rounded-[32px] p-8 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border border-slate-100 space-y-8"
             >
-              <h2 className="text-xl font-bold text-slate-900">Resumen del Proyecto</h2>
+              <h2 className="text-xl font-bold text-slate-900">Resumen de la Tutoría</h2>
               
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-3 border-b border-slate-50">
@@ -261,28 +261,28 @@ export default function EvidenceCenterPage() {
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-slate-50">
                   <span className="text-sm font-medium text-slate-500">Presupuesto</span>
-                  <span className="text-sm font-bold text-slate-900">$4,500.00 USD</span>
+                  <span className="text-sm font-bold text-[#0B2545]">$18.00 USD</span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-slate-50">
                   <span className="text-sm font-medium text-slate-500">Hito</span>
-                  <span className="text-sm font-bold text-sky-600">Entrega Final</span>
+                  <span className="text-sm font-bold text-[#C5A059]">Entrega Final</span>
                 </div>
               </div>
 
-              {/* Caja de Información del Cliente */}
-              <div className="bg-blue-50/50 rounded-2xl p-4 flex items-center gap-4 border border-blue-50">
-                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-blue-500 shadow-sm">
-                  <Building2 size={24} />
+              {/* Caja de Información de la Asignatura */}
+              <div className="bg-[#FAF8F5] rounded-2xl p-4 flex items-center gap-4 border border-[#C5A059]/30">
+                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#0B2545] shadow-sm border border-[#C5A059]/20">
+                  <Building2 size={24} className="text-[#C5A059]" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">CLIENTE</p>
-                  <p className="text-sm font-bold text-slate-900">Studio Arq. Minimal</p>
+                  <p className="text-[10px] font-black text-[#5C6B73] uppercase tracking-widest">ASIGNATURA / SERVICIO</p>
+                  <p className="text-sm font-bold text-[#0B2545]">Tutoría de Matemáticas & Álgebra</p>
                 </div>
               </div>
 
               <button
                 onClick={() => router.push('/liberacion-fondos')}
-                className="w-full py-4 bg-[#FCE4EC] hover:bg-[#fbd1de] text-[#880e4f] font-bold rounded-2xl shadow-sm hover:shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                className="w-full py-4 bg-[#0B2545] hover:bg-[#134074] text-[#C5A059] font-bold rounded-2xl shadow-sm hover:shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 border border-[#C5A059]/40"
               >
                 <span>Confirmar Pagos</span>
                 <ChevronRight size={18} />

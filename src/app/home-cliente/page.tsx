@@ -262,11 +262,11 @@ export default function HomeCliente() {
             <div className="relative hidden md:block">
               <button
                 onClick={toggleNotif}
-                className="p-2 text-[#5e6f79] hover:text-[#0d1c2e] transition-colors relative"
+                className="p-2 text-[#5e6f79] hover:text-[#0B2545] transition-colors relative"
               >
                 <Bell size={24} />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#FCE4EC] border-2 border-white rounded-full" />
+                  <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#C5A059] border-2 border-white rounded-full" />
                 )}
               </button>
 
@@ -285,13 +285,13 @@ export default function HomeCliente() {
                       {/* Header */}
                       <div className="flex justify-between items-center px-5 pt-5 pb-3 border-b border-gray-100">
                         <div className="flex items-center gap-2">
-                          <span className="font-extrabold text-[#0d1c2e]">Notificaciones</span>
+                          <span className="font-extrabold text-[#0B2545]">Notificaciones</span>
                           {unreadCount > 0 && (
-                            <span className="bg-[#FCE4EC] text-[#0d1c2e] text-xs font-bold px-2 py-0.5 rounded-full">{unreadCount}</span>
+                            <span className="bg-[#FAF8F5] text-[#0B2545] border border-[#C5A059]/40 text-xs font-bold px-2 py-0.5 rounded-full">{unreadCount}</span>
                           )}
                         </div>
                         {unreadCount > 0 && (
-                          <button onClick={markAllRead} className="text-xs font-bold text-[#5e6f79] hover:text-[#0d1c2e] transition-colors">
+                          <button onClick={markAllRead} className="text-xs font-bold text-[#5e6f79] hover:text-[#0B2545] transition-colors">
                             Marcar todo leído
                           </button>
                         )}
@@ -304,18 +304,18 @@ export default function HomeCliente() {
                             key={notif.id}
                             onClick={() => setNotifications(prev => prev.map(n => n.id === notif.id ? { ...n, read: true } : n))}
                             className={`flex gap-3 px-5 py-4 cursor-pointer transition-colors ${
-                              !notif.read ? 'bg-[#f8f9ff] hover:bg-[#E0F2FE]/30' : 'hover:bg-gray-50'
+                              !notif.read ? 'bg-[#f8f9ff] hover:bg-[#FAF8F5]' : 'hover:bg-gray-50'
                             }`}
                           >
-                            <div className="w-10 h-10 rounded-2xl bg-gray-100 flex items-center justify-center text-lg flex-shrink-0">
+                            <div className="w-10 h-10 rounded-2xl bg-[#FAF8F5] border border-[#C5A059]/20 flex items-center justify-center text-lg flex-shrink-0">
                               {notif.icon}
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between gap-2">
-                                <p className={`text-sm leading-tight ${!notif.read ? 'font-bold text-[#0d1c2e]' : 'font-medium text-[#5e6f79]'}`}>
+                                <p className={`text-sm leading-tight ${!notif.read ? 'font-bold text-[#0B2545]' : 'font-medium text-[#5e6f79]'}`}>
                                   {notif.title}
                                 </p>
-                                {!notif.read && <span className="w-2 h-2 bg-[#D81B60] rounded-full flex-shrink-0 mt-1" />}
+                                {!notif.read && <span className="w-2 h-2 bg-[#C5A059] rounded-full flex-shrink-0 mt-1" />}
                               </div>
                               <p className="text-xs text-[#5e6f79] mt-0.5 line-clamp-2">{notif.body}</p>
                               <p className="text-[10px] text-gray-400 font-medium mt-1">{notif.time}</p>
@@ -326,7 +326,7 @@ export default function HomeCliente() {
 
                       {/* Footer */}
                       <div className="px-5 py-3 border-t border-gray-100 text-center">
-                        <button className="text-xs font-bold text-[#5e6f79] hover:text-[#0d1c2e] transition-colors">
+                        <button className="text-xs font-bold text-[#5e6f79] hover:text-[#0B2545] transition-colors">
                           Ver todas las notificaciones
                         </button>
                       </div>
@@ -337,17 +337,17 @@ export default function HomeCliente() {
             </div>
             <div className="flex items-center gap-3">
               <div className="flex flex-col items-end mr-1 text-right">
-                <span className="text-xs sm:text-sm font-bold text-[#0d1c2e] leading-tight line-clamp-1 max-w-[120px] sm:max-w-[200px]">{userName}</span>
-                <span className="text-[10px] font-medium text-[#5e6f79]">Estudiante</span>
+                <span className="text-xs sm:text-sm font-bold text-[#0B2545] leading-tight line-clamp-1 max-w-[120px] sm:max-w-[200px]">{userName}</span>
+                <span className="text-[10px] font-bold text-[#C5A059]">Estudiante</span>
               </div>
               <div 
                 onClick={toggleProfile}
-                className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#e6eeff] cursor-pointer bg-white flex items-center justify-center relative z-50 hover:border-[#FCE4EC] transition-colors"
+                className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#C5A059]/40 cursor-pointer bg-white flex items-center justify-center relative z-50 hover:border-[#0B2545] transition-colors shadow-sm"
               >
                 {userAvatar ? (
                   <img src={userAvatar} alt={userName} className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-[#0d1c2e] font-bold text-sm uppercase">{userName.charAt(0)}</span>
+                  <span className="text-[#0B2545] font-bold text-sm uppercase">{userName.charAt(0)}</span>
                 )}
               </div>
             </div>
@@ -368,11 +368,11 @@ export default function HomeCliente() {
                   >
                     <div className="flex flex-col items-center mb-6">
                       <div className="relative group cursor-pointer mb-4">
-                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-[#f8f9ff] bg-gray-100 flex items-center justify-center shadow-sm">
+                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-[#FAF8F5] bg-gray-100 flex items-center justify-center shadow-sm">
                           {userAvatar ? (
                             <img src={userAvatar} alt={userName} className="w-full h-full object-cover" />
                           ) : (
-                            <span className="text-[#0d1c2e] font-bold text-2xl uppercase">{userName.charAt(0)}</span>
+                            <span className="text-[#0B2545] font-bold text-2xl uppercase">{userName.charAt(0)}</span>
                           )}
                         </div>
                         <label className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 text-white opacity-0 group-hover:opacity-100 rounded-full transition-opacity cursor-pointer">
@@ -381,29 +381,29 @@ export default function HomeCliente() {
                           <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                         </label>
                       </div>
-                      <p className="text-xs font-bold text-[#5e6f79] uppercase tracking-wider mb-1">Perfil de Usuario</p>
+                      <p className="text-xs font-bold text-[#5e6f79] uppercase tracking-wider mb-1">Perfil de Estudiante</p>
                     </div>
 
                     <div className="space-y-4">
                       <div>
-                        <label className="text-xs font-bold text-[#0d1c2e] ml-1">Nombre de Usuario</label>
+                        <label className="text-xs font-bold text-[#0B2545] ml-1">Nombre de Usuario</label>
                         <input 
                           type="text" 
                           value={editName}
                           onChange={(e) => setEditName(e.target.value)}
-                          className="w-full mt-1 px-4 py-3 bg-[#f8f9ff] border border-gray-200 rounded-xl focus:outline-none focus:border-[#FCE4EC] focus:ring-2 focus:ring-[#FCE4EC] transition-all text-[#0d1c2e] font-medium"
+                          className="w-full mt-1 px-4 py-3 bg-[#f8f9ff] border border-gray-200 rounded-xl focus:outline-none focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/30 transition-all text-[#0B2545] font-medium"
                         />
                       </div>
                       <button 
                         onClick={handleSaveProfile}
-                        className="w-full py-3 bg-[#FCE4EC] hover:bg-[#fbd1de] text-[#0d1c2e] font-bold rounded-xl transition-all shadow-sm"
+                        className="w-full py-3 bg-[#0B2545] hover:bg-[#134074] text-[#C5A059] font-bold rounded-xl transition-all shadow-sm border border-[#C5A059]/40"
                       >
                         Guardar Cambios
                       </button>
 
                       <button 
                         onClick={() => router.push('/perfil')}
-                        className="w-full py-3 bg-slate-100 hover:bg-[#E0F2FE] hover:text-[#0288D1] text-[#0d1c2e] font-bold rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
+                        className="w-full py-3 bg-[#FAF8F5] hover:bg-[#C5A059]/15 text-[#0B2545] border border-[#C5A059]/30 font-bold rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5"
                       >
                         <span className="material-symbols-outlined text-sm">person</span>
                         <span>Ver Perfil y Actividad</span>

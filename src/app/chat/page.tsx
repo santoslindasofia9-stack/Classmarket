@@ -288,13 +288,13 @@ export default function InboxPage() {
               <div
                 key={chat.id}
                 onClick={() => handleChatClick(chat.id)}
-                className={`group bg-white rounded-2xl border transition-all cursor-pointer p-4 hover:shadow-md hover:border-pink-200 flex gap-4 items-center relative ${
-                  chat.unread ? "border-pink-200 bg-[#FCE4EC]/10" : "border-slate-100"
+                className={`group bg-white rounded-2xl border transition-all cursor-pointer p-4 hover:shadow-md hover:border-[#C5A059]/40 flex gap-4 items-center relative ${
+                  chat.unread ? "border-[#C5A059]/40 bg-[#FAF8F5]" : "border-slate-100"
                 }`}
               >
                 {/* Unread indicator dot */}
                 {chat.unread && (
-                  <span className="absolute top-4 right-4 w-2 h-2 bg-pink-500 rounded-full animate-ping" />
+                  <span className="absolute top-4 right-4 w-2 h-2 bg-[#C5A059] rounded-full animate-ping" />
                 )}
 
                 {/* Avatar with dynamic outline */}
@@ -332,7 +332,7 @@ export default function InboxPage() {
                       chat.status === "active" 
                         ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
                         : chat.status === "negotiating"
-                        ? "bg-pink-50 text-pink-700 border border-pink-100"
+                        ? "bg-[#FAF8F5] text-[#0B2545] border border-[#C5A059]/40"
                         : "bg-slate-100 text-slate-600"
                     }`}>
                       {chat.status === "active" && <ShieldCheck size={9} />}
@@ -340,13 +340,13 @@ export default function InboxPage() {
                     </span>
 
                     {/* Escrow Value Badge */}
-                    <span className="bg-sky-50 text-[#0288D1] border border-sky-100 text-[9px] font-extrabold px-2 py-0.5 rounded-full">
+                    <span className="bg-[#FAF8F5] text-[#0B2545] border border-[#C5A059]/30 text-[9px] font-extrabold px-2 py-0.5 rounded-full">
                       Presupuesto: {chat.budget}
                     </span>
                   </div>
                 </div>
 
-                <ChevronRight size={16} className="text-slate-300 group-hover:text-[#D81B60] group-hover:translate-x-0.5 transition-all shrink-0" />
+                <ChevronRight size={16} className="text-slate-300 group-hover:text-[#0B2545] group-hover:translate-x-0.5 transition-all shrink-0" />
               </div>
             ))
           )
@@ -356,7 +356,7 @@ export default function InboxPage() {
             <div
               key={notif.id}
               className={`bg-white p-4 rounded-2xl border transition-all flex gap-3.5 items-start ${
-                notif.isRead ? "border-slate-100" : "border-pink-200 bg-[#FCE4EC]/5"
+                notif.isRead ? "border-slate-100" : "border-[#C5A059]/30 bg-[#FAF8F5]"
               }`}
             >
               {/* Left Dynamic Icon based on Notification Type */}
@@ -364,7 +364,7 @@ export default function InboxPage() {
                 notif.type === "escrow"
                   ? "bg-emerald-100 text-emerald-600"
                   : notif.type === "signature"
-                  ? "bg-pink-100 text-[#D81B60]"
+                  ? "bg-[#FAF8F5] text-[#0B2545] border border-[#C5A059]/40"
                   : notif.type === "file"
                   ? "bg-sky-100 text-[#0288D1]"
                   : "bg-amber-100 text-amber-600"
@@ -441,10 +441,10 @@ export default function InboxPage() {
               <span className="text-[10px] font-semibold mt-1">Agenda</span>
             </a>
 
-            {/* Mensajes (Active - Pink style matching requested bottom nav layout) */}
+            {/* Mensajes (Active - ClassMarket Navy & Gold style) */}
             <a 
               href="#" 
-              className="flex flex-col items-center justify-center text-[#D81B60] bg-[#FCE4EC]/85 rounded-2xl px-5 py-2 cursor-pointer transition-all border border-[#FCE4EC]/40"
+              className="flex flex-col items-center justify-center text-[#C5A059] bg-[#0B2545] rounded-2xl px-5 py-2 cursor-pointer transition-all border border-[#C5A059]/40 shadow-sm"
             >
               <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
               <span className="text-[10px] font-bold mt-1">Mensajes</span>

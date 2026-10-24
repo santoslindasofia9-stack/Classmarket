@@ -303,7 +303,7 @@ export default function CalificacionPage() {
               <button 
                 type="button" 
                 onClick={() => setShowSuccessModal(true)}
-                className="w-full sm:w-auto bg-[#FCE4EC] hover:bg-[#fbd1de] text-[#880e4f] font-bold px-10 py-4 rounded-full text-base transition-all active:scale-95 shadow-sm hover:scale-[1.01]"
+                className="w-full sm:w-auto bg-[#0B2545] hover:bg-[#134074] text-[#C5A059] font-bold px-10 py-4 rounded-full text-base transition-all active:scale-95 shadow-sm hover:scale-[1.01] border border-[#C5A059]/40"
               >
                 Publicar Reseña
               </button>
