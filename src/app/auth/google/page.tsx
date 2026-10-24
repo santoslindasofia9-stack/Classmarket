@@ -18,10 +18,13 @@ export default function FakeGoogleLogin() {
     
     // Simulate network delay
     setTimeout(() => {
-      if (role === "client") {
-        window.location.href = "/home-cliente";
+      const isPro = role === "pro" || localStorage.getItem("userRole") === "pro" || localStorage.getItem("isProIntent") === "true";
+      if (isPro) {
+        localStorage.setItem("userRole", "pro");
+        window.location.href = "/tutor/register";
       } else {
-        window.location.href = "/auth/verificacion-pro";
+        localStorage.setItem("userRole", "client");
+        window.location.href = "/home-cliente";
       }
     }, 800);
   };

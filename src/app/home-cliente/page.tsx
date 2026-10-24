@@ -122,9 +122,10 @@ export default function HomeCliente() {
   useEffect(() => {
     // ── MODO DEMO: carga inmediata sin Supabase ──
     const currentRole = localStorage.getItem("userRole");
-    if (currentRole === "pro") {
-      const isVerified = localStorage.getItem("isProVerified") === "true";
-      window.location.replace(isVerified ? "/dashboard-pro" : "/auth/verificacion-pro");
+    const isProIntent = localStorage.getItem("isProIntent") === "true";
+    if (currentRole === "pro" || isProIntent) {
+      const isRegistered = localStorage.getItem("proRegistered") === "true";
+      window.location.replace(isRegistered ? "/dashboard-pro" : "/tutor/register");
       return;
     }
 

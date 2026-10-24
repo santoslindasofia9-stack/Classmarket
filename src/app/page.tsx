@@ -24,8 +24,8 @@ export default function SplashScreen() {
     if (isLoggedIn && savedRole) {
       let target = savedRole === "client" ? "/home-cliente" : "/dashboard-pro";
       if (savedRole === "pro") {
-        const isVerified = localStorage.getItem("isProVerified") === "true";
-        target = isVerified ? "/dashboard-pro" : "/auth/verificacion-pro";
+        const isRegistered = localStorage.getItem("proRegistered") === "true";
+        target = isRegistered ? "/dashboard-pro" : "/tutor/register";
       }
       window.location.replace(target);
       return;
