@@ -506,7 +506,7 @@ export default function PerfilYEditorDeServicios() {
               
               {/* Photo & Status Badge */}
               <div className="relative mb-6 mx-auto lg:mx-0 w-36 h-36">
-                <div className="w-full h-full rounded-full border-[6px] border-[#FCE4EC] p-1.5 bg-white shadow-2xl shadow-sky-100/60 relative">
+                <div className="w-full h-full rounded-full border-4 border-[#0B2545] p-1.5 bg-white shadow-2xl ring-4 ring-[#C5A059]/40 relative">
                   <div className="w-full h-full rounded-full overflow-hidden bg-slate-100">
                     <img className="w-full h-full object-cover" alt="Profile avatar" src={avatar} />
                   </div>
@@ -523,8 +523,8 @@ export default function PerfilYEditorDeServicios() {
               </div>
 
               {/* Verified Ribbon */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 text-sky-800 border border-sky-100 rounded-full text-xs font-bold mb-4">
-                <Shield size={14} className="fill-sky-500 text-white animate-pulse" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FAF8F5] text-[#0B2545] border border-[#C5A059]/40 rounded-full text-xs font-bold mb-4">
+                <Shield size={14} className="fill-[#C5A059] text-white animate-pulse" />
                 <span>Profesional Verificado Pro</span>
               </div>
 
@@ -540,7 +540,7 @@ export default function PerfilYEditorDeServicios() {
               {/* Details & Location */}
               <div className="space-y-3.5 border-t border-slate-100 pt-6">
                 <div className="flex items-center gap-3 text-xs font-semibold text-[#5e6f79] bg-slate-50/70 p-3 rounded-2xl border border-slate-100/30">
-                  <MapPin size={18} className="text-pink-500" />
+                  <MapPin size={18} className="text-[#0284C7]" />
                   <div className="flex-1">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase">Ubicación</span>
                     <span className="text-[#0d1c2e] text-sm font-extrabold">{ubicacion}</span>

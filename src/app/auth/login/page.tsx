@@ -89,8 +89,7 @@ function LoginContent() {
         if (role === "client") {
           router.push("/home-cliente");
         } else {
-          const isRegistered = localStorage.getItem("proRegistered") === "true";
-          router.push(isRegistered ? "/dashboard-pro" : "/tutor/register");
+          router.push("/tutor/register");
         }
       }
     } catch (err: any) {
@@ -113,8 +112,7 @@ function LoginContent() {
         if (role === "client") {
           router.push("/home-cliente");
         } else {
-          const isRegistered = localStorage.getItem("proRegistered") === "true";
-          router.push(isRegistered ? "/dashboard-pro" : "/tutor/register");
+          router.push("/tutor/register");
         }
         return;
       }
@@ -275,37 +273,6 @@ function LoginContent() {
                 Ofrezco Tutoría
               </button>
             </div>
-
-            {/* Callout si selecciona "Ofrezco Tutoría" */}
-            {role === "pro" && (
-              <motion.div
-                initial={{ opacity: 0, y: -4, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.2 }}
-                className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#C5A059]/35 flex items-center justify-between gap-3 shadow-xs"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-[#0B2545] text-[#C5A059] flex items-center justify-center shrink-0 shadow-xs">
-                    <Sparkles size={16} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-[#0B2545]">
-                      ¿Primera vez ofreciendo tutorías?
-                    </p>
-                    <p className="text-[11px] text-[#5C6B73] font-medium leading-tight">
-                      Crea tu perfil con IA, añade materias y fotos de tus trabajos.
-                    </p>
-                  </div>
-                </div>
-                <Link
-                  href="/tutor/register"
-                  className="shrink-0 px-3 py-1.5 rounded-xl bg-[#0B2545] text-white hover:bg-[#12335d] text-[11px] font-bold transition-all shadow-xs flex items-center gap-1 border border-[#C5A059]/40"
-                >
-                  Configurar
-                  <ArrowRight size={12} />
-                </Link>
-              </motion.div>
-            )}
 
             {/* Mensaje de error */}
             {error && (
