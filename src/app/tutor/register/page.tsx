@@ -112,8 +112,15 @@ export default function TutorRegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Prefill existing session / name if logged in
+  // Guard: Si el usuario es estudiante (client), JAMÁS debe estar en /tutor/register
   useEffect(() => {
+    const currentRole = localStorage.getItem("userRole");
+    const isProIntent = localStorage.getItem("isProIntent") === "true";
+    if (currentRole === "client" || (!isProIntent && currentRole !== "pro")) {
+      window.location.replace("/home-cliente");
+      return;
+    }
+
     const savedName = localStorage.getItem("userName") || localStorage.getItem("proName");
     if (savedName && savedName !== "Usuario" && savedName !== "Profesional") {
       setFullName(savedName);

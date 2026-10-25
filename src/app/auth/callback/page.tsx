@@ -99,19 +99,14 @@ export default function AuthCallback() {
         if (code) {
           if (isMounted) setStatus("Confirmando cuenta de Google...");
           const { data } = await supabase.auth.exchangeCodeForSession(code);
-          if (data?.session?.user) {
-            clearTimeout(safetyTimer);
-            doRedirect(data.session, role);
-            return;
-          }
+          clearTimeout(safetyTimer);
+          doRedirect(data?.session, role);
+          return;
         }
 
         const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          clearTimeout(safetyTimer);
-          doRedirect(session, role);
-          return;
-        }
+        clearTimeout(safetyTimer);
+        doRedirect(session, role);
       } catch (err) {
         console.error("Callback error:", err);
       }
